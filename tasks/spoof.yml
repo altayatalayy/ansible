@@ -2,7 +2,7 @@
   copy:
     src: files/spoof/first-names.txt
     dest: /usr/local/sbin/first-names.txt
-    owner: "{{ ansible_user_id }}"
+    owner: "{{ lookup('env', 'USER') }}"
     group: admin
     mode: 0440
 
