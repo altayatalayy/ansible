@@ -1,11 +1,9 @@
 - hosts: localhost
   connection: local
   gather_facts: true
-  become: true
 
   tasks:
     - community.general.homebrew:
         name: htop
         state: latest
-      become: false
 
