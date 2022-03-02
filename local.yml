@@ -7,4 +7,5 @@
     - community.general.homebrew:
         name: htop
         state: latest
+      become: false
 
