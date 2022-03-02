@@ -4,6 +4,7 @@
 
   tasks:
     - import_tasks: tasks/spoof.yml
-    - debug:
-      msg: 
-        - "{{ user_name }}"
+    - name:
+      debug:
+        msg: 
+          - "{{ user_name }}"
