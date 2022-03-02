@@ -1,3 +1,11 @@
+- name: Make sure /usr/loca/sbin exists
+  file:
+    path: /usr/local/sbin
+    state: directory
+    owner: "{{ user_name }}"
+    group: admin
+    mode: 0775
+
 - name: Copy first names
   copy:
     src: files/spoof/first-names.txt
