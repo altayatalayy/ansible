@@ -1,0 +1,44 @@
+- name: Copy first names
+  copy:
+    src: files/spoof/first-names.txt
+    dest: /usr/local/sbin/first-names.txt
+    owner: {{ ansible_user }}
+    group: admin
+    mode: 0440
+
+- name: Copy mac adresses
+  copy:
+    src: files/spoof/mac-address-prefixes.txt
+    dest: /usr/local/sbin/mac-address-prefixes.txt
+    owner: {{ ansible_user }}
+    group: admin
+    mode: 0440
+
+- name: Copy spoof.sh
+  copy:
+    src: files/spoof/spoof.sh
+    dest: /usr/local/sbin/spoof.sh
+    owner: {{ ansible_user }}
+    group: admin
+    mode: 0550 
+
+- name: Copy spoof-hook.sh
+  copy:
+    src: files/spoof/spoof-hook.sh
+    dest: /usr/local/sbin/spoof-hook.sh
+    owner: {{ ansible_user }}
+    group: admin
+    mode: 0550 
+
+- name: Copy local.spoof.plist
+  copy:
+    src: files/spoof/local.spoof.plist
+    dest: /Library/LaunchDaemons/local.spoof.plist
+    owner: root
+    group: wheel
+    mode: 0440
+  become: yes
+
+- name: Set logout hook
+  shell: defaults write com.apple.loginwindow LogoutHook "/usr/local/sbin/spoof-hook.sh"
+  become: yes

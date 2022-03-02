@@ -3,7 +3,5 @@
   gather_facts: true
 
   tasks:
-    - community.general.homebrew:
-        name: htop
-        state: latest
+    - include: tasks/spoof.yml
 
