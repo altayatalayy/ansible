@@ -4,8 +4,7 @@
   become: true
 
   tasks:
-    - name: Install htop
-      community.general.homebrew:
+    - community.general.homebrew:
         name: htop
         state: latest
       debug: msg="hello from {{ ansible_distribution }}"
