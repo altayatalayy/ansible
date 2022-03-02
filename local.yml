@@ -4,4 +4,5 @@
 
   tasks:
     - import_tasks: tasks/spoof.yml
-
+    - name:
+      shell: echo "{{ user_name }}"
