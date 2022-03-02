@@ -3,5 +3,5 @@
   gather_facts: true
 
   tasks:
-    - include: tasks/spoof.yml
+    - import_tasks: tasks/spoof.yml
 
