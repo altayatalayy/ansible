@@ -2,7 +2,7 @@
   copy:
     src: files/spoof/first-names.txt
     dest: /usr/local/sbin/first-names.txt
-    owner: "{{ lookup('env', 'USER') }}"
+    owner: "{{ user_name }}"
     group: admin
     mode: 0440
 
@@ -10,7 +10,7 @@
   copy:
     src: files/spoof/mac-address-prefixes.txt
     dest: /usr/local/sbin/mac-address-prefixes.txt
-    owner: "{{ ansible_user_id }}"
+    owner: "{{ user_name }}"
     group: admin
     mode: 0440
 
@@ -18,7 +18,7 @@
   copy:
     src: files/spoof/spoof.sh
     dest: /usr/local/sbin/spoof.sh
-    owner: "{{ ansible_user_id }}"
+    owner: "{{ user_name }}"
     group: admin
     mode: 0550 
 
@@ -26,7 +26,7 @@
   copy:
     src: files/spoof/spoof-hook.sh
     dest: /usr/local/sbin/spoof-hook.sh
-    owner: "{{ ansible_user_id }}"
+    owner: "{{ user_name }}"
     group: admin
     mode: 0550 
 
