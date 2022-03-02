@@ -7,6 +7,4 @@
     - community.general.homebrew:
         name: htop
         state: latest
-      debug: msg="hello from {{ ansible_distribution }}"
-      when: ansible_facts['distribution'] == 'MacOSX'
 
