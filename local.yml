@@ -3,4 +3,4 @@
   gather_facts: true
 
   tasks:
-    - import_tasks: tasks/spoof.yml
+    - import_tasks: tasks/nvim.yml

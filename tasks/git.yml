@@ -3,3 +3,20 @@
     name: git
     state: latest
 
+- name: Set git user name
+  git_config:
+    name: user.name
+    scope: global
+    value: ""
+
+- name: Set git user email
+  git_config:
+    name: user.email
+    scope: global
+    value: ""
+
+- name: Set git default branch
+  git_config:
+    name: init.defaultBranch
+    scope: global
+    value: master
