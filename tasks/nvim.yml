@@ -60,6 +60,9 @@
     owner: "{{ user_name }}"
     group: staff
     mode: 0750
+    directory_mode:
+  tags:
+    - dircontent
 
 
 - name: Install vim-plug
