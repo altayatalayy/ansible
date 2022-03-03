@@ -6,42 +6,38 @@
 
 - name: Install required packages
   homebrew:
-    name: "{{ item }}"
-    state: latest
-    with_items:
+    name: 
       - nvim
       - curl
       - git
       - node
+    state: latest
   become: true
   become_user: "{{ user_name }}"
 
 - name: Install lsp servers with homebrew
   homebrew:
-    name: "{{ item }}"
-    state: latest
-    with_items:
+    name:
       - pyright
       - gopls
       - llvm
       - lua-language-server
+    state: latest
   become: true
   become_user: "{{ user_name }}"
 
 - name: Install lsp servers with npm
   npm:
-    name: "{{ item }}"
+    name: 
+      - ansible-language-server
     global: true
     state: latest
-    with_items:
-      - ansible-language-server
   become: true
   become_user: "{{ user_name }}"
 
 - name: Install lsp servers with pip
   pip:
-    name: "{{ item }}"
-    with_items:
+    name:
       - cmake-language-server
   become: true
   become_user: "{{ user_name }}"
