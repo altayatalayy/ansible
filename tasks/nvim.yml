@@ -1,5 +1,6 @@
 - name: Set nvim path
-  nvim_path: "~/.config/nvim"
+  set_fact:
+    nvim_path: "~/.config/nvim"
   become: true
   become_user: "{{ user_name }}"
 
