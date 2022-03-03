@@ -55,15 +55,51 @@
 
 - name: copy files
   copy:
-    src: files/nvim/
-    dest: "{{ nvim_path }}/"
+    src: files/nvim/init.vim
+    dest: "{{ nvim_path }}/init.vim"
     owner: "{{ user_name }}"
     group: staff
     mode: 0750
-    directory_mode:
-  tags:
-    - dircontent
 
+- name: copy files
+  copy:
+    src: files/nvim/ftplugin/markdown.vim
+    dest: "{{ nvim_path }}/ftplugin/markdown.vim"
+    owner: "{{ user_name }}"
+    group: staff
+    mode: 0750
+
+- name: copy files
+  copy:
+    src: files/nvim/ftplugin/yaml.vim
+    dest: "{{ nvim_path }}/ftplugin/yaml.vim"
+    owner: "{{ user_name }}"
+    group: staff
+    mode: 0750
+
+- name: copy files
+  copy:
+    src: files/nvim/lua/lsp-config.lua
+    dest: "{{ nvim_path }}/lua/lsp-config.lua"
+    owner: "{{ user_name }}"
+    group: staff
+    mode: 0750
+
+- name: copy files
+  copy:
+    src: files/nvim/lua/nvim-cmp.lua
+    dest: "{{ nvim_path }}/lua/nvim-cmp.lua"
+    owner: "{{ user_name }}"
+    group: staff
+    mode: 0750
+
+- name: copy files
+  copy:
+    src: files/nvim/lua/treesitter/lua
+    dest: "{{ nvim_path }}/lua/treesitter/lua"
+    owner: "{{ user_name }}"
+    group: staff
+    mode: 0750
 
 - name: Install vim-plug
   get_url:
