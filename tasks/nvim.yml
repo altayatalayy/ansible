@@ -40,6 +40,8 @@
     owner: "{{ user_name }}"
     group: staff
     mode: 0750
+  become: true
+  become_user: "{{ user_name }}"
 
 - name: Make sure ~/.config/nvim exists
   file:
@@ -52,54 +54,18 @@
     - "autoload"
     - "lua"
     - "ftplugin"
+  become: true
+  become_user: "{{ user_name }}"
 
 - name: copy files
   copy:
-    src: files/nvim/init.vim
-    dest: "{{ nvim_path }}/init.vim"
+    src: files/nvim/
+    dest: "{{ nvim_path }}/"
     owner: "{{ user_name }}"
     group: staff
     mode: 0750
-
-- name: copy files
-  copy:
-    src: files/nvim/ftplugin/markdown.vim
-    dest: "{{ nvim_path }}/ftplugin/markdown.vim"
-    owner: "{{ user_name }}"
-    group: staff
-    mode: 0750
-
-- name: copy files
-  copy:
-    src: files/nvim/ftplugin/yaml.vim
-    dest: "{{ nvim_path }}/ftplugin/yaml.vim"
-    owner: "{{ user_name }}"
-    group: staff
-    mode: 0750
-
-- name: copy files
-  copy:
-    src: files/nvim/lua/lsp-config.lua
-    dest: "{{ nvim_path }}/lua/lsp-config.lua"
-    owner: "{{ user_name }}"
-    group: staff
-    mode: 0750
-
-- name: copy files
-  copy:
-    src: files/nvim/lua/nvim-cmp.lua
-    dest: "{{ nvim_path }}/lua/nvim-cmp.lua"
-    owner: "{{ user_name }}"
-    group: staff
-    mode: 0750
-
-- name: copy files
-  copy:
-    src: files/nvim/lua/treesitter/lua
-    dest: "{{ nvim_path }}/lua/treesitter/lua"
-    owner: "{{ user_name }}"
-    group: staff
-    mode: 0750
+  become: true
+  become_user: "{{ user_name }}"
 
 - name: Install vim-plug
   get_url:
