@@ -52,8 +52,6 @@
     mode: 0750
   with_items:
     - "autoload"
-    - "lua"
-    - "ftplugin"
   become: true
   become_user: "{{ user_name }}"
 
