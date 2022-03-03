@@ -26,15 +26,6 @@
   become: true
   become_user: "{{ user_name }}"
 
-- name: Install lsp servers with npm
-  npm:
-    name: 
-      - ansible-language-server
-    global: true
-    state: latest
-  become: true
-  become_user: "{{ user_name }}"
-
 - name: Install lsp servers with pip
   pip:
     name:
