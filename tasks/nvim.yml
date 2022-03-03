@@ -53,13 +53,20 @@
     - "lua"
     - "ftplugin"
 
-- name: Copy config files
+- name: list files
+  find:
+    paths: "files/nvim"
+    file_type: any
+  register: files
+
+- name: copy files
   copy:
-    src: files/nvim/
+    src: "{{ item.path }}"
     dest: "{{ nvim_path }}"
     owner: "{{ user_name }}"
     group: staff
     mode: 0750
+  loop: "{{ files.files }}"
 
 - name: Install vim-plug
   get_url:
