@@ -4,3 +4,5 @@
 
   tasks:
     - import_tasks: tasks/nvim.yml
+      become: true
+      become_user: "{{ user_name }}"

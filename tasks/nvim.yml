@@ -1,8 +1,6 @@
 - name: Set nvim path
   set_fact:
     nvim_path: "~/.config/nvim"
-  become: true
-  become_user: "{{ user_name }}"
 
 - name: Install required packages
   homebrew:
@@ -12,8 +10,6 @@
       - git
       - node
     state: latest
-  become: true
-  become_user: "{{ user_name }}"
 
 - name: Install lsp servers with homebrew
   homebrew:
@@ -23,15 +19,11 @@
       - llvm
       - lua-language-server
     state: latest
-  become: true
-  become_user: "{{ user_name }}"
 
 - name: Install lsp servers with pip
   pip:
     name:
       - cmake-language-server
-  become: true
-  become_user: "{{ user_name }}"
 
 - name: Make sure ~/.config/nvim exists
   file:
@@ -40,8 +32,6 @@
     owner: "{{ user_name }}"
     group: staff
     mode: 0750
-  become: true
-  become_user: "{{ user_name }}"
 
 - name: Make sure ~/.config/nvim exists
   file:
@@ -52,8 +42,6 @@
     mode: 0750
   with_items:
     - "autoload"
-  become: true
-  become_user: "{{ user_name }}"
 
 - name: copy files
   copy:
@@ -62,15 +50,11 @@
     owner: "{{ user_name }}"
     group: staff
     mode: 0750
-  become: true
-  become_user: "{{ user_name }}"
 
 - name: Install vim-plug
   get_url:
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     dest: ~/.config/nvim/autoload/plug.vim
-  become: true
-  become_user: "{{ user_name }}"
 
 #- name: Install Plugins
   #shell: nvim -c PlugInstall -c q -c q
