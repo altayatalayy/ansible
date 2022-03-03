@@ -12,7 +12,7 @@ filetype plugin indent on
 :set smarttab
 :set softtabstop=4
 
-call plug#begin()
+call plug#begin('~/.config/nvim/plugged')
 
 Plug 'https://github.com/vim-airline/vim-airline.git'
 Plug 'https://github.com/preservim/nerdtree.git' " NerdTree
