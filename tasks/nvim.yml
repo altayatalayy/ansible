@@ -41,6 +41,18 @@
     group: staff
     mode: 0750
 
+- name: Make sure ~/.config/nvim exists
+  file:
+    path: "{{ nvim_path }}/{{ item }}"
+    state: directory
+    owner: "{{ user_name }}"
+    group: staff
+    mode: 0750
+  with_items:
+    - "autoload"
+    - "lua"
+    - "ftplugin"
+
 - name: Copy config files
   copy:
     src: files/nvim/
