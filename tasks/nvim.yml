@@ -27,14 +27,6 @@
 
 - name: Make sure ~/.config/nvim exists
   file:
-    path: "{{ nvim_path }}"
-    state: directory
-    owner: "{{ user_name }}"
-    group: staff
-    mode: 0750
-
-- name: Make sure ~/.config/nvim exists
-  file:
     path: "{{ nvim_path }}/{{ item }}"
     state: directory
     owner: "{{ user_name }}"
@@ -56,5 +48,3 @@
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     dest: ~/.config/nvim/autoload/plug.vim
 
-- name: Install Plugins
-  shell: nvim -c PlugInstall -c q -c q
