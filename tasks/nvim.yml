@@ -8,6 +8,9 @@
       - nvim
       - curl
       - git
+      - gopls
+      - llvm
+      - lua-language-server
     state: latest
   when:
     ansible_facts['os_family'] == "Darwin"
@@ -19,25 +22,22 @@
       - curl
       - git
       - python3-pip
+      - golang
+      - llvm
     state: latest
   when:
     ansible_facts['os_family'] == "Debian"
 
-- name: Install lsp servers with homebrew
-  homebrew:
-    name:
-      - pyright
-      - gopls
-      - llvm
-      - lua-language-server
-    state: latest
+- name: Install gopls on Debian
+  shell: go install golang.org/x/tools/gopls@latest
   when:
-    ansible_facts['os_family'] == "Darwin"
+    ansible_facts['os_family'] == "Debian"
 
 - name: Install lsp servers with pip
   pip:
     name:
       - cmake-language-server
+      - pyright
 
 - name: Make sure ~/.config/nvim and subdirectories exists
   file:

@@ -4,7 +4,7 @@ filetype plugin indent on
 :set number
 :set relativenumber
 :set autoindent
-:set mouse=a
+:set mouse=v
 :set cursorline
 
 :set tabstop=4
@@ -39,7 +39,7 @@ call plug#end()
 
 set completeopt=menu,menuone,noselect
 
-:colorscheme Iceberg
+:colorscheme gruvbox
 
 nnoremap <C-f> :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
