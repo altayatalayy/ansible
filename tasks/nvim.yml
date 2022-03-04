@@ -26,6 +26,7 @@
       - llvm
     state: latest
   become: true
+  become_user: root
   when:
     ansible_facts['os_family'] == "Debian"
 
