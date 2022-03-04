@@ -25,6 +25,7 @@
       - golang
       - llvm
     state: latest
+  become: true
   when:
     ansible_facts['os_family'] == "Debian"
 
