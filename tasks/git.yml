@@ -20,3 +20,9 @@
     name: init.defaultBranch
     scope: global
     value: master
+
+- name: set default editor for git
+  git_config:
+    name: core.editor
+    scope: global
+    value: "{{ 'nvim' if ansible_facts['os_family'] == 'Darwin' else 'neovim' }}"

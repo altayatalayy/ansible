@@ -2,6 +2,7 @@
 > Install and configure
 > * neovim
 > * git
+> * tmux
 
 ## Table of Contents
 * [Screenshots](#screenshots)
@@ -15,20 +16,20 @@
 <!-- If you have screenshots you'd like to share, include them here. -->
 
 ## Setup
-  #### Macos
-  ```
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" # Install brew
-  brew install ansible # Install ansible
-  ```
-  #### Ubuntu
-  ```
-  sudo apt install git ansible # Install ansible
-  ```
+#### Macos
+```
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" # Install brew
+brew install ansible # Install ansible
+```
+#### Ubuntu
+```
+sudo apt install git ansible # Install ansible
+```
 
-  ## Launch
-  ```
-  sudo ansible-pull -U <url> -e "user_name=$(whoami)"
-  ```
+## Launch
+```
+sudo ansible-pull -U <url> -e "user_name=$(whoami)"
+```
 
 ## Project Status
 Project is: _in progress_ 
