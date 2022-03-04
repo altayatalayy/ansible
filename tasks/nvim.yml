@@ -2,14 +2,26 @@
   set_fact:
     nvim_path: "~/.config/nvim"
 
-- name: Install required packages
+- name: Install required packages with brew
   homebrew:
     name: 
       - nvim
       - curl
       - git
-      - node
     state: latest
+  when:
+    ansible_facts['os_family'] == "Darwin"
+
+- name: Install required packages with apt
+  apt:
+    name: 
+      - nvim
+      - curl
+      - git
+      - python3-pip
+    state: latest
+  when:
+    ansible_facts['os_family'] == "Debian"
 
 - name: Install lsp servers with homebrew
   homebrew:
@@ -19,28 +31,30 @@
       - llvm
       - lua-language-server
     state: latest
+  when:
+    ansible_facts['os_family'] == "Darwin"
 
 - name: Install lsp servers with pip
   pip:
     name:
       - cmake-language-server
 
-- name: Make sure ~/.config/nvim exists
+- name: Make sure ~/.config/nvim and subdirectories exists
   file:
     path: "{{ nvim_path }}/{{ item }}"
     state: directory
     owner: "{{ user_name }}"
-    group: staff
+    group: "{{ 'staff' if ansible_facts['os_family'] == 'Darwin' else user_name }}"
     mode: 0750
   with_items:
     - "autoload"
 
-- name: copy files
+- name: Copy config files
   copy:
     src: files/nvim/
     dest: "{{ nvim_path }}/"
     owner: "{{ user_name }}"
-    group: staff
+    group: "{{ 'staff' if ansible_facts['os_family'] == 'Darwin' else user_name }}"
     mode: 0750
 
 - name: Install vim-plug
