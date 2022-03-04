@@ -18,7 +18,7 @@
 - name: Install required packages with apt
   apt:
     name: 
-      - nvim
+      - neovim
       - curl
       - git
       - python3-pip
