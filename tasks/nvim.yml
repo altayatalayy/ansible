@@ -37,7 +37,7 @@
 - name: Download neovim source
   git:
     repo: https://github.com/neovim/neovim
-    dest: "/home/{user_name}"
+    dest: "/home/{{ user_name }}"
     clone: yes
     version: stable
   when:
@@ -45,7 +45,7 @@
 
 - name: Build neovim
   make:
-    chdir: "/home/{user_name}/neovim"
+    chdir: "/home/{{ user_name }}/neovim"
     target: install
     params:
       CMAKE_BUILD_TYPE: Release
