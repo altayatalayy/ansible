@@ -55,7 +55,7 @@
 
 - name: Copy nvim bin to /usr/bin
   copy:
-    src: ~/neovim/build/bin/nvim
+    src: "/home/{{ user_name }}/neovim/build/bin/nvim"
     dest: /usr/bin/
     owner: root
     group: root
