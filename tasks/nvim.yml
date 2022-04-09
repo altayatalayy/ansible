@@ -53,6 +53,17 @@
   when:
     ansible_facts['os_family'] == "Debian"
 
+- name: Copy nvim bin to /usr/bin
+  copy:
+    src: ~/neovim/build/bin/nvim
+    dest: /usr/bin/
+    owner: root
+    group: root
+  become: true
+  become_user: root
+  when:
+    ansible_facts['os_family'] == "Debian"
+
 - name: Install required packages with apt
   apt:
     name: 
@@ -68,7 +79,7 @@
     ansible_facts['os_family'] == "Debian"
 
 - name: Install gopls on Debian
-  shell: go install golang.org/x/tools/gopls@latest
+  shell: export GO111MODULE=on && go get golang.org/x/tools/gopls@latest
   when:
     ansible_facts['os_family'] == "Debian"
 
