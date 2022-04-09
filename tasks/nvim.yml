@@ -15,10 +15,47 @@
   when:
     ansible_facts['os_family'] == "Darwin"
 
+- name: Install neovim from source, Install required packages
+  apt:
+    name: 
+      - ninja-build
+      - gettext
+      - libtool
+      - libtool-bin
+      - autoconf
+      - automake
+      - cmake
+      - g++
+      - pkg-config
+      - unzip
+    state: latest
+  become: true
+  become_user: root
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Download neovim source
+  git:
+    repo: https://github.com/neovim/neovim
+    dest: "/home/{user_name}"
+    clone: yes
+    version: stable
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Build neovim
+  make:
+    chdir: "/home/{user_name}/neovim"
+    target: install
+    params:
+      CMAKE_BUILD_TYPE: Release
+      CMAKE_INSTALL_PREFIX: build
+  when:
+    ansible_facts['os_family'] == "Debian"
+
 - name: Install required packages with apt
   apt:
     name: 
-      - neovim
       - curl
       - git
       - python3-pip
