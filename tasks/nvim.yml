@@ -59,6 +59,7 @@
     dest: /usr/bin/
     owner: root
     group: root
+    mode: '0555'
   become: true
   become_user: root
   when:
