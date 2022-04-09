@@ -37,7 +37,7 @@
 - name: Download neovim source
   git:
     repo: https://github.com/neovim/neovim
-    dest: "/home/{{ user_name }}"
+    dest: "/home/{{ user_name }}/neovim"
     clone: yes
     version: stable
   when:
