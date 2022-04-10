@@ -25,14 +25,17 @@
     ansible_facts['os_family'] == "Debian"
 
 
-- name: Download ros2
-  get_url:
-    url: https://github.com/ros2/ros2/releases/download/release-foxy-20220208/ros2-foxy-20220208-linux-focal-amd64.tar.bz2
-    dest: ~/ros2-package-linux-x86_64.tar.bz2
+#- name: Download ros2
+  #get_url:
+    #url: https://github.com/ros2/ros2/releases/download/release-foxy-20220208/ros2-foxy-20220208-linux-focal-amd64.tar.bz2
+    #dest: ~/ros2-package-linux-x86_64.tar.bz2
 
 - name: Create ros2 dir
   file:
     path: ~/ros2_foxy
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
     mode: 0755
 
 - name: unzip ros2 
