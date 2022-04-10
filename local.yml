@@ -7,4 +7,5 @@
   tasks:
     - import_tasks: tasks/nvim.yml
     - import_tasks: tasks/tmux.yml
+    - import_tasks: tasks/flatpak.yml
 
