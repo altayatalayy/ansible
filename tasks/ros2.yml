@@ -1,0 +1,24 @@
+- name: Add the ROS 2 apt repository, install required packages
+  apt:
+    name:
+      - curl
+      - gnupg2
+      - lsb-release
+  become: true
+  become_user: root
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Add the ROS 2 apt repository, download gpg key and add repo to sources
+  shell: |
+    curl -sSL https://raw.githubusercontent.com/ros/rosdistro/master/ros.key  -o /usr/share/keyrings/ros-archive-keyring.gpg
+    echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu $(source /etc/os-release && echo $UBUNTU_CODENAME) main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
+  become: true
+  become_user: root
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Download ros2
+  get_url:
+    url: https://github.com/ros2/ros2/releases/download/release-foxy-20220208/ros2-foxy-20220208-linux-focal-amd64.tar.bz2
+    dest: ~/
