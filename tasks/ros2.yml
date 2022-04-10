@@ -42,3 +42,5 @@
   unarchive:
     src: ~/ros2-package-linux-x86_64.tar.bz2
     dest: ~/ros2_foxy/
+  become: true
+  become_user: "{{ user_name }}"
