@@ -1,15 +1,3 @@
-- name: Set git user name
-  git_config:
-    name: user.name
-    scope: global
-    value: "{{ git_user }}"
-
-- name: Set git user email
-  git_config:
-    name: user.email
-    scope: global
-    value: "{{ git_mail }}"
-
 - name: Set git default branch
   git_config:
     name: init.defaultBranch
