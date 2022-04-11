@@ -32,6 +32,8 @@
       - python-wstool
       - build-essential
       - python-rosdep
+  become: true
+  become_user: root
 
 - name: Initializing rosdep
   shell: rosdep init
