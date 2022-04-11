@@ -4,6 +4,16 @@
   become: true
   become_user: "{{ user_name }}"
 
+  vars_prompt:
+
+    - name: git_user
+      prompt: What is your git username?
+      private: no
+
+    - name: git_mail
+      prompt: What is your git username?
+      private: no
+
   tasks:
     - import_tasks: tasks/git.yml
     #- import_tasks: tasks/nvim.yml
