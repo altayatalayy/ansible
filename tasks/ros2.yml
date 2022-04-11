@@ -69,3 +69,9 @@
   pip:
     name: argcomplete
     state: latest
+
+- name: Add sourcing to your shell startup script
+  lineinfile:
+    path: ~/.bashrc
+    line: 'source /opt/ros/foxy/setup.bash'
+
