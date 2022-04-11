@@ -3,6 +3,9 @@
 > * neovim
 > * git
 > * tmux
+> * flatpak
+> * UTM, virt-manager
+> * ros
 
 ## Table of Contents
 * [Screenshots](#screenshots)
@@ -19,11 +22,11 @@
 #### Macos
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" # Install brew
-brew install ansible # Install ansible
+brew install git ansible # Install git, ansible
 ```
 #### Ubuntu
 ```
-sudo apt install git ansible # Install ansible
+sudo apt install git ansible # Install git, ansible
 ```
 
 ## Launch
