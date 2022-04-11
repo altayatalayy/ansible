@@ -1,3 +1,12 @@
+vars_prompt:
+  - name: git_user
+    prompt: What is your git username?
+    private: no
+
+  - name: git_mail
+    prompt: What is your git username?
+    private: no
+
 - name: Install git with homebrew
   homebrew:
     name: git
@@ -7,13 +16,13 @@
   git_config:
     name: user.name
     scope: global
-    value: ""
+    value: "{{ git_user }}"
 
 - name: Set git user email
   git_config:
     name: user.email
     scope: global
-    value: ""
+    value: "{{ git_mail }}"
 
 - name: Set git default branch
   git_config:
@@ -25,4 +34,4 @@
   git_config:
     name: core.editor
     scope: global
-    value: "{{ 'nvim' if ansible_facts['os_family'] == 'Darwin' else 'neovim' }}"
+    value: 'nvim'

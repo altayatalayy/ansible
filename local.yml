@@ -5,8 +5,9 @@
   become_user: "{{ user_name }}"
 
   tasks:
-    - import_tasks: tasks/nvim.yml
-    - import_tasks: tasks/tmux.yml
-    - import_tasks: tasks/flatpak.yml
-    - import_tasks: tasks/vm.yml
+    - import_tasks: tasks/git.yml
+    #- import_tasks: tasks/nvim.yml
+    #- import_tasks: tasks/tmux.yml
+    #- import_tasks: tasks/flatpak.yml
+    #- import_tasks: tasks/vm.yml
 
