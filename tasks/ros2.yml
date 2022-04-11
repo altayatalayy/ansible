@@ -56,11 +56,13 @@
 - name: Installing the missing dependencies
   shell: rosdep install --from-paths ~/ros2_foxy/ros2-linux/share --ignore-src -y --skip-keys "cyclonedds fastcdr fastrtps rti-connext-dds-5.3.1 urdfdom_headers"
 
-- name: Installing the python3 libraries
+- name: Installing the python3-pip
   apt:
     name:
       - libpython3-dev
       - python3-pip
+  become: true
+  become_user: root
 
 - name: Installing the python3 libraries
   pip:
