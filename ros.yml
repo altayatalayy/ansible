@@ -1,0 +1,11 @@
+- hosts: localhost
+  connection: local
+  gather_facts: true
+  become: true
+  become_user: "{{ user_name }}"
+
+  tasks:
+    - import_tasks: tasks/ros.yml
+      when: ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "18"
+ 
+
