@@ -6,8 +6,6 @@
       - lsb-release
   become: true
   become_user: root
-  when:
-    ansible_facts['os_family'] == "Debian"
 
 - name: Add the ROS 2 apt repository, download gpg key and add repo to sources
   get_url:
@@ -15,14 +13,10 @@
     dest: /usr/share/keyrings/ros-archive-keyring.gpg
   become: true
   become_user: root
-  when:
-    ansible_facts['os_family'] == "Debian"
 
 - name: Add the ROS 2 apt repository, add repo to sources
   shell: |
     echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/ros-archive-keyring.gpg] http://packages.ros.org/ros2/ubuntu focal main" | sudo tee /etc/apt/sources.list.d/ros2.list > /dev/null
-  when:
-    ansible_facts['os_family'] == "Debian"
 
 
 #- name: Download ros2
@@ -38,7 +32,37 @@
     group: "{{ user_name }}"
     mode: 0755
 
-- name: unzip ros2 
-  unarchive:
-    src: "/home/{{ user_name }}/ros2-package-linux-x86_64.tar.bz2"
-    dest: "/home/{{ user_name }}/ros2_foxy/"
+#- name: unzip ros2 
+  #unarchive:
+    #src: "/home/{{ user_name }}/ros2-package-linux-x86_64.tar.bz2"
+    #dest: "/home/{{ user_name }}/ros2_foxy/"
+
+- name: Installing rosdep
+  apt:
+    update_cache: yes
+    name:
+      - python3-rosdep
+  become: true
+  become_user: root
+
+- name: Initializing rosdep
+  shell: rosdep init
+  become: true
+  become_user: root
+
+- name: Update rosdep
+  shell: rosdep update
+
+- name: Installing the missing dependencies
+  shell: rosdep install --from-paths ~/ros2_foxy/ros2-linux/share --ignore-src -y --skip-keys "cyclonedds fastcdr fastrtps rti-connext-dds-5.3.1 urdfdom_headers"
+
+- name: Installing the python3 libraries
+  apt:
+    name:
+      - libpython3-dev
+      - python3-pip
+
+- name: Installing the python3 libraries
+  pip:
+    name: argcomplete
+    state: latest
