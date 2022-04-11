@@ -7,11 +7,11 @@
   vars_prompt:
 
     - name: git_user
-      prompt: What is your git username?
+      prompt: 'What is your git username?\n\r'
       private: no
 
     - name: git_mail
-      prompt: What is your git username?
+      prompt: What is your git email?
       private: no
 
   tasks:
