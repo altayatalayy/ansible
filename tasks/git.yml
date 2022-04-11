@@ -1,4 +1,5 @@
 vars_prompt:
+
   - name: git_user
     prompt: What is your git username?
     private: no
@@ -7,26 +8,27 @@ vars_prompt:
     prompt: What is your git username?
     private: no
 
-- name: Set git user name
-  git_config:
-    name: user.name
-    scope: global
-    value: "{{ git_user }}"
+tasks:
+  - name: Set git user name
+    git_config:
+      name: user.name
+      scope: global
+      value: "{{ git_user }}"
 
-- name: Set git user email
-  git_config:
-    name: user.email
-    scope: global
-    value: "{{ git_mail }}"
+  - name: Set git user email
+    git_config:
+      name: user.email
+      scope: global
+      value: "{{ git_mail }}"
 
-- name: Set git default branch
-  git_config:
-    name: init.defaultBranch
-    scope: global
-    value: master
+  - name: Set git default branch
+    git_config:
+      name: init.defaultBranch
+      scope: global
+      value: master
 
-- name: set default editor for git
-  git_config:
-    name: core.editor
-    scope: global
-    value: nvim
+  - name: set default editor for git
+    git_config:
+      name: core.editor
+      scope: global
+      value: nvim
