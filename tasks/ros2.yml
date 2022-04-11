@@ -57,7 +57,7 @@
 - name: Installing the missing dependencies
   shell: rosdep install --from-paths ~/ros2_foxy/ros2-linux/share --ignore-src -y --skip-keys "cyclonedds fastcdr fastrtps rti-connext-dds-5.3.1 urdfdom_headers"
 
-- name: Installing the python3-pip
+- name: Installing the python3 libraries with apt
   apt:
     name:
       - libpython3-dev
@@ -65,7 +65,7 @@
   become: true
   become_user: root
 
-- name: Installing the python3 libraries
+- name: Installing the python3 libraries with pip
   pip:
     name: argcomplete
     state: latest
@@ -74,4 +74,12 @@
   lineinfile:
     path: ~/.bashrc
     line: 'source /opt/ros/foxy/setup.bash'
+
+- name: Install Gazebo
+  apt:
+    name:
+      - ros-foxy-gazebo-ros-pkgs
+  become: true
+  become_user: root
+
 
