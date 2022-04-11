@@ -49,6 +49,7 @@
   shell: rosdep init
   become: true
   become_user: root
+  ignore_errors: yes
 
 - name: Update rosdep
   shell: rosdep update
