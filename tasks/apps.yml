@@ -27,8 +27,6 @@
   flatpak:
     name:
       - org.signal.Signal
-      - com.bitwarden.desktop
-      - com.spotify.Client
     state: present
     method: system
     remote: flathub
