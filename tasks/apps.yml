@@ -44,6 +44,7 @@
       - us.zoom.Zoom
     state: present
     method: system
+    remote: flathub
   when:
     ansible_facts['os_family'] == "Debian"
 
