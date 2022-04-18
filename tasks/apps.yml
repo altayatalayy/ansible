@@ -25,23 +25,7 @@
 
 - name: Install apps as flatpak
   flatpak:
-    name:
-      - org.signal.Signal
-      - com.bitwarden.desktop
-      - com.spotify.Client
-      - com.google.Chrome
-      - org.mozilla.firefox 
-      - com.discordapp.Discord
-      - com.visualstudio.code
-      - com.valvesoftware.Steam
-      - com.nextcloud.desktopclient.nextcloud
-      - com.sublimetext.three
-      - org.raspberrypi.rpi-imager
-      - cc.arduino.arduinoide
-      - com.mojang.Minecraft
-      - com.google.AndroidStudio
-      - org.godotengine.Godot
-      - us.zoom.Zoom
+    name: org.signal.Signal
     state: present
     method: system
     remote: flathub
