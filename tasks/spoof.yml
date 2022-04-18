@@ -5,6 +5,8 @@
     owner: "{{ user_name }}"
     group: admin
     mode: 0775
+  when:
+    ansible_facts['os_family'] == "Darwin"
 
 - name: Copy first names
   copy:
@@ -13,6 +15,8 @@
     owner: "{{ user_name }}"
     group: admin
     mode: 0440
+  when:
+    ansible_facts['os_family'] == "Darwin"
 
 - name: Copy mac adresses
   copy:
@@ -21,6 +25,8 @@
     owner: "{{ user_name }}"
     group: admin
     mode: 0440
+  when:
+    ansible_facts['os_family'] == "Darwin"
 
 - name: Copy spoof.sh
   copy:
@@ -29,6 +35,8 @@
     owner: "{{ user_name }}"
     group: admin
     mode: 0550 
+  when:
+    ansible_facts['os_family'] == "Darwin"
 
 - name: Copy spoof-hook.sh
   copy:
@@ -37,6 +45,8 @@
     owner: "{{ user_name }}"
     group: admin
     mode: 0550 
+  when:
+    ansible_facts['os_family'] == "Darwin"
 
 - name: Copy local.spoof.plist
   copy:
@@ -46,7 +56,11 @@
     group: wheel
     mode: 0440
   become: yes
+  when:
+    ansible_facts['os_family'] == "Darwin"
 
 - name: Set logout hook
   shell: defaults write com.apple.loginwindow LogoutHook "/usr/local/sbin/spoof-hook.sh"
   become: yes
+  when:
+    ansible_facts['os_family'] == "Darwin"

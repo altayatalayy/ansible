@@ -31,7 +31,7 @@ sudo apt install git ansible # Install git, ansible
 
 ## Launch
 ```
-sudo ansible-pull -U <url> -e "user_name=$(whoami)"
+sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami)"
 ```
 
 ## Project Status

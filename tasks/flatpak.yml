@@ -5,12 +5,10 @@
       - gnome-software-plugin-flatpak
   become: true
   become_user: root
-  when:
-    ansible_facts['os_family'] == "Debian"
 
-- name: Add flathub
-  shell: flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-  become: true
-  become_user: root
-  when:
-    ansible_facts['os_family'] == "Debian"
+- name: Add the flathub flatpak repository remote to the user installation
+  community.general.flatpak_remote:
+    name: flathub
+    state: present
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    method: system
