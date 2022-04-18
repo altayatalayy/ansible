@@ -23,10 +23,12 @@
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" # Install brew
 brew install git ansible # Install git, ansible
+ansible-galaxy collection install community.general
 ```
 #### Ubuntu
 ```
 sudo apt install git ansible # Install git, ansible
+ansible-galaxy collection install community.general
 ```
 
 ## Launch
