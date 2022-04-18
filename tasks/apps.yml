@@ -23,14 +23,138 @@
   when:
     ansible_facts['os_family'] == "Darwin"
 
+
 - name: Install apps as flatpak
   flatpak:
-    name:
-      - org.signal.Signal
+    name: org.signal.Signal
     state: present
     method: system
     remote: flathub
   when:
     ansible_facts['os_family'] == "Debian"
 
+- name: Install apps as flatpak
+  flatpak:
+    name: com.bitwarden.desktop
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
 
+- name: Install apps as flatpak
+  flatpak:
+    name: com.spotify.Client
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install apps as flatpak
+  flatpak:
+    name: com.google.Chrome
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install apps as flatpak
+  flatpak:
+    name: org.mozilla.firefox 
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
+    
+- name: Install apps as flatpak
+  flatpak:
+    name: com.discordapp.Discord
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install apps as flatpak
+  flatpak:
+    name: com.visualstudio.code
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install apps as flatpak
+  flatpak:
+    name: com.valvesoftware.Steam
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install apps as flatpak
+  flatpak:
+    name: com.sublimetext.three
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install apps as flatpak
+  flatpak:
+    name: org.raspberrypi.rpi-imager
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install apps as flatpak
+  flatpak:
+    name: cc.arduino.arduinoide
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install apps as flatpak
+  flatpak:
+    name: com.mojang.Minecraft
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install apps as flatpak
+  flatpak:
+    name: com.google.AndroidStudio
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install apps as flatpak
+  flatpak:
+    name: org.godotengine.Godot
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install apps as flatpak
+  flatpak:
+    name: us.zoom.Zoom
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
