@@ -59,6 +59,7 @@
     remote: flathub
   when:
     ansible_facts['os_family'] == "Debian"
+  ignore_errors: yes
 
 - name: Install apps as flatpak
   flatpak:
