@@ -1,5 +1,5 @@
 # Config
-> Install and configure
+> Install and configure, see tasks/apps.yml for other apps
 > * neovim
 > * git
 > * tmux
@@ -34,6 +34,14 @@ ansible-galaxy collection install community.general
 ## Launch
 ```
 sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami)"
+```
+#### Install ros
+```
+sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami) ros.yml"
+```
+#### Install ros2
+```
+sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami) ros2.yml"
 ```
 
 ## Project Status
