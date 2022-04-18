@@ -45,7 +45,7 @@
     ansible_facts['os_family'] == "Debian"
 
 - name: Update neovim source
-  shell: cd ~/neovim && git pull origin stable
+  shell: cd ~/neovim && git config user.name nvimuser && git config user.email nvimuser && git pull origin stable
   when:
     ansible_facts['os_family'] == "Debian"
 
