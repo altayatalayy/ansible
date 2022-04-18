@@ -12,6 +12,7 @@
     name:
       - neofetch
       - htop
+      - preload
   when:
     ansible_facts['os_family'] == "Debian"
 
