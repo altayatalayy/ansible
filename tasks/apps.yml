@@ -19,11 +19,31 @@
   when:
     ansible_facts['os_family'] == "Debian"
 
+#Get app id by running: mas search APP_NAME
+- name: Install mac apps from app store
+  mas:
+    id:
+      - 497799835 # Xcode
+      - 1352778147 # Bitwarden
+    state: latest
+  when:
+    ansible_facts['os_family'] == "Darwin"
+
+- name: Uninstall mac apps from app store
+  mas:
+    id:
+      - 409201541 # Pages
+      - 409203825 # Numbers
+      - 682658836 # GarageBand
+    state: absent
+  when:
+    ansible_facts['os_family'] == "Darwin"
+
+
 - name: Install apps with brew
   homebrew_cask:
     name: 
       - signal
-      - bitwarden
       - spotify
       - google-chrome
       - firefox
@@ -41,6 +61,7 @@
       - mullvadvpn
       - zoom
       - libreoffice
+      - wireshark
     state: latest
   when:
     ansible_facts['os_family'] == "Darwin"
@@ -185,6 +206,15 @@
 - name: Install apps as flatpak
   flatpak:
     name: org.libreoffice.LibreOffice
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install apps as flatpak
+  flatpak:
+    name: org.wireshark.Wireshark
     state: present
     method: system
     remote: flathub

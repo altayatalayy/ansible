@@ -19,3 +19,5 @@
     name: "{{ user_name }}"
     groups: libvirt
     append: yes
+  when:
+    ansible_facts['os_family'] == "Debian"

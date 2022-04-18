@@ -20,3 +20,5 @@
 
     - import_tasks: tasks/spoof.yml
 
+    - import_tasks: tasks/update.yml
+
