@@ -13,6 +13,8 @@
       - neofetch
       - htop
       - preload
+  become: true
+  become_user: root
   when:
     ansible_facts['os_family'] == "Debian"
 
