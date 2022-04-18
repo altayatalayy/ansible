@@ -13,6 +13,7 @@
       - neofetch
       - htop
       - preload
+      - net-tools
   become: true
   become_user: root
   when:
