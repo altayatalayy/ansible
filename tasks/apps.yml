@@ -1,4 +1,21 @@
 - name: Install apps with brew
+  homebrew:
+    name:
+      - neofetch
+      - htop
+    state: latest
+  when:
+    ansible_facts['os_family'] == "Darwin"
+
+- name: Install apps with apt
+  apt:
+    name:
+      - neofetch
+      - htop
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install apps with brew
   homebrew_cask:
     name: 
       - signal
@@ -19,6 +36,7 @@
       - godot
       - mullvadvpn
       - zoom
+      - libreoffice
     state: latest
   when:
     ansible_facts['os_family'] == "Darwin"
@@ -154,6 +172,15 @@
 - name: Install apps as flatpak
   flatpak:
     name: us.zoom.Zoom
+    state: present
+    method: system
+    remote: flathub
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install apps as flatpak
+  flatpak:
+    name: org.libreoffice.LibreOffice
     state: present
     method: system
     remote: flathub
