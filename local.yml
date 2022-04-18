@@ -16,7 +16,7 @@
 
     - import_tasks: tasks/vm.yml
       
-    - import_tasks: tasks/app.yml
+    - import_tasks: tasks/apps.yml
 
     - import_tasks: tasks/spoof.yml
 
