@@ -37,11 +37,11 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 ```
 #### Install ros
 ```
-sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami) ros.yml"
+sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami)" ros.yml
 ```
 #### Install ros2
 ```
-sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami) ros2.yml"
+sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami)" ros2.yml
 ```
 
 ## Project Status
