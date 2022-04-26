@@ -10,3 +10,5 @@
 
     - import_tasks: tasks/tmux.yml
 
+    - import_tasks: tasks/termapps.yml
+

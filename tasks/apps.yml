@@ -1,24 +1,3 @@
-- name: Install apps with brew
-  homebrew:
-    name:
-      - neofetch
-      - htop
-    state: present
-  when:
-    ansible_facts['os_family'] == "Darwin"
-
-- name: Install apps with apt
-  apt:
-    name:
-      - neofetch
-      - htop
-      - preload
-      - net-tools
-  become: true
-  become_user: root
-  when:
-    ansible_facts['os_family'] == "Debian"
-
 #Get app id by running: mas search APP_NAME
 - name: Install mac apps from app store
   mas:
