@@ -49,6 +49,7 @@
     chdir: "/home/{{ user_name }}/neovim"
     target: install
     params:
+      NUM_THREADS: 4
       CMAKE_BUILD_TYPE: Release
       CMAKE_INSTALL_PREFIX: build
   when:
