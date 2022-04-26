@@ -22,4 +22,7 @@
     dest: ~/.tmux.conf
     mode: 0640
 
-
+- name: Install tmux tpm
+  git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: ~/.tmux/plugins/tpm
