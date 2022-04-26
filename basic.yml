@@ -1,0 +1,12 @@
+- hosts: localhost
+  connection: local
+  gather_facts: true
+  become: true
+  become_user: "{{ user_name }}"
+
+  tasks:
+
+    - import_tasks: tasks/nvim.yml
+
+    - import_tasks: tasks/tmux.yml
+
