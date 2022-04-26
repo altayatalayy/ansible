@@ -33,7 +33,7 @@ ansible-galaxy collection install community.general
 
 ## Launch
 ```
-sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami)"
+sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami)" basic.yml
 ```
 #### Install ros
 ```
@@ -43,6 +43,16 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 ```
 sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami)" ros2.yml
 ```
+
+## After Install
+
+> ### neovim
+> - run PlugInstall in neovim
+
+> ### tmux
+> - prefix-I #Install plugins
+> 
+> - prefix-U #Update plugins
 
 ## Project Status
 Project is: _in progress_ 
