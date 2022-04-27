@@ -53,11 +53,6 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 
 > ### neovim
 > - run PlugInstall in neovim
-
-> ### tmux
-> - prefix-I #Install plugins
-> 
-> - prefix-U #Update plugins
   
 ## Notes
 > ### tmux
