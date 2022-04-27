@@ -1,0 +1,16 @@
+- name: Install zsh
+  apt:
+    name:
+      - zsh
+    state: present
+  become: true
+  become_user: root
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Set zsh as default shell
+  user:
+    name: "{{ user_name }}"
+    shell: /bin/zsh
+  when:
+    ansible_facts['os_family'] == "Debian"

@@ -2,7 +2,7 @@
   homebrew:
     name: 
       - tmux
-    state: latest
+    state: present
   when:
     ansible_facts['os_family'] == "Darwin"
 
@@ -10,7 +10,7 @@
   apt:
     name: 
       - tmux
-    state: latest
+    state: present
   become: true
   become_user: root
   when:

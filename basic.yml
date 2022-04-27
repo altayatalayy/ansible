@@ -7,8 +7,7 @@
   tasks:
 
     - import_tasks: tasks/nvim.yml
-
     - import_tasks: tasks/tmux.yml
-
     - import_tasks: tasks/termapps.yml
+    - import_tasks: tasks/zsh.yml
 
