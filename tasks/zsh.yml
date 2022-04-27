@@ -48,5 +48,6 @@
 - name: add plugins to .zshrc
   lineinfile:
     path: ~/.zshrc
-    regexp: '^plugins=(git)'
+    regexp: '^plugins=\(git\)'
     line: plugins=(git zsh-autosuggestions copypath copyfile zsh-syntax-highlighting)
+    backrefs: yes
