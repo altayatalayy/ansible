@@ -1,6 +1,9 @@
 " Enable ftplugin
 filetype plugin indent on
 
+" Disable status bar
+:set laststatus=0 ruler
+
 :set number
 :set relativenumber
 :set autoindent
@@ -14,7 +17,7 @@ filetype plugin indent on
 
 call plug#begin('~/.config/nvim/plugged')
 
-Plug 'https://github.com/vim-airline/vim-airline.git'
+"Plug 'https://github.com/vim-airline/vim-airline.git'
 Plug 'https://github.com/preservim/nerdtree.git' " NerdTree
 Plug 'https://github.com/ap/vim-css-color.git' " CSS Color Preview
 Plug 'https://github.com/rafi/awesome-vim-colorschemes' " Retro Scheme

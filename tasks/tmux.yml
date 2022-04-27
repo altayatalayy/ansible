@@ -22,6 +22,20 @@
     dest: ~/.tmux.conf
     mode: 0640
 
+- name: Copy config file
+  copy:
+    src: files/tmux/.tmux.conf.local
+    dest: ~/.tmux/.tmux.conf
+    mode: 0640
+
+- name: Make sure ~/.tmux folder exists
+  file:
+    path: "~/.tmux"
+    state: directory
+    owner: "{{ user_name }}"
+    group: "{{ 'staff' if ansible_facts['os_family'] == 'Darwin' else user_name }}"
+    mode: 0750
+
 - name: Install tmux tpm
   git:
     repo: https://github.com/tmux-plugins/tpm
