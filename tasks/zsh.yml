@@ -47,9 +47,13 @@
 
 - name: Ubuntu add diff-so-fancy to $PATH
   copy:
-    src: ~/.diff-so-fancy/diff-so-fancy
+    src: "/home/{{ user_name }}/.diff-so-fancy/diff-so-fancy"
     dest: /usr/local/bin/diff-so-fancy
     mode: '0755'
+  become: true
+  become_user: root
+  when:
+    ansible_facts['os_family'] == "Debian"
 
 - name: add plugins to .zshrc
   lineinfile:
