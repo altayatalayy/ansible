@@ -11,7 +11,7 @@
 - name: Set zsh as default shell
   user:
     name: "{{ user_name }}"
-    shell: /bin/zsh
+    shell: /usr/bin/zsh
   become: true
   become_user: root
   when:
