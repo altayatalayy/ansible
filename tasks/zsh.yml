@@ -12,5 +12,7 @@
   user:
     name: "{{ user_name }}"
     shell: /bin/zsh
+  become: true
+  become_user: root
   when:
     ansible_facts['os_family'] == "Debian"
