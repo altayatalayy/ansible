@@ -390,6 +390,8 @@ set -g @plugin 'tmux-plugins/tmux-resurrect'
 set -g @plugin 'tmux-plugins/tmux-continuum'
 #set -g @continuum-restore 'on'
 
+# tmux resurrect settings
+set -g @resurrect-strategy-nvim 'session'
 
 # -- custom variables ----------------------------------------------------------
 
