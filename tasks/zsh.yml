@@ -11,8 +11,12 @@
 - name: Set zsh as default shell
   user:
     name: "{{ user_name }}"
-    shell: /usr/bin/zsh
+    shell: /bin/zsh
   become: true
   become_user: root
   when:
     ansible_facts['os_family'] == "Debian"
+
+- name: Install oh-my-zsh
+  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+
