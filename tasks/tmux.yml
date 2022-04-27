@@ -41,3 +41,4 @@
   git:
     repo: https://github.com/tmux-plugins/tpm
     dest: "/home/{{ user_name }}/.tmux/plugins/tpm"
+  ignore_errors: yes
