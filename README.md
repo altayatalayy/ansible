@@ -45,12 +45,6 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 ```
 
 ## After Install
-> ### ssh
-> - sudo apt install ssh
-> - Edit /etc/hosts
-> - Edit ssh config 
-> - ssh-copy-id -p <port> -i <ssh public key> user@host
-
 > ### neovim
 > - run PlugInstall in neovim
   
@@ -77,6 +71,20 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 > https://github.com/tmux-plugins/tmux-resurrect
 > 
 > https://github.com/tmux-plugins/tmux-continuum
+  
+ 
+> ### zsh
+>
+> copy path to clipboard: copypath
+>
+> copy a file to clipboard copyfile
+
+> ### ssh setup for vms
+> - on guest: sudo apt install ssh
+> - on host: Edit /etc/hosts
+> - on host: Edit ssh config 
+> - on host: ssh-copy-id -p <port> -i <ssh public key> user@host
+
 
 ## Project Status
 Project is: _in progress_ 
