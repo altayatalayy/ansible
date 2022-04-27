@@ -45,6 +45,11 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 ```
 
 ## After Install
+> ### ssh
+> - sudo apt install ssh
+> - Edit /etc/hosts
+> - Edit ssh config 
+> - ssh-copy-id -p <port> -i <ssh public key> user@host
 
 > ### neovim
 > - run PlugInstall in neovim
@@ -53,6 +58,30 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 > - prefix-I #Install plugins
 > 
 > - prefix-U #Update plugins
+  
+## Notes
+> ### tmux
+> prefix = C-a
+>
+> Reload configuration file: prefix-r
+>
+> splits: prefix-| prefix--
+>
+> Toggle mouse mode: prefix-m
+> 
+> Save: prefix-C-s
+>
+> Restore: prefic-C-r
+>
+> plugins:
+> 
+> https://github.com/tmux-plugins/tpm
+> 
+> https://github.com/tmux-plugins/tmux-sensible 
+>
+> https://github.com/tmux-plugins/tmux-resurrect
+> 
+> https://github.com/tmux-plugins/tmux-continuum
 
 ## Project Status
 Project is: _in progress_ 
