@@ -31,7 +31,7 @@
     dest: ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
       
 - name: Mac Install diff-so-fancy
-  brew:
+  homebrew:
     name:
       - diff-so-fancy
   when:
