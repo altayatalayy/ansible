@@ -48,5 +48,5 @@
 - name: add plugins to .zshrc
   lineinfile:
     path: ~/.zshrc
-    search_string: 'plugins=(git)'
+    regexp: '^plugins=(git)'
     line: plugins=(git zsh-autosuggestions copypath copyfile zsh-syntax-highlighting)
