@@ -8,15 +8,10 @@
 > * ros
 
 ## Table of Contents
-* [Screenshots](#screenshots)
 * [Setup](#setup)
 * [Project Status](#project-status)
 * [Acknowledgements](#acknowledgements)
 <!-- * [License](#license) -->
-
-## Screenshots
-![Example screenshot](./img/screenshot.png)
-<!-- If you have screenshots you'd like to share, include them here. -->
 
 ## Setup
 #### Macos
