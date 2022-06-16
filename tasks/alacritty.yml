@@ -1,0 +1,4 @@
+- name: Copy alacritty config
+  copy:
+    src: files/alacritty/alacritty.yml
+    dest: "/home/{{ user_name }}/.config/alacritty/alacritty.yml"
