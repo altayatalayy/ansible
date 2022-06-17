@@ -15,6 +15,41 @@
   when:
     ansible_facts['os_family'] == "Darwin"
 
+- name: Install required packages with apt
+  apt:
+    name: 
+      - curl
+      - git
+      - python3-pip
+      - golang
+      - gopls
+      - llvm
+    state: latest
+    update_cache: yes
+  become: true
+  become_user: root
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install neovim from tarball, unzip tarball
+  unarchive:
+    src: https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.tar.gz
+    dest: "/home/{{ user_name }}/"
+    remote_src: yes
+  when: ansible_facts['os_family'] == "Debian" and ansible_architecture == "x86_64"
+
+- name: Install neovim from tarball, copy nvim to /usr/bin
+  copy:
+    src: "/home/{{ user_name }}/nvim-linux64/bin/nvim"
+    dest: "/usr/bin/nvim"
+    owner: root
+    group: root
+    mode: '0555'
+    remote_src: yes
+  become: true
+  become_user: root
+  when: ansible_facts['os_family'] == "Debian" and ansible_architecture == "x86_64"
+
 - name: Install neovim from source, Install required packages
   apt:
     name: 
@@ -32,7 +67,7 @@
   become: true
   become_user: root
   when:
-    ansible_facts['os_family'] == "Debian"
+    ansible_facts['os_family'] == "Debian" and ansible_architecture != "x86_64"
 
 - name: Download neovim source
   git:
@@ -42,7 +77,7 @@
     update: no
     version: stable
   when:
-    ansible_facts['os_family'] == "Debian"
+    ansible_facts['os_family'] == "Debian" and ansible_architecture != "x86_64"
 
 - name: Build neovim
   make:
@@ -53,7 +88,7 @@
       CMAKE_BUILD_TYPE: Release
       CMAKE_INSTALL_PREFIX: build
   when:
-    ansible_facts['os_family'] == "Debian"
+    ansible_facts['os_family'] == "Debian" and ansible_architecture != "x86_64"
 
 - name: Copy nvim bin to /usr/bin
   copy:
@@ -62,29 +97,11 @@
     owner: root
     group: root
     mode: '0555'
+    remote_src: yes
   become: true
   become_user: root
   when:
-    ansible_facts['os_family'] == "Debian"
-
-- name: Install required packages with apt
-  apt:
-    name: 
-      - curl
-      - git
-      - python3-pip
-      - golang
-      - llvm
-    state: latest
-  become: true
-  become_user: root
-  when:
-    ansible_facts['os_family'] == "Debian"
-
-- name: Install gopls on Debian
-  shell: export GO111MODULE=on && go get golang.org/x/tools/gopls@latest
-  when:
-    ansible_facts['os_family'] == "Debian"
+    ansible_facts['os_family'] == "Debian" and ansible_architecture != "x86_64"
 
 - name: Install lsp servers with pip
   pip:

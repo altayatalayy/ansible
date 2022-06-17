@@ -1,0 +1,21 @@
+---
+dependency:
+  name: galaxy
+
+driver:
+  name: docker
+
+platforms:
+  - name: instance
+    image: altayatalay/ubuntu-ansible:latest
+
+provisioner:
+  name: ansible
+  inventory:
+    hosts:
+      all:
+        vars:
+          user_name: testuser
+
+verifier:
+  name: ansible

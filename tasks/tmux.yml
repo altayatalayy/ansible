@@ -11,6 +11,7 @@
     name: 
       - tmux
     state: present
+    update_cache: yes
   become: true
   become_user: root
   when:

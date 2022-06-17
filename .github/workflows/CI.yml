@@ -5,3 +5,25 @@ on:
   pull_request: 
     branches: [master]
 
+jobs:
+  test:
+    name: Molecule
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup python3
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Install test dependencies
+        run: pip3 install molecule[docker] yamllint ansible-lint
+
+      - name: Run molecule tests
+        run: molecule test
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
