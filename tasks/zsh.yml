@@ -18,8 +18,14 @@
   when:
     ansible_facts['os_family'] == "Debian"
 
+- name: Check if .zshrc.pre-oh-my-zsh file exists
+  stat:
+    path: "/home/{{ user_name }}/.zshrc.pre-oh-my-zsh"
+  register: register_name
+
 - name: Install oh-my-zsh
-  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+  shell: sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" #sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+  when: not register_name.stat.exists
 
 - name: Install zsh-autosuggestions
   git:

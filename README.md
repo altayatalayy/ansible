@@ -1,4 +1,6 @@
 # Config
+![example workflow](https://github.com/altayatalayy/ansible/actions/workflows/CI.yml/badge.svg)
+
 > Install and configure, see tasks/apps.yml for other apps
 > * neovim
 > * git
