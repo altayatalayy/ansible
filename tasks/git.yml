@@ -1,3 +1,4 @@
+---
 - name: Set git default branch
   git_config:
     name: init.defaultBranch

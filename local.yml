@@ -1,3 +1,4 @@
+---
 - hosts: localhost
   connection: local
   gather_facts: true
@@ -15,10 +16,8 @@
       when: ansible_facts['distribution'] == "Ubuntu"
 
     - import_tasks: tasks/vm.yml
-      
     - import_tasks: tasks/apps.yml
 
     - import_tasks: tasks/spoof.yml
 
     - import_tasks: tasks/update.yml
-

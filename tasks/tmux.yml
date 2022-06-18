@@ -1,24 +1,25 @@
+---
 - name: Install required packages with brew
   homebrew:
-    name: 
+    name:
       - tmux
     state: present
   when:
     ansible_facts['os_family'] == "Darwin"
 
 - name: Install required packages with apt
-  apt:
-    name: 
+  ansible.builtin.apt:
+    name:
       - tmux
     state: present
-    update_cache: yes
+    update_cache: true
   become: true
   become_user: root
   when:
     ansible_facts['os_family'] == "Debian"
 
 - name: Make sure ~/.tmux folder exists
-  file:
+  ansible.builtin.file:
     path: "~/.tmux"
     state: directory
     owner: "{{ user_name }}"
@@ -26,20 +27,20 @@
     mode: 0750
 
 - name: Copy config file
-  copy:
+  ansible.builtin.copy:
     src: files/tmux/.tmux.conf
-    dest: "/home/{{ user_name }}/.tmux.conf"
+    dest: ~/.tmux.conf
     mode: 0640
 
 - name: Copy config file
-  copy:
+  ansible.builtin.copy:
     src: files/tmux/.tmux.conf.local
-    dest: "/home/{{ user_name }}/.tmux.conf.local"
+    dest: ~/.tmux.conf.local
     mode: 0640
 
 
 - name: Install tmux tpm
-  git:
+  ansible.builtin.git:
     repo: https://github.com/tmux-plugins/tpm
-    dest: "/home/{{ user_name }}/.tmux/plugins/tpm"
-  ignore_errors: yes
+    dest: ~/.tmux/plugins/tpm
+  ignore_errors: true

@@ -1,3 +1,4 @@
+---
 - name: Install apps with brew
   homebrew:
     name:
@@ -17,6 +18,3 @@
   become_user: root
   when:
     ansible_facts['os_family'] == "Debian"
-
-
-#- preload

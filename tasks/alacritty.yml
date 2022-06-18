@@ -1,3 +1,4 @@
+---
 - name: Copy alacritty config
   copy:
     src: files/alacritty/alacritty.yml

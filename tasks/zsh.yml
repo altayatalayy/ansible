@@ -1,16 +1,19 @@
+---
 - name: Install zsh
-  apt:
+  ansible.builtin.apt:
     name:
       - zsh
+      - curl
+      - git
     state: present
-    update_cache: yes
+    update_cache: true
   become: true
   become_user: root
   when:
     ansible_facts['os_family'] == "Debian"
 
 - name: Set zsh as default shell
-  user:
+  ansible.builtin.user:
     name: "{{ user_name }}"
     shell: /bin/zsh
   become: true
@@ -18,25 +21,39 @@
   when:
     ansible_facts['os_family'] == "Debian"
 
+- name: Check if .zshrc file exists
+  ansible.builtin.stat:
+    path: ~/.zshrc
+  register: zsh_file
+
+- name: Make sure ~/.zshrc exists
+  ansible.builtin.file:
+    path: ~/.zshrc
+    owner: "{{ user_name }}"
+    group: "{{ 'staff' if ansible_facts['os_family'] == 'Darwin' else user_name }}"
+    mode: 0750
+    state: touch
+  when: not zsh_file.stat.exists
+
 - name: Check if .zshrc.pre-oh-my-zsh file exists
-  stat:
-    path: "/home/{{ user_name }}/.zshrc.pre-oh-my-zsh"
+  ansible.builtin.stat:
+    path: ~/.oh-my-zsh
   register: register_name
 
 - name: Install oh-my-zsh
-  shell: sh -c "$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)" #sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+  ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
   when: not register_name.stat.exists
 
 - name: Install zsh-autosuggestions
-  git:
+  ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-autosuggestions
     dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
 - name: Install zsh-syntax-highlighting
-  git:
+  ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
     dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
-      
+
 - name: Mac Install diff-so-fancy
   homebrew:
     name:
@@ -45,14 +62,14 @@
     ansible_facts['os_family'] == "Darwin"
 
 - name: Ubuntu install diff-so-fancy
-  git:
+  ansible.builtin.git:
     repo: https://github.com/so-fancy/diff-so-fancy.git
     dest: ~/.diff-so-fancy
   when:
     ansible_facts['os_family'] == "Debian"
 
 - name: Ubuntu add diff-so-fancy to $PATH
-  file:
+  ansible.builtin.file:
     src: "/home/{{ user_name }}/.diff-so-fancy/diff-so-fancy"
     dest: /usr/local/bin/diff-so-fancy
     mode: '0755'
@@ -63,8 +80,8 @@
     ansible_facts['os_family'] == "Debian"
 
 - name: add plugins to .zshrc
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: ~/.zshrc
     regexp: '^plugins=\(git\)'
     line: plugins=(git zsh-autosuggestions copypath copyfile zsh-syntax-highlighting)
-    backrefs: yes
+    backrefs: true

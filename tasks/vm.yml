@@ -1,5 +1,6 @@
+---
 - name: Install virt-manager
-  apt:
+  ansible.builtin.apt:
     name:
       - virt-manager
       - linux-headers-{{ ansible_kernel }}
@@ -15,9 +16,9 @@
     ansible_facts['os_family'] == "Darwin"
 
 - name: Add user to libvirt group
-  user:
+  ansible.builtin.user:
     name: "{{ user_name }}"
     groups: libvirt
-    append: yes
+    append: true
   when:
     ansible_facts['os_family'] == "Debian"

@@ -1,3 +1,4 @@
+---
 #Get app id by running: mas search APP_NAME
 - name: Install mac apps from app store
   mas:

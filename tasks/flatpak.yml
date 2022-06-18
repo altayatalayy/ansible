@@ -1,3 +1,4 @@
+---
 - name: Install flatpak, gnome software
   apt:
     name:
