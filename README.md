@@ -20,12 +20,12 @@ Install and configure, see tasks/apps.yml for other apps
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" # Install brew
 brew install git ansible # Install git, ansible
-ansible-galaxy collection install community.general
+ansible-galaxy install -r requirements.yml
 ```
 #### Ubuntu
 ```
 sudo apt install git ansible # Install git, ansible
-ansible-galaxy collection install community.general
+ansible-galaxy install -r requirements.yml
 ```
 
 ## Launch
@@ -80,7 +80,7 @@ copy a file to clipboard copyfile
 - on guest: sudo apt install ssh
 - on host: Edit /etc/hosts
 - on host: Edit ssh config 
-- on host: ssh-copy-id -p <port-i <ssh public keyuser@host
+- on host: ssh-copy-id -p <port> -i <sshkey> user@host
 
 
 ## Project Status
