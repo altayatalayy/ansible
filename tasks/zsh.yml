@@ -19,8 +19,7 @@
     ansible_facts['os_family'] == "Debian"
 
 - name: Install oh-my-zsh
-  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-  ignore_errors: yes
+  shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
 
 - name: Install zsh-autosuggestions
   git:
