@@ -1,6 +1,5 @@
 ---
-- hosts: localhost
-  connection: local
+- hosts: all
   gather_facts: true
   become: true
   become_user: "{{ user_name }}"
@@ -11,3 +10,4 @@
     - import_tasks: tasks/tmux.yml
     - import_tasks: tasks/termapps.yml
     - import_tasks: tasks/zsh.yml
+
