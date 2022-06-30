@@ -1,6 +1,5 @@
 ---
-- hosts: localhost
-  connection: local
+- hosts: all
   gather_facts: true
   become: true
   become_user: "{{ user_name }}"

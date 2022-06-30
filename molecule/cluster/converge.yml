@@ -2,4 +2,4 @@
 - name: Converge
   hosts: all
 
-- import_playbook: ../../basic.yml
+- import_playbook: ../../basic-molecule.yml
