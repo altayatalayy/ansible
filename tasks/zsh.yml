@@ -30,7 +30,9 @@
   ansible.builtin.file:
     path: ~/.zshrc
     owner: "{{ user_name }}"
-    group: "{{ 'staff' if ansible_facts['os_family'] == 'Darwin' else user_name }}"
+    group:
+      "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
+      else user_name }}"
     mode: 0750
     state: touch
   when: not zsh_file.stat.exists
@@ -41,7 +43,10 @@
   register: register_name
 
 - name: Install oh-my-zsh
-  ansible.builtin.shell: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" --unattended
+  ansible.builtin.shell: >
+    sh -c "$(curl -fsSL
+    https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    --unattended
   when: not register_name.stat.exists
 
 - name: Install zsh-autosuggestions
@@ -83,5 +88,12 @@
   ansible.builtin.lineinfile:
     path: ~/.zshrc
     regexp: '^plugins=\(git\)'
-    line: plugins=(git zsh-autosuggestions copypath copyfile zsh-syntax-highlighting)
+    line: >
+      plugins=(
+      git
+      zsh-autosuggestions
+      copypath
+      copyfile
+      zsh-syntax-highlighting
+      )
     backrefs: true

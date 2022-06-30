@@ -23,7 +23,9 @@
     path: "~/.tmux"
     state: directory
     owner: "{{ user_name }}"
-    group: "{{ 'staff' if ansible_facts['os_family'] == 'Darwin' else user_name }}"
+    group:
+      "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
+      else user_name }}"
     mode: 0750
 
 - name: Copy config file

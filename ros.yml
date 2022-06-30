@@ -6,6 +6,10 @@
 
   tasks:
     - import_tasks: tasks/ros-melodic.yml
-      when: ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "18"
+      when: >
+        ansible_facts['distribution'] == "Ubuntu" and
+        ansible_facts['distribution_major_version'] == "18"
     - import_tasks: tasks/ros-noetic.yml
-      when: ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "20"
+      when: >
+        ansible_facts['distribution'] == "Ubuntu" and
+        ansible_facts['distribution_major_version'] == "20"

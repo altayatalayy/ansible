@@ -9,7 +9,7 @@ driver:
 
 platforms:
   - name: instance
-    image: altayatalay/ubuntu-ansible:latest
+    image: altayatalay/docker-ubuntu2204-ansible:latest
 
 provisioner:
   name: ansible
