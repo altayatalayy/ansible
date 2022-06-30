@@ -23,7 +23,6 @@
       - git
       - python3-pip
       - golang
-      - gopls
       - llvm
     state: latest
     update_cache: true
@@ -34,10 +33,14 @@
 
 - name: Install neovim from tarball, unzip tarball
   unarchive:
-    src: https://github.com/neovim/neovim/releases/download/v0.7.0/nvim-linux64.tar.gz
+    src:
+      "https://github.com/neovim/neovim/releases/download/\
+      v0.7.0/nvim-linux64.tar.gz"
     dest: "/home/{{ user_name }}/"
     remote_src: true
-  when: ansible_facts['os_family'] == "Debian" and ansible_architecture == "x86_64"
+  when: >
+    ansible_facts['os_family'] == "Debian" and
+    ansible_architecture == "x86_64"
 
 - name: Install neovim from tarball, copy nvim to /usr/bin
   copy:
@@ -49,7 +52,9 @@
     remote_src: true
   become: true
   become_user: root
-  when: ansible_facts['os_family'] == "Debian" and ansible_architecture == "x86_64"
+  when: >
+    ansible_facts['os_family'] == "Debian" and
+    ansible_architecture == "x86_64"
 
 - name: Install neovim from source, Install required packages
   apt:
@@ -67,8 +72,9 @@
     state: latest
   become: true
   become_user: root
-  when:
-    ansible_facts['os_family'] == "Debian" and ansible_architecture != "x86_64"
+  when: >
+    ansible_facts['os_family'] == "Debian" and
+    ansible_architecture != "x86_64"
 
 - name: Download neovim source
   git:
@@ -77,8 +83,9 @@
     clone: true
     update: false
     version: stable
-  when:
-    ansible_facts['os_family'] == "Debian" and ansible_architecture != "x86_64"
+  when: >
+    ansible_facts['os_family'] == "Debian" and
+    ansible_architecture != "x86_64"
 
 - name: Build neovim
   make:
@@ -88,8 +95,9 @@
       NUM_THREADS: 4
       CMAKE_BUILD_TYPE: Release
       CMAKE_INSTALL_PREFIX: build
-  when:
-    ansible_facts['os_family'] == "Debian" and ansible_architecture != "x86_64"
+  when: >
+    ansible_facts['os_family'] == "Debian" and
+    ansible_architecture != "x86_64"
 
 - name: Copy nvim bin to /usr/bin
   copy:
@@ -101,21 +109,25 @@
     remote_src: true
   become: true
   become_user: root
-  when:
-    ansible_facts['os_family'] == "Debian" and ansible_architecture != "x86_64"
+  when: >
+    ansible_facts['os_family'] == "Debian" and
+    ansible_architecture != "x86_64"
 
 - name: Install lsp servers with pip
   pip:
     name:
       - cmake-language-server
       - pyright
+    executable: pip3
 
 - name: Make sure ~/.config/nvim and subdirectories exists
   file:
     path: "{{ nvim_path }}/{{ item }}"
     state: directory
     owner: "{{ user_name }}"
-    group: "{{ 'staff' if ansible_facts['os_family'] == 'Darwin' else user_name }}"
+    group:
+      "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
+      else user_name }}"
     mode: 0750
   with_items:
     - "autoload"
@@ -125,7 +137,9 @@
     src: files/nvim/
     dest: "{{ nvim_path }}/"
     owner: "{{ user_name }}"
-    group: "{{ 'staff' if ansible_facts['os_family'] == 'Darwin' else user_name }}"
+    group:
+      "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
+      else user_name }}"
     mode: 0750
 
 - name: Install vim-plug

@@ -61,7 +61,9 @@
     ansible_facts['os_family'] == "Darwin"
 
 - name: Set logout hook
-  ansible.builtin.shell: defaults write com.apple.loginwindow LogoutHook "/usr/local/sbin/spoof-hook.sh"
+  ansible.builtin.shell: >
+    defaults write com.apple.loginwindow
+    LogoutHook "/usr/local/sbin/spoof-hook.sh"
   become: true
   when:
     ansible_facts['os_family'] == "Darwin"

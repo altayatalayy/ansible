@@ -1,0 +1,29 @@
+---
+dependency:
+  name: galaxy
+  options:
+    collection-file: requirements.yml
+
+driver:
+  name: docker
+
+platforms:
+  - name: instance-1
+    image: altayatalay/docker-ubuntu1804-ansible
+  - name: instance-2
+    image: altayatalay/docker-ubuntu2004-ansible
+  - name: instance-3
+    image: altayatalay/docker-ubuntu2204-ansible
+  - name: instance-4
+    image: altayatalay/docker-debian10-ansible
+
+provisioner:
+  name: ansible
+  inventory:
+    hosts:
+      all:
+        vars:
+          user_name: testuser
+
+verifier:
+  name: ansible
