@@ -3,10 +3,94 @@
   git_config:
     name: init.defaultBranch
     scope: global
-    value: master
+    value: main
 
 - name: set default editor for git
   git_config:
     name: core.editor
     scope: global
     value: nvim
+
+- name: Configure git to use diff-so-fancy for all diff output
+  git_config:
+    name: core.pager
+    scope: global
+    value: "diff-so-fancy | less --tabs=4 -RFX"
+
+- name: set default editor for git
+  git_config:
+    name: interactive.diffFilter
+    scope: global
+    value: "diff-so-fancy --patch"
+
+- name: change default git colors
+  git_config:
+    name: color.ui
+    scope: global
+    value: true
+
+- name: change default git diff highlight colors
+  git_config:
+    name: color.diff-highlight.oldNormal
+    scope: global
+    value: "red bold"
+
+- name: change default git diff highlight colors
+  git_config:
+    name: color.diff-highlight.oldHighlight
+    scope: global
+    value: "red bold 52"
+
+- name: change default git diff highlight colors
+  git_config:
+    name: color.diff-highlight.newNormal
+    scope: global
+    value: "green bold"
+
+- name: change default git diff highlight colors
+  git_config:
+    name: color.diff-highlight.newHighlight
+    scope: global
+    value: "green bold 22"
+
+- name: change default git diff colors
+  git_config:
+    name: color.diff.meta
+    scope: global
+    value: "11"
+
+- name: change default git diff colors
+  git_config:
+    name: color.diff.frag
+    scope: global
+    value: "magenta bold"
+
+- name: change default git diff colors
+  git_config:
+    name: color.diff.func
+    scope: global
+    value: "146 bold"
+
+- name: change default git diff colors
+  git_config:
+    name: color.diff.commit
+    scope: global
+    value: "yellow bold"
+
+- name: change default git diff colors
+  git_config:
+    name: color.diff.old
+    scope: global
+    value: "red bold"
+
+- name: change default git diff colors
+  git_config:
+    name: color.diff.new
+    scope: global
+    value: "green bold"
+
+- name: change default git diff colors
+  git_config:
+    name: color.diff.whitespace
+    scope: global
+    value: "red reverse"

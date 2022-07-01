@@ -10,4 +10,4 @@
     - import_tasks: tasks/tmux.yml
     - import_tasks: tasks/termapps.yml
     - import_tasks: tasks/zsh.yml
-
+    - import_tasks: tasks/git.yml

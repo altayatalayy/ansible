@@ -56,6 +56,34 @@
     ansible_facts['os_family'] == "Debian" and
     ansible_architecture == "x86_64"
 
+- name: Install neovim from tarball, copy nvim/share to /usr/share/nvim
+  copy:
+    src: "/home/{{ user_name }}/nvim-linux64/share/nvim/"
+    dest: "/usr/share/nvim"
+    owner: root
+    group: root
+    mode: '0555'
+    remote_src: true
+  become: true
+  become_user: root
+  when: >
+    ansible_facts['os_family'] == "Debian" and
+    ansible_architecture == "x86_64"
+
+- name: Install neovim from tarball, copy nvim/lib to /usr/lib/x86_64-linux-gnu/nvim
+  copy:
+    src: "/home/{{ user_name }}/nvim-linux64/lib/nvim/"
+    dest: "/usr/lib/x86_64-linux-gnu/nvim"
+    owner: root
+    group: root
+    mode: '0555'
+    remote_src: true
+  become: true
+  become_user: root
+  when: >
+    ansible_facts['os_family'] == "Debian" and
+    ansible_architecture == "x86_64"
+
 - name: Install neovim from source, Install required packages
   apt:
     name:
@@ -119,6 +147,8 @@
       - cmake-language-server
       - pyright
     executable: pip3
+  become: true
+  become_user: root
 
 - name: Make sure ~/.config/nvim and subdirectories exists
   file:
@@ -146,3 +176,44 @@
   get_url:
     url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
     dest: ~/.config/nvim/autoload/plug.vim
+
+- name: Install reuired packages for nvim plugins, Mac
+  homebrew:
+    name:
+      - ripgrep
+      - nodejs
+      - yarn
+    state: latest
+  when:
+    ansible_facts['os_family'] == "Darwin"
+
+- name: Install reuired packages for nvim plugins, Ubuntu 18.10+
+  apt:
+    name:
+      - ripgrep
+    state: latest
+  become: true
+  become_user: root
+  when:
+    ansible_facts['os_family'] == "Debian" and
+    not (ansible_facts['distribution'] == "Ubuntu" and
+    ansible_facts['distribution_major_version'] == "18")
+
+- name: Install reuired packages for nvim plugins, Ubuntu 18.04
+  apt:
+    deb: https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
+  when:
+    ansible_facts['os_family'] == "Debian" and
+    (ansible_facts['distribution'] == "Ubuntu" and
+    ansible_facts['distribution_major_version'] == "18")
+
+- name: Install reuired packages for nvim plugins
+  apt:
+    name:
+      - nodejs
+      - yarn
+    state: latest
+  become: true
+  become_user: root
+  when:
+    ansible_facts['os_family'] == "Debian"

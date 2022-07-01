@@ -20,12 +20,12 @@ Install and configure, see tasks/apps.yml for other apps
 ```
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" # Install brew
 brew install git ansible # Install git, ansible
-ansible-galaxy install -r requirements.yml
+ansible-galaxy collection install community.general
 ```
 #### Ubuntu
 ```
 sudo apt install git ansible # Install git, ansible
-ansible-galaxy install -r requirements.yml
+ansible-galaxy collection install community.general
 ```
 
 ## Launch
@@ -46,12 +46,61 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 - run PlugInstall in neovim
   
 ## Notes
+### nvim
+
+leader = \
+
+#### Telescope
+
+leader-f :Telescope find_files<CR>
+
+leader-l :Telescope live_grep<CR>
+
+leader-g :Telescope git_files<CR>
+
+#### Hop
+
+s # HopChar1
+sw # HopWord
+
+#### stop seacrh higlight
+
+:noh
+
+#### NerdCommenter
+
+leader-c-space Toggle comment
+
+#### folding:
+
+z-c # fold
+
+z-o # open fold
+
+#### git diff view:
+
+d-o # DiffviewOpen
+
+d-c # DiffviewClose
+
+d-f # DiffviewFileHistory
+
+#### nerd tree:
+
+C-t # NerdTreeToggle
+
+C-f # NerdTreeFocus
+
+#### markdown preview
+
+C-p # MarkdownPreviewToggle
+
 ### tmux
 prefix = C-a
 
 Reload configuration file: prefix-r
 
-splits: prefix-| prefix--
+splits: prefix-| prefix- -
 
 Toggle mouse mode: prefix-m
 
