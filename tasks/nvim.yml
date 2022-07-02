@@ -202,6 +202,8 @@
 - name: Install reuired packages for nvim plugins, Ubuntu 18.04
   apt:
     deb: https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
+  become: true
+  become_user: root
   when:
     ansible_facts['os_family'] == "Debian" and
     (ansible_facts['distribution'] == "Ubuntu" and
@@ -210,6 +212,9 @@
 - name: Install reuired packages for nvim plugins
   apt:
     name:
+      - cmake
+      - make
+      - gcc
       - nodejs
       - yarn
     state: latest

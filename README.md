@@ -47,66 +47,38 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
   
 ## Notes
 ### nvim
+#### Keymapings
+- `<leader>` = \
+- `<leader> + f` - Telescope find files
+- `<leader> + l` - Telescope live grep
+- `<leader> + g` - Telescope git files
+- `s` - HopChar1
+- `sw` - HopWord
+- `gcc` - Toggles the current line using linewise comment
+- `gbc` - Toggles the current line using blockwise comment
+- `z-c` - fold
+- `z-o` - open fold
+- `d-o` - DiffviewOpen
+- `d-c` - DiffviewClose
+- `d-f` - DiffviewFileHistory
+- `<C-t>` - NerdTreeToggle
+- `<C-f>` - NerdTreeFocus
+- `<C-p>` - MarkdownPreviewToggle
 
-leader = \
+#### Cheat sheet
 
-#### Telescope
-
-leader-f :Telescope find_files<CR>
-
-leader-l :Telescope live_grep<CR>
-
-leader-g :Telescope git_files<CR>
-
-#### Hop
-
-s # HopChar1
-sw # HopWord
-
-#### stop seacrh higlight
-
-:noh
-
-#### NerdCommenter
-
-leader-c-space Toggle comment
-
-#### folding:
-
-z-c # fold
-
-z-o # open fold
-
-#### git diff view:
-
-d-o # DiffviewOpen
-
-d-c # DiffviewClose
-
-d-f # DiffviewFileHistory
-
-#### nerd tree:
-
-C-t # NerdTreeToggle
-
-C-f # NerdTreeFocus
-
-#### markdown preview
-
-C-p # MarkdownPreviewToggle
+```
+:noh # Stop search highlight
+```
 
 ### tmux
-prefix = C-a
-
-Reload configuration file: prefix-r
-
-splits: prefix-| prefix- -
-
-Toggle mouse mode: prefix-m
-
-Save: prefix-C-s
-
-Restore: prefic-C-r
+- `Ctrl-a` - prefix
+- `prefix + r` - Reload configuration file
+- `prefix + |` - Vertical split
+- `prefix + -` - Horizontal split
+- `prefix + m` - Toggle mouse mode 
+- `prefix + Ctrl-s` - save
+- `prefix + Ctrl-r` - restore
 
 plugins:
 
@@ -121,9 +93,10 @@ https://github.com/tmux-plugins/tmux-continuum
  
 ### zsh
 
-copy path to clipboard: copypath
-
-copy a file to clipboard copyfile
+```
+$ copypath #copy path to clipboard
+$ copyfile #copy a file to clipboard
+```
 
 ### ssh setup for vms
 - on guest: sudo apt install ssh
