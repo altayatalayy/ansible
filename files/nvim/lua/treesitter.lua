@@ -1,3 +1,12 @@
+local vim = vim
+
+-- Use a protected call
+local status_ok, treesitter = pcall(require, 'nvim-treesitter')
+if not status_ok then
+	vim.notify('Couldn\'t load treesitter')
+	return
+end
+
 require'nvim-treesitter.configs'.setup {
   -- One of "all", "maintained" (parsers with maintainers), or a list of languages
   ensure_installed = "all",

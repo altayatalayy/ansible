@@ -17,25 +17,25 @@
     ansible_facts['os_family'] == "Darwin"
 
 - name: Install required packages with apt
-  apt:
+  ansible.builtin.apt:
     name:
       - curl
       - git
       - python3-pip
+      - python3-venv
       - golang
       - llvm
     state: latest
-    update_cache: true
   become: true
   become_user: root
   when:
     ansible_facts['os_family'] == "Debian"
 
 - name: Install neovim from tarball, unzip tarball
-  unarchive:
+  ansible.builtin.unarchive:
     src:
       "https://github.com/neovim/neovim/releases/download/\
-      v0.7.0/nvim-linux64.tar.gz"
+      v0.7.2/nvim-linux64.tar.gz"
     dest: "/home/{{ user_name }}/"
     remote_src: true
   when: >
@@ -43,7 +43,7 @@
     ansible_architecture == "x86_64"
 
 - name: Install neovim from tarball, copy nvim to /usr/bin
-  copy:
+  ansible.builtin.copy:
     src: "/home/{{ user_name }}/nvim-linux64/bin/nvim"
     dest: "/usr/bin/nvim"
     owner: root
@@ -57,7 +57,7 @@
     ansible_architecture == "x86_64"
 
 - name: Install neovim from tarball, copy nvim/share to /usr/share/nvim
-  copy:
+  ansible.builtin.copy:
     src: "/home/{{ user_name }}/nvim-linux64/share/nvim/"
     dest: "/usr/share/nvim"
     owner: root
@@ -71,7 +71,7 @@
     ansible_architecture == "x86_64"
 
 - name: Install neovim from tarball, copy nvim/lib to /usr/lib/x86_64-linux-gnu/nvim
-  copy:
+  ansible.builtin.copy:
     src: "/home/{{ user_name }}/nvim-linux64/lib/nvim/"
     dest: "/usr/lib/x86_64-linux-gnu/nvim"
     owner: root
@@ -85,7 +85,7 @@
     ansible_architecture == "x86_64"
 
 - name: Install neovim from source, Install required packages
-  apt:
+  ansible.builtin.apt:
     name:
       - ninja-build
       - gettext
@@ -105,7 +105,7 @@
     ansible_architecture != "x86_64"
 
 - name: Download neovim source
-  git:
+  ansible.builtin.git:
     repo: https://github.com/neovim/neovim
     dest: "/home/{{ user_name }}/neovim"
     clone: true
@@ -116,7 +116,7 @@
     ansible_architecture != "x86_64"
 
 - name: Build neovim
-  make:
+  ansible.builtin.make:
     chdir: "/home/{{ user_name }}/neovim"
     target: install
     params:
@@ -128,7 +128,7 @@
     ansible_architecture != "x86_64"
 
 - name: Copy nvim bin to /usr/bin
-  copy:
+  ansible.builtin.copy:
     src: "/home/{{ user_name }}/neovim/build/bin/nvim"
     dest: /usr/bin/
     owner: root
@@ -142,7 +142,7 @@
     ansible_architecture != "x86_64"
 
 - name: Install lsp servers with pip
-  pip:
+  ansible.builtin.pip:
     name:
       - cmake-language-server
       - pyright
@@ -151,19 +151,17 @@
   become_user: root
 
 - name: Make sure ~/.config/nvim and subdirectories exists
-  file:
-    path: "{{ nvim_path }}/{{ item }}"
+  ansible.builtin.file:
+    path: "{{ nvim_path }}"
     state: directory
     owner: "{{ user_name }}"
     group:
       "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
       else user_name }}"
     mode: 0750
-  with_items:
-    - "autoload"
 
 - name: Copy config files
-  copy:
+  ansible.builtin.copy:
     src: files/nvim/
     dest: "{{ nvim_path }}/"
     owner: "{{ user_name }}"
@@ -171,11 +169,6 @@
       "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
       else user_name }}"
     mode: 0750
-
-- name: Install vim-plug
-  get_url:
-    url: https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    dest: ~/.config/nvim/autoload/plug.vim
 
 - name: Install reuired packages for nvim plugins, Mac
   homebrew:
@@ -188,7 +181,7 @@
     ansible_facts['os_family'] == "Darwin"
 
 - name: Install reuired packages for nvim plugins, Ubuntu 18.10+
-  apt:
+  ansible.builtin.apt:
     name:
       - ripgrep
     state: latest
@@ -200,7 +193,7 @@
     ansible_facts['distribution_major_version'] == "18")
 
 - name: Install reuired packages for nvim plugins, Ubuntu 18.04
-  apt:
+  ansible.builtin.apt:
     deb: https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
   become: true
   become_user: root
@@ -210,7 +203,7 @@
     ansible_facts['distribution_major_version'] == "18")
 
 - name: Install reuired packages for nvim plugins
-  apt:
+  ansible.builtin.apt:
     name:
       - cmake
       - make
@@ -222,3 +215,10 @@
   become_user: root
   when:
     ansible_facts['os_family'] == "Debian"
+
+- name: Create venv debugpy
+  ansible.builtin.pip:
+    name:
+      - debugpy
+    virtualenv: ~/.virtualenvs/debugpy
+    virtualenv_command: python3 -m venv

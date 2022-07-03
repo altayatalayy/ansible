@@ -3,23 +3,14 @@
   ansible.builtin.apt:
     update_cache: true
     upgrade: true
-  when:
-    ansible_facts['os_family'] == "Debian"
-
-- name: Update flatpaks
-  ansible.builtin.shell: flatpak update --noninteractive
+  become: true
+  become_user: root
   when:
     ansible_facts['os_family'] == "Debian"
 
 - name: Update brew
   homebrew:
     update_homebrew: true
-    upgrade_all: true
-  when:
-    ansible_facts['os_family'] == "Darwin"
-
-- name: Update mac apps from app store
-  mas:
     upgrade_all: true
   when:
     ansible_facts['os_family'] == "Darwin"

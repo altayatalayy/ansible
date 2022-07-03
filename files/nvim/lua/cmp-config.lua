@@ -1,4 +1,11 @@
-local cmp = require'cmp'
+local vim = vim
+
+-- Use a protected call
+local status_ok, cmp = pcall(require, 'cmp')
+if not status_ok then
+	vim.notify('Couldn\'t load cmp')
+	return
+end
 
 cmp.setup({
 	snippet = {

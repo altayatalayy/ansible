@@ -1,19 +1,29 @@
 # Config
 ![example workflow](https://github.com/altayatalayy/ansible/actions/workflows/CI.yml/badge.svg)
 
-Install and configure, see tasks/apps.yml for other apps
+Install and configure
 * neovim
 * git
 * tmux
+* zsh
 * flatpak
 * UTM, virt-manager
 * ros
 
 ## Table of Contents
+* [Platform Support](#platform-support)
 * [Setup](#setup)
+* [Launch](#launch)
+* [Notes](#notes)
 * [Project Status](#project-status)
 * [Acknowledgements](#acknowledgements)
 <!-- * [License](#license) -->
+
+## Platform Support
+
+|  MacOS  | Ubuntu 22.04 | Ubuntu 20.04 | Ubuntu 18.04 | Debian 10 | Raspberry Pi OS | Fedora 36 | Arch Linux |
+|  :---:  | :----------: | :----------: | :----------: | :-------: | :-------------: | :-------: | :--------: |
+|    ✅   |       ✅    |       ✅      |       ✅     |     ✅    |        ✅       |    :x:    |     :x:    |
 
 ## Setup
 #### Macos
@@ -43,7 +53,7 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 
 ## After Install
 ### neovim
-- run PlugInstall in neovim
+- run PackerSync in neovim
   
 ## Notes
 ### nvim
@@ -52,6 +62,7 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 - `<leader> + f` - Telescope find files
 - `<leader> + l` - Telescope live grep
 - `<leader> + g` - Telescope git files
+- `<leader> + k` - Telescope keymaps
 - `s` - HopChar1
 - `sw` - HopWord
 - `gcc` - Toggles the current line using linewise comment
@@ -64,6 +75,8 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 - `<C-t>` - NerdTreeToggle
 - `<C-f>` - NerdTreeFocus
 - `<C-p>` - MarkdownPreviewToggle
+- `<leader> + b` Toggle Brekpoint
+- `<F5>` Continue Debugging
 
 #### Cheat sheet
 
@@ -80,17 +93,6 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 - `prefix + Ctrl-s` - save
 - `prefix + Ctrl-r` - restore
 
-plugins:
-
-https://github.com/tmux-plugins/tpm
-
-https://github.com/tmux-plugins/tmux-sensible 
-
-https://github.com/tmux-plugins/tmux-resurrect
-
-https://github.com/tmux-plugins/tmux-continuum
-  
- 
 ### zsh
 
 ```
@@ -99,10 +101,10 @@ $ copyfile #copy a file to clipboard
 ```
 
 ### ssh setup for vms
-- on guest: sudo apt install ssh
+- on guest: `sudo apt install ssh`
+- on host: `ssh-copy-id -p <port> -i <sshkey> user@host`
 - on host: Edit /etc/hosts
 - on host: Edit ssh config 
-- on host: ssh-copy-id -p <port> -i <sshkey> user@host
 
 
 ## Project Status

@@ -1,0 +1,11 @@
+---
+- name: Update flatpaks
+  ansible.builtin.shell: flatpak update --noninteractive
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Update mac apps from app store
+  mas:
+    upgrade_all: true
+  when:
+    ansible_facts['os_family'] == "Darwin"
