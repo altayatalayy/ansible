@@ -31,6 +31,7 @@ packer.init {
 
 return packer.startup(function(use)
 	use 'wbthomason/packer.nvim' -- Package manager
+    use 'lewis6991/impatient.nvim'
 	use {
 		'nvim-lualine/lualine.nvim',
 		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
@@ -42,9 +43,37 @@ return packer.startup(function(use)
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
     }
+	use 'numToStr/Comment.nvim'
+    use 'JoosepAlviste/nvim-ts-context-commentstring'
 
-	use 'neovim/nvim-lspconfig'
+    use {
+      'lewis6991/gitsigns.nvim',
+      config = function()
+        require('gitsigns').setup()
+      end
+    }
 
+    use {
+      "folke/trouble.nvim",
+      requires = "kyazdani42/nvim-web-devicons",
+    }
+
+    -- LSP
+    use({
+      "Maan2003/lsp_lines.nvim",
+      config = function()
+        require("lsp_lines").register_lsp_virtual_lines()
+      end,
+    })
+    -- Disable virtual_text since it's redundant due to lsp_lines.
+    vim.diagnostic.config({
+        virtual_text = false,
+    })
+
+    use {
+        "williamboman/nvim-lsp-installer",
+        "neovim/nvim-lspconfig",
+    }
 	-- Completion
 	use 'hrsh7th/cmp-nvim-lsp'
 	use 'hrsh7th/cmp-buffer'
@@ -55,6 +84,9 @@ return packer.startup(function(use)
 	-- Lua snip
 	use 'L3MON4D3/LuaSnip'
 	use 'saadparwaiz1/cmp_luasnip'
+
+    -- Linting
+    use { 'jose-elias-alvarez/null-ls.nvim', requires = 'nvim-lua/plenary.nvim'}
 
 	-- Telescope
 	use {
@@ -73,20 +105,33 @@ return packer.startup(function(use)
 	use 'theHamsta/nvim-dap-virtual-text'
 	use 'nvim-telescope/telescope-dap.nvim'
 
-	use 'numToStr/Comment.nvim'
 	use 'phaazon/hop.nvim'
 
-	use 'preservim/nerdtree'
 	use 'ap/vim-css-color'
+
+    vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+
+    use {
+        "nvim-neo-tree/neo-tree.nvim",
+        branch = "v2.x",
+        requires = {
+          "nvim-lua/plenary.nvim",
+          "kyazdani42/nvim-web-devicons", -- not strictly required, but recommended
+          "MunifTanjim/nui.nvim",
+        }
+    }
 
 	use {'akinsho/bufferline.nvim', tag = "v2.*", requires = 'kyazdani42/nvim-web-devicons'}
 
 	use {
 		"iamcco/markdown-preview.nvim",
 		run = "cd app && npm install",
-		setup = function() vim.g.mkdp_filetypes = { "markdown" } end,
 		ft = { "markdown" },
 	}
+    vim.g.mkdp_filetypes = { "markdown" }
+
+    use {"akinsho/toggleterm.nvim", tag = 'v2.*'}
+
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

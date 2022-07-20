@@ -7,6 +7,9 @@ if not status_ok then
 	return
 end
 
+-- configure lsp installer before setting up lsp servers
+require('user.lsp.lsp-installer')
+
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
 local opts = { noremap=true, silent=true }
@@ -41,10 +44,36 @@ end
 -- LSP Autocomplete
 vim.opt.completeopt = {"menu", "menuone", "noselect"}
 
-local servers = { 'pyright', 'gopls', 'clangd', 'cmake', 'sumneko_lua' }
+-- Add additional capabilities supported by nvim-cmp
+local capabilities = vim.lsp.protocol.make_client_capabilities()
+capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+local servers = {
+    'pyright',
+    'gopls',
+    'clangd',
+    'cmake',
+    'sumneko_lua',
+    'jdtls',
+    'csharp_ls',
+    'html',
+    'cssls',
+    'awk_ls',
+    'eslint',
+    'tsserver',
+    'rust_analyzer',
+    'sourcekit',
+    'texlab',
+    'yamlls',
+    'marksman',
+    'julials'
+}
 
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup({
 		on_attach = on_attach,
+        capabilities = capabilities,
 	})
 end
+
+require('user.lsp.null-ls')
