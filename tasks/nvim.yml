@@ -1,6 +1,6 @@
 ---
 - name: Set nvim path
-  set_fact:
+  ansible.builtin.set_fact:
     nvim_path: "~/.config/nvim"
 
 - name: Install required packages with brew
@@ -10,7 +10,6 @@
       - curl
       - git
       - llvm
-    state: latest
   when:
     ansible_facts['os_family'] == "Darwin"
 
@@ -21,7 +20,6 @@
       - git
       - python3-pip
       - python3-venv
-    state: latest
   become: true
   become_user: root
   when:
@@ -29,7 +27,9 @@
 
 - name: Install neovim Debian
   ansible.builtin.apt:
-    deb: https://github.com/neovim/neovim/releases/download/v0.7.2/nvim-linux64.deb
+    deb: >-
+      https://github.com/neovim/neovim/releases/download/
+      v0.7.2/nvim-linux64.deb
   become: true
   become_user: root
   when:
@@ -61,7 +61,6 @@
       - ripgrep
       - nodejs
       - yarn
-    state: latest
   when:
     ansible_facts['os_family'] == "Darwin"
 
@@ -69,7 +68,6 @@
   ansible.builtin.apt:
     name:
       - ripgrep
-    state: latest
   become: true
   become_user: root
   when:
@@ -79,7 +77,9 @@
 
 - name: Install ripgrep, Ubuntu 18.04
   ansible.builtin.apt:
-    deb: https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb
+    deb: >-
+      https://github.com/BurntSushi/ripgrep/releases/download/
+      13.0.0/ripgrep_13.0.0_amd64.deb
   become: true
   become_user: root
   when:
@@ -95,7 +95,6 @@
       - gcc
       - nodejs
       - yarn
-    state: latest
   become: true
   become_user: root
   when:
@@ -107,3 +106,30 @@
       - debugpy
     virtualenv: ~/.virtualenvs/debugpy
     virtualenv_command: python3 -m venv
+
+- name: Install python, ansible, yaml linter and formatter
+  ansible.builtin.pip:
+    name:
+      - flake8
+      - black
+      - ansible-lint
+      - yamllint
+
+- name: Install eslint
+  community.general.npm:
+    name:
+      - eslint
+    global: true
+
+- name: Check if rustup is installed
+  command: which rustup
+  changed_when: false
+  register: rustup_installed
+
+- name: Install rustup
+  shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+  when: "'not found' in rustup_installed.stdout"
+
+- name: Install linters, formatters with cargo
+  community.general.cargo:
+    name: stylua
