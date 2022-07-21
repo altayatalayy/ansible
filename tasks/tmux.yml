@@ -18,28 +18,11 @@
   when:
     ansible_facts['os_family'] == "Debian"
 
-- name: Make sure ~/.tmux folder exists
-  ansible.builtin.file:
-    path: "~/.tmux"
-    state: directory
-    owner: "{{ user_name }}"
-    group:
-      "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
-      else user_name }}"
-    mode: 0750
-
 - name: Copy config file
   ansible.builtin.copy:
     src: files/tmux/.tmux.conf
     dest: ~/.tmux.conf
     mode: 0640
-
-- name: Copy config file
-  ansible.builtin.copy:
-    src: files/tmux/.tmux.conf.local
-    dest: ~/.tmux.conf.local
-    mode: 0640
-
 
 - name: Install tmux tpm
   ansible.builtin.git:

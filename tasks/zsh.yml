@@ -26,9 +26,19 @@
     path: ~/.zshrc
   register: zsh_file
 
-- name: Make sure ~/.zshrc exists
+- name: Make sure ~/.config/zsh exists
   ansible.builtin.file:
-    path: ~/.zshrc
+    path: ~/.config/zsh
+    state: directory
+    owner: "{{ user_name }}"
+    group:
+      "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
+      else user_name }}"
+    mode: 0750
+
+- name: Make sure ~/.config/zsh/.zshrc exists
+  ansible.builtin.file:
+    path: ~/.config/zsh/.zshrc
     owner: "{{ user_name }}"
     group:
       "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
@@ -37,27 +47,27 @@
     state: touch
   when: not zsh_file.stat.exists
 
-- name: Check if .zshrc.pre-oh-my-zsh file exists
+- name: Copy .zprofile files
+  ansible.builtin.copy:
+    src: files/zsh/.zprofile
+    dest: ~/.zprofile
+    owner: "{{ user_name }}"
+    group:
+      "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
+      else user_name }}"
+    mode: 0750
+
+- name: Check if .oh-my-zsh folder exists
   ansible.builtin.stat:
-    path: ~/.oh-my-zsh
+    path: ~/.config/zsh/.oh-my-zsh
   register: register_name
 
 - name: Install oh-my-zsh
   ansible.builtin.shell: >
-    sh -c "$(curl -fsSL
+    ZSH="$HOME/.config/zsh/.oh-my-zsh" && sh -c "$(curl -fsSL
     https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     --unattended
   when: not register_name.stat.exists
-
-- name: Install zsh-autosuggestions
-  ansible.builtin.git:
-    repo: https://github.com/zsh-users/zsh-autosuggestions
-    dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-
-- name: Install zsh-syntax-highlighting
-  ansible.builtin.git:
-    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
-    dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 
 - name: Mac Install diff-so-fancy
   homebrew:
@@ -94,6 +104,8 @@
       zsh-autosuggestions
       copypath
       copyfile
+      copybuffer
       zsh-syntax-highlighting
+      vi-mode
       )
     backrefs: true
