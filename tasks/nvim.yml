@@ -27,9 +27,8 @@
 
 - name: Install neovim Debian
   ansible.builtin.apt:
-    deb: >-
-      https://github.com/neovim/neovim/releases/download/
-      v0.7.2/nvim-linux64.deb
+    deb:
+      "https://github.com/neovim/neovim/releases/download/v0.7.2/nvim-linux64.deb"
   become: true
   become_user: root
   when:
@@ -77,9 +76,8 @@
 
 - name: Install ripgrep, Ubuntu 18.04
   ansible.builtin.apt:
-    deb: >-
-      https://github.com/BurntSushi/ripgrep/releases/download/
-      13.0.0/ripgrep_13.0.0_amd64.deb
+    deb:
+      "https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb"
   become: true
   become_user: root
   when:
@@ -95,6 +93,8 @@
       - gcc
       - nodejs
       - yarn
+      - npm
+      - unzip
   become: true
   become_user: root
   when:
@@ -117,19 +117,44 @@
 
 - name: Install eslint
   community.general.npm:
-    name:
-      - eslint
+    name: eslint
     global: true
+  become: true
+  become_user: root
+
+- name: Install tree-sitter-cli
+  community.general.npm:
+    name: tree-sitter-cli
+    global: true
+  become: true
+  become_user: root
+  when:
+    ansible_facts['os_family'] == "Debian"
 
 - name: Check if rustup is installed
   command: which rustup
   changed_when: false
+  failed_when: false
   register: rustup_installed
 
 - name: Install rustup
-  shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-  when: "'not found' in rustup_installed.stdout"
+  shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+  when: rustup_installed.rc != 0
 
-- name: Install linters, formatters with cargo
-  community.general.cargo:
-    name: stylua
+- name: Install lazygit, Mac
+  homebrew:
+    name: lazygit
+  when:
+    ansible_facts['os_family'] == "Darwin"
+
+- name: Install lazygit, Debian
+  ansible.builtin.unarchive:
+    src:
+      "https://github.com/jesseduffield/lazygit/releases/download/v0.35/lazygit_0.35_Linux_x86_64.tar.gz"
+    dest: /usr/local/bin/
+    include: lazygit
+    remote_src: true
+  become: true
+  become_user: root
+  when:
+    ansible_facts['os_family'] == "Debian"
