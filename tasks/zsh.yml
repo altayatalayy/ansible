@@ -105,7 +105,7 @@
 
 - name: add plugins to .zshrc
   ansible.builtin.lineinfile:
-    path: ~/.zshrc
+    path: ~/.config/zsh/.zshrc
     regexp: '^plugins=\(git\)'
     line: >
       plugins=(
