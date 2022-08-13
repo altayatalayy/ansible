@@ -8,7 +8,8 @@ if not status_ok then
 end
 
 -- configure lsp installer before setting up lsp servers
-require('user.lsp.lsp-installer')
+-- require('user.lsp.lsp-installer')
+require('mason-lspconfig').setup({automatic_installation = true})
 
 -- Mappings.
 -- See `:help vim.diagnostic.*` for documentation on any of the below functions
@@ -66,7 +67,9 @@ local servers = {
     'texlab',
     'yamlls',
     'marksman',
-    'julials'
+    'julials',
+    'bashls',
+    'ansiblels',
 }
 
 for _, lsp in ipairs(servers) do

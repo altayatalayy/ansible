@@ -17,14 +17,27 @@ null_ls.setup({
         -- Python
         formatting.black,
         diagnostics.flake8,
+        diagnostics.pydocstyle, -- x
         -- JS
-        formatting.eslint,
-        diagnostics.eslint,
+        formatting.eslint, -- x
+        -- diagnostics.eslint,
         -- ansible
-        diagnostics.ansiblelint,
+        diagnostics.ansiblelint, -- x
         -- yaml
         diagnostics.yamllint,
         -- lua
-        formatting.stylua,
+        formatting.stylua, -- x
+        -- c/c++
+        diagnostics.cppcheck, -- x
+        -- shell
+        diagnostics.shellcheck,
+        -- rst
+        diagnostics.rstcheck, -- x
+        -- text
+        diagnostics.codespell,
+        -- git
+        diagnostics.gitlint,
+        -- docker
+        diagnostics.hadolint,
     }
 })

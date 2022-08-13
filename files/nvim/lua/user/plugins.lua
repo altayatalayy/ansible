@@ -32,6 +32,9 @@ packer.init {
 return packer.startup(function(use)
 	use 'wbthomason/packer.nvim' -- Package manager
     use 'lewis6991/impatient.nvim'
+    use 'pearofducks/ansible-vim' -- Detect Ansible files
+    use 'gpanders/editorconfig.nvim'
+
 	use {
 		'nvim-lualine/lualine.nvim',
 		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
@@ -43,13 +46,28 @@ return packer.startup(function(use)
         'nvim-treesitter/nvim-treesitter',
         run = ':TSUpdate'
     }
+    use {
+      'm-demare/hlargs.nvim',
+      requires = { 'nvim-treesitter/nvim-treesitter' },
+      config = function ()
+        require('hlargs').setup()
+      end
+    }
 	use 'numToStr/Comment.nvim'
     use 'JoosepAlviste/nvim-ts-context-commentstring'
 
     use {
       'lewis6991/gitsigns.nvim',
       config = function()
-        require('gitsigns').setup()
+        require('gitsigns').setup({
+            current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+            current_line_blame_opts = {
+                virt_text = true,
+                virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+                delay = 300,
+                ignore_whitespace = false,
+            },
+        })
       end
     }
 
@@ -60,9 +78,9 @@ return packer.startup(function(use)
 
     -- LSP
     use({
-      "Maan2003/lsp_lines.nvim",
+      "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
       config = function()
-        require("lsp_lines").register_lsp_virtual_lines()
+        require("lsp_lines").setup()
       end,
     })
     -- Disable virtual_text since it's redundant due to lsp_lines.
@@ -71,15 +89,35 @@ return packer.startup(function(use)
     })
 
     use {
-        "williamboman/nvim-lsp-installer",
+        'j-hui/fidget.nvim',
+        config = function ()
+            require"fidget".setup{}
+        end
+    }
+
+    use { "williamboman/mason.nvim", config = function()  require('mason').setup() end }
+    use { "williamboman/mason-lspconfig.nvim",
+        -- config = function()  require('mason-lspconfig').setup({automatic_installation = true}) end
+    }
+    use {
+        -- "williamboman/nvim-lsp-installer",
         "neovim/nvim-lspconfig",
     }
+
+    use 'onsails/lspkind.nvim'
+
+    use 'mfussenegger/nvim-jdtls'
+    use 'simrat39/rust-tools.nvim'
+
 	-- Completion
 	use 'hrsh7th/cmp-nvim-lsp'
+    use 'hrsh7th/cmp-nvim-lsp-signature-help'
+	use 'hrsh7th/cmp-nvim-lua'
 	use 'hrsh7th/cmp-buffer'
 	use 'hrsh7th/cmp-path'
 	use 'hrsh7th/cmp-cmdline'
 	use 'hrsh7th/nvim-cmp'
+    use({"petertriho/cmp-git", requires = "nvim-lua/plenary.nvim"})
 
 	-- Lua snip
 	use 'L3MON4D3/LuaSnip'

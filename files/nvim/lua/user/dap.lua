@@ -25,7 +25,8 @@ vim.api.nvim_set_keymap("n", "<leader>dr", ":lua require'dap'.repl.open()<CR>", 
 vim.api.nvim_set_keymap("n", "<leader>ptm", ":lua require('dap-python').test_method()<CR>", opts)
 
 dapui.setup()
-require('dap-python').setup('~/.virtualenvs/debugpy/bin/python')
+
+require('dap-python').setup(vim.fn.stdpath("data") .. "/mason/packages/debugpy/venv/bin/python")
 require("nvim-dap-virtual-text").setup()
 require('telescope').load_extension('dap')
 

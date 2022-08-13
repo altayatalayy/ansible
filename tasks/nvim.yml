@@ -100,20 +100,12 @@
   when:
     ansible_facts['os_family'] == "Debian"
 
-- name: Create venv debugpy
-  ansible.builtin.pip:
-    name:
-      - debugpy
-    virtualenv: ~/.virtualenvs/debugpy
-    virtualenv_command: python3 -m venv
-
 - name: Install python, ansible, yaml linter and formatter
   ansible.builtin.pip:
     name:
-      - flake8
-      - black
-      - ansible-lint
       - yamllint
+      - ansible-lint
+      - pydocstyle
 
 - name: Install eslint
   community.general.npm:
@@ -132,14 +124,20 @@
     ansible_facts['os_family'] == "Debian"
 
 - name: Check if rustup is installed
-  command: which rustup
+  ansible.builtin.command: which rustup
   changed_when: false
   failed_when: false
   register: rustup_installed
 
-- name: Install rustup
-  shell: curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-  when: rustup_installed.rc != 0
+# - name: Install rustup
+#   ansible.builtin.shell: |
+#     set -o pipefail && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs
+#     | sh -s -- -y
+#   when: rustup_installed.rc != 0
+
+# - name: Install linters, formatters with cargo
+#   community.general.cargo:
+#     name: stylua
 
 - name: Install lazygit, Mac
   homebrew:
@@ -154,6 +152,22 @@
     dest: /usr/local/bin/
     include: lazygit
     remote_src: true
+  become: true
+  become_user: root
+  when:
+    ansible_facts['os_family'] == "Debian"
+
+- name: Install cppcheck Macos
+  homebrew:
+    name:
+      - cppcheck
+  when:
+    ansible_facts['os_family'] == "Darwin"
+
+- name: Install cppcheck
+  ansible.builtin.apt:
+    name:
+      - cppcheck
   become: true
   become_user: root
   when:
