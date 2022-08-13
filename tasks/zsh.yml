@@ -59,16 +59,25 @@
 
 - name: Check if .oh-my-zsh folder exists
   ansible.builtin.stat:
-    path: ~/.config/zsh/.oh-my-zsh
+    path: ~/.oh-my-zsh
   register: register_name
 
 - name: Install oh-my-zsh
   ansible.builtin.shell: >
-    ZSH="$HOME/.config/zsh/.oh-my-zsh" && sh -c "$(curl -fsSL
+    sh -c "$(curl -fsSL
     https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     --unattended
-  when: not register_name.stat.exists
+  when: not (register_name.stat.exists and register_name.stat.isdir)
 
+- name: Install zsh-autosuggestions
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+
+- name: Install zsh-syntax-highlighting
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 - name: Mac Install diff-so-fancy
   homebrew:
     name:
