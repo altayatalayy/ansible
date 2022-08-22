@@ -26,19 +26,9 @@
     path: ~/.zshrc
   register: zsh_file
 
-- name: Make sure ~/.config/zsh exists
+- name: Make sure ~/.zshrc exists
   ansible.builtin.file:
-    path: ~/.config/zsh
-    state: directory
-    owner: "{{ user_name }}"
-    group:
-      "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
-      else user_name }}"
-    mode: 0750
-
-- name: Make sure ~/.config/zsh/.zshrc exists
-  ansible.builtin.file:
-    path: ~/.config/zsh/.zshrc
+    path: ~/.zshrc
     owner: "{{ user_name }}"
     group:
       "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
@@ -46,16 +36,6 @@
     mode: 0750
     state: touch
   when: not zsh_file.stat.exists
-
-- name: Copy .zprofile files
-  ansible.builtin.copy:
-    src: files/zsh/.zprofile
-    dest: ~/.zprofile
-    owner: "{{ user_name }}"
-    group:
-      "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
-      else user_name }}"
-    mode: 0750
 
 - name: Check if .oh-my-zsh folder exists
   ansible.builtin.stat:
@@ -105,7 +85,7 @@
 
 - name: add plugins to .zshrc
   ansible.builtin.lineinfile:
-    path: ~/.config/zsh/.zshrc
+    path: ~/.zshrc
     regexp: '^plugins=\(git\)'
     line: >
       plugins=(

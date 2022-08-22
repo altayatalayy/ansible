@@ -44,6 +44,7 @@ cmp.setup({
       }),
     },
     sources = cmp.config.sources({
+        { name = "neorg" },
         { name = 'nvim_lsp_signature_help' },
         { name = 'cmp_git' },
         { name = 'nvim_lua' },

@@ -9,3 +9,5 @@ vim.api.nvim_set_keymap("n", "df", "<cmd>DiffviewFileHistory<CR>", opts)
 vim.api.nvim_set_keymap("n", "<C-p>", "<Plug>MarkdownPreviewToggle", opts)
 vim.api.nvim_set_keymap("n", "s", "<cmd>HopChar1<CR>", opts)
 vim.api.nvim_set_keymap("n", "sw", "<cmd>HopWord<CR>", opts)
+vim.api.nvim_set_keymap("n", "<leader>ll", ":lua require('lsp_lines').toggle()<CR>", opts)
+

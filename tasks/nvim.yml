@@ -3,6 +3,24 @@
   ansible.builtin.set_fact:
     nvim_path: "~/.config/nvim"
 
+- name: Set is_ubuntu18_or_debian10 to true
+  ansible.builtin.set_fact:
+    is_ubuntu18_or_debian10: true
+  when: >
+    (ansible_facts['distribution'] == "Ubuntu" and
+    ansible_facts['distribution_major_version'] == "18") or
+    (ansible_facts['distribution'] == "Debian" and
+    ansible_facts['distribution_major_version'] == "10")
+
+- name: Set is_ubuntu18_or_debian10 to false
+  ansible.builtin.set_fact:
+    is_ubuntu18_or_debian10: false
+  when: >
+    not ((ansible_facts['distribution'] == "Ubuntu" and
+    ansible_facts['distribution_major_version'] == "18") or
+    (ansible_facts['distribution'] == "Debian" and
+    ansible_facts['distribution_major_version'] == "10"))
+
 - name: Install required packages with brew
   homebrew:
     name:
@@ -25,14 +43,61 @@
   when:
     ansible_facts['os_family'] == "Debian"
 
-- name: Install neovim Debian
+- name: Install neovim from tarball, unzip tarball
+  ansible.builtin.unarchive:
+    src:
+      "https://github.com/neovim/neovim/releases/download/\
+      v0.7.2/nvim-linux64.tar.gz"
+    dest: "/home/{{ user_name }}/"
+    remote_src: true
+  when: is_ubuntu18_or_debian10
+
+- name: Install neovim from tarball, copy nvim to /usr/bin
+  ansible.builtin.copy:
+    src: "/home/{{ user_name }}/nvim-linux64/bin/nvim"
+    dest: "/usr/bin/nvim"
+    owner: root
+    group: root
+    mode: '0555'
+    remote_src: true
+  become: true
+  become_user: root
+  when: is_ubuntu18_or_debian10
+
+
+- name: Install neovim from tarball, copy nvim/share to /usr/share/nvim
+  ansible.builtin.copy:
+    src: "/home/{{ user_name }}/nvim-linux64/share/nvim/"
+    dest: "/usr/share/nvim"
+    owner: root
+    group: root
+    mode: '0555'
+    remote_src: true
+  become: true
+  become_user: root
+  when: is_ubuntu18_or_debian10
+
+- name: Install neovim from tarball, copy nvim/lib to /usr/lib/x86_64-linux-gnu
+  ansible.builtin.copy:
+    src: "/home/{{ user_name }}/nvim-linux64/lib/nvim/"
+    dest: "/usr/lib/x86_64-linux-gnu/nvim"
+    owner: root
+    group: root
+    mode: '0555'
+    remote_src: true
+  become: true
+  become_user: root
+  when: is_ubuntu18_or_debian10
+
+- name: Install neovim Debian 20.04+
   ansible.builtin.apt:
     deb:
       "https://github.com/neovim/neovim/releases/download/v0.7.2/nvim-linux64.deb"
   become: true
   become_user: root
-  when:
-    ansible_facts['os_family'] == "Debian"
+  when: >
+    ansible_facts['os_family'] == "Debian" and
+    not is_ubuntu18_or_debian10
 
 - name: Make sure ~/.config/nvim exists
   ansible.builtin.file:
@@ -71,8 +136,7 @@
   become_user: root
   when:
     ansible_facts['os_family'] == "Debian" and
-    not (ansible_facts['distribution'] == "Ubuntu" and
-    ansible_facts['distribution_major_version'] == "18")
+    not is_ubuntu18_or_debian10
 
 - name: Install ripgrep, Ubuntu 18.04
   ansible.builtin.apt:
@@ -80,10 +144,7 @@
       "https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb"
   become: true
   become_user: root
-  when:
-    ansible_facts['os_family'] == "Debian" and
-    (ansible_facts['distribution'] == "Ubuntu" and
-    ansible_facts['distribution_major_version'] == "18")
+  when: is_ubuntu18_or_debian10
 
 - name: Install reuired packages for nvim plugins
   ansible.builtin.apt:
@@ -113,15 +174,7 @@
     global: true
   become: true
   become_user: root
-
-- name: Install tree-sitter-cli
-  community.general.npm:
-    name: tree-sitter-cli
-    global: true
-  become: true
-  become_user: root
-  when:
-    ansible_facts['os_family'] == "Debian"
+  when: not is_ubuntu18_or_debian10
 
 - name: Check if rustup is installed
   ansible.builtin.command: which rustup

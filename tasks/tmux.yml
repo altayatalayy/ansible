@@ -18,7 +18,7 @@
   when:
     ansible_facts['os_family'] == "Debian"
 
-- name: Copy config file
+- name: Copy tmux config file
   ansible.builtin.copy:
     src: files/tmux/.tmux.conf
     dest: ~/.tmux.conf

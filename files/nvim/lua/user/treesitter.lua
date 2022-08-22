@@ -16,7 +16,6 @@ require'nvim-treesitter.configs'.setup {
       'c',
       'cpp',
       'c_sharp',
-      'devicetree',
       'cmake',
       'ninja',
       'llvm',
@@ -41,7 +40,6 @@ require'nvim-treesitter.configs'.setup {
       'gowork',
       'make',
       'regex',
-      'swift',
       'vim',
       'yaml',
       'toml',
@@ -51,6 +49,7 @@ require'nvim-treesitter.configs'.setup {
       'bash',
       'fish',
       'comment',
+      'norg',
   },
 
   -- Install languages synchronously (only applied to `ensure_installed`)
