@@ -17,7 +17,6 @@ vim.cmd([[
 -- Use a protected call
 local status_ok, packer = pcall(require, 'packer')
 if not status_ok then
-	vim.notify('Couldn\'t load packer')
 	return
 end
 
@@ -29,6 +28,12 @@ packer.init {
 	}
 }
 
+local setup = function ()
+  vim.g.tokyonight_style = "night"
+  vim.cmd[[colorscheme tokyonight]]
+end
+
+
 return packer.startup(function(use)
   use 'wbthomason/packer.nvim' -- Package manager
   use 'lewis6991/impatient.nvim'
@@ -39,10 +44,10 @@ return packer.startup(function(use)
 		'nvim-lualine/lualine.nvim',
 		requires = { 'kyazdani42/nvim-web-devicons', opt = true }
 	}
-  use 'folke/tokyonight.nvim'
-  vim.g.tokyonight_style = "night"
-  vim.cmd[[colorscheme tokyonight]]
-
+  use {
+    'folke/tokyonight.nvim',
+  }
+  pcall(setup)
 	use "lukas-reineke/indent-blankline.nvim"
 	use { 'sindrets/diffview.nvim', requires = 'nvim-lua/plenary.nvim' }
 	use {
@@ -250,7 +255,7 @@ return packer.startup(function(use)
     end
   }
 
-  use {'glepnir/dashboard-nvim'}
+  --[[ use {'glepnir/dashboard-nvim'} ]]
 
   use 'folke/which-key.nvim'
 

@@ -3,7 +3,6 @@ local vim = vim
 -- Use a protected call
 local status_ok, toggleterm = pcall(require, 'toggleterm')
 if not status_ok then
-	vim.notify('Couldn\'t load toggleterm')
 	return
 end
 

@@ -3,13 +3,11 @@ local vim = vim
 -- Use a protected call
 local status_ok, dap = pcall(require, 'dap')
 if not status_ok then
-	vim.notify('Couldn\'t load dap')
 	return
 end
 
 local status_ok, dapui = pcall(require, 'dapui')
 if not status_ok then
-	vim.notify('Couldn\'t load dapui')
 	return
 end
 

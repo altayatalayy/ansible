@@ -3,7 +3,11 @@ local vim = vim
 vim.g.dashboard_default_executive = 'telescope'
 vim.g.indentLine_fileTypeExclude = {'dashboard'}
 
-local db = require('dashboard')
+local status_ok, db = pcall(require,'dashboard')
+if not status_ok then
+  return
+end
+
 
 db.custom_header = {
     [[                                ]],

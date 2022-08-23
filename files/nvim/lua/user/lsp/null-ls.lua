@@ -3,7 +3,6 @@ local vim = vim
 -- Use a protected call
 local status_ok, null_ls = pcall(require, 'null-ls')
 if not status_ok then
-	vim.notify('Couldn\'t load null-ls')
 	return
 end
 

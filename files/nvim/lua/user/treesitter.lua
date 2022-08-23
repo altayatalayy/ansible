@@ -3,7 +3,6 @@ local vim = vim
 -- Use a protected call
 local status_ok, treesitter = pcall(require, 'nvim-treesitter')
 if not status_ok then
-	vim.notify('Couldn\'t load treesitter')
 	return
 end
 

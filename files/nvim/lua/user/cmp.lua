@@ -3,13 +3,16 @@ local vim = vim
 -- Use a protected call
 local cmp_status_ok, cmp = pcall(require, 'cmp')
 if not cmp_status_ok then
-	vim.notify('Couldn\'t load cmp')
+	return
+end
+
+local cmp_git_status_ok, cmp_git = pcall(require, 'cmp_git')
+if not cmp_git_status_ok then
 	return
 end
 
 local snip_status_ok, luasnip = pcall(require, 'luasnip')
 if not snip_status_ok then
-	vim.notify('Couldn\'t load luasnip')
 	return
 end
 
@@ -19,7 +22,7 @@ if not lspkind_status_ok then
 end
 
 require("luasnip.loaders.from_vscode").lazy_load()
-require("cmp_git").setup()
+cmp_git.setup()
 
 cmp.setup({
 	snippet = {
@@ -85,31 +88,3 @@ cmp.setup.cmdline(':', {
         { name = 'nvim_lua' },
     })
 })
-
--- local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
---
--- local servers = {
---     'pyright',
---     'gopls',
---     'clangd',
---     'cmake',
---     'sumneko_lua',
---     'jdtls',
---     'csharp_ls',
---     'html',
---     'cssls',
---     'awk_ls',
---     'eslint',
---     'rust_analyzer',
---     'sourcekit',
---     'texlab',
---     'yamlls',
---     'marksman',
---     'julials'
--- }
---
--- for _, lsp in ipairs(servers) do
--- 	require('lspconfig')[lsp].setup {
--- 		capabilities = capabilities
--- 	}
--- end

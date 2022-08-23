@@ -3,12 +3,10 @@ local vim = vim
 -- Use a protected call
 local status_ok, lspconfig = pcall(require, 'lspconfig')
 if not status_ok then
-	vim.notify('Couldn\'t load lspconfig')
 	return
 end
 
 -- configure lsp installer before setting up lsp servers
--- require('user.lsp.lsp-installer')
 require('mason-lspconfig').setup({automatic_installation = true})
 
 -- Mappings.

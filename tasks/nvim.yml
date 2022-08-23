@@ -176,18 +176,18 @@
   become_user: root
   when: not is_ubuntu18_or_debian10
 
-- name: Check if rustup is installed
-  ansible.builtin.command: which rustup
-  changed_when: false
-  failed_when: false
-  register: rustup_installed
-
+# - name: Check if rustup is installed
+#   ansible.builtin.command: which rustup
+#   changed_when: false
+#   failed_when: false
+#   register: rustup_installed
+#
 # - name: Install rustup
 #   ansible.builtin.shell: |
 #     set -o pipefail && curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs
 #     | sh -s -- -y
 #   when: rustup_installed.rc != 0
-
+#
 # - name: Install linters, formatters with cargo
 #   community.general.cargo:
 #     name: stylua

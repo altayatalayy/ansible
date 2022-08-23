@@ -3,7 +3,6 @@ local vim = vim
 -- Use a protected call
 local status_ok, indent_blankline = pcall(require, 'indent_blankline')
 if not status_ok then
-	vim.notify('Couldn\'t load indent_blankline')
 	return
 end
 
