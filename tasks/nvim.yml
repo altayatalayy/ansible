@@ -64,7 +64,6 @@
   become_user: root
   when: is_ubuntu18_or_debian10
 
-
 - name: Install neovim from tarball, copy nvim/share to /usr/share/nvim
   ansible.builtin.copy:
     src: "/home/{{ user_name }}/nvim-linux64/share/nvim/"
@@ -99,15 +98,37 @@
     ansible_facts['os_family'] == "Debian" and
     not is_ubuntu18_or_debian10
 
-- name: Make sure ~/.config/nvim exists
+- name: Check if Cheovim is installed
+  ansible.builtin.stat:
+    path: ~/.config/nvim/profiles.lua
+  register: cheovim
+
+- name: Delete ~/.config/nvim if cheovim is not installed
   ansible.builtin.file:
     path: "{{ nvim_path }}"
-    state: directory
+    state: absent
+  when: not cheovim.stat.exists
+
+- name: Empty ~/.local/share/nvim/site/pack if cheovim is not installed
+  ansible.builtin.file:
+    path: ~/.local/share/nvim/site/pack
+    state: "{{ item }}"
     owner: "{{ user_name }}"
     group:
       "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
       else user_name }}"
     mode: 0750
+  with_items:
+    - absent
+    - directory
+  when: not cheovim.stat.exists
+
+- name: Clone cheovim
+  ansible.builtin.git:
+    repo: https://github.com/NTBBloodbath/cheovim.git
+    dest: ~/.config/nvim
+    version: main
+  when: not cheovim.stat.exists
 
 - name: Copy config files
   ansible.builtin.copy:
@@ -123,6 +144,7 @@
   homebrew:
     name:
       - ripgrep
+      - fd
       - nodejs
       - yarn
   when:
@@ -132,6 +154,7 @@
   ansible.builtin.apt:
     name:
       - ripgrep
+      - fd-find
   become: true
   become_user: root
   when:
@@ -146,7 +169,7 @@
   become_user: root
   when: is_ubuntu18_or_debian10
 
-- name: Install reuired packages for nvim plugins
+- name: Install required packages for nvim plugins
   ansible.builtin.apt:
     name:
       - cmake
@@ -224,3 +247,27 @@
   become_user: root
   when:
     ansible_facts['os_family'] == "Debian"
+
+- name: Check if java-debug is installed
+  ansible.builtin.stat:
+    path: ~/.config/nvim/java-debug
+  register: java_debug
+
+- name: clone java-debug
+  ansible.builtin.git:
+    repo: https://github.com/microsoft/java-debug.git
+    dest: ~/.config/nvim/java-debug
+    version: main
+  when: not java_debug.stat.exists
+
+- name: Check if vscode-java-test is installed
+  ansible.builtin.stat:
+    path: ~/.config/nvim/vscode-java-test
+  register: java_test
+
+- name: clone vscode-java-test
+  ansible.builtin.git:
+    repo: https://github.com/microsoft/vscode-java-test.git
+    dest: ~/.config/nvim/vscode-java-test
+    version: main
+  when: not java_test.stat.exists

@@ -53,11 +53,14 @@
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-autosuggestions
     dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+    version: master
 
 - name: Install zsh-syntax-highlighting
   ansible.builtin.git:
     repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
     dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+    version: master
+
 - name: Mac Install diff-so-fancy
   homebrew:
     name:
@@ -69,6 +72,7 @@
   ansible.builtin.git:
     repo: https://github.com/so-fancy/diff-so-fancy.git
     dest: ~/.diff-so-fancy
+    version: master
   when:
     ansible_facts['os_family'] == "Debian"
 

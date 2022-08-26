@@ -24,8 +24,14 @@
     dest: ~/.tmux.conf
     mode: 0640
 
+- name: Check if tpm is installed
+  ansible.builtin.stat:
+    path: ~/.tmux/plugins/tpm
+  register: tpm_installed
+
 - name: Install tmux tpm
   ansible.builtin.git:
     repo: https://github.com/tmux-plugins/tpm
     dest: ~/.tmux/plugins/tpm
-  ignore_errors: true
+    version: master
+  when: not tpm_installed.stat.exists

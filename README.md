@@ -52,41 +52,28 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 ```
 
 ## After Install
-### neovim
-- run PackerSync in neovim
+```
+nvim -c +PackerSync +qa
+cd ~/.config/nvim/java-debug/ && ./mvnw clean install
+cd ~/.config/nvim/vscode-java-test/ && npm install && npm run build-plugin
+``` 
   
 ## Notes
 ### nvim
 #### Keymapings
-- `<leader>` = \
-- `<leader> + f` - Telescope find files
-- `<leader> + l` - Telescope live grep
-- `<leader> + g` - Telescope git files
-- `<leader> + k` - Telescope keymaps
+- `<leader>` = Space
 - `s` - HopChar1
 - `sw` - HopWord
 - `gcc` - Toggles the current line using linewise comment
 - `gbc` - Toggles the current line using blockwise comment
 - `z-c` - fold
 - `z-o` - open fold
-- `d-o` - DiffviewOpen
-- `d-c` - DiffviewClose
-- `d-f` - DiffviewFileHistory
-- `<C-t>` - NerdTreeToggle
-- `<C-f>` - NerdTreeFocus
 - `<C-p>` - MarkdownPreviewToggle
-- `<leader> + b` Toggle Brekpoint
-- `<F5>` Continue Debugging
 
-#### Cheat sheet
-
-```
-:noh # Stop search highlight
-```
 
 ### tmux
 - `Ctrl-a` - prefix
-- `prefix + r` - Reload configuration file
+- `prefix + R` - Reload configuration file
 - `prefix + |` - Vertical split
 - `prefix + -` - Horizontal split
 - `prefix + m` - Toggle mouse mode 
