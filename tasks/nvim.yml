@@ -190,6 +190,8 @@
       - yamllint
       - ansible-lint
       - pydocstyle
+  when: not (ansible_facts['distribution'] == "Ubuntu" and
+    ansible_facts['distribution_major_version'] == "18")
 
 - name: Install eslint
   community.general.npm:
