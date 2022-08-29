@@ -86,17 +86,21 @@ cmp.setup.filetype('gitcommit', {
 -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline('/', {
 	sources = {
-        { name = 'luasnip' },
-        { name = 'buffer' },
-        { name = 'path' },
+    { name = 'luasnip' },
+    { name = 'buffer' },
+    { name = 'path' },
 	}
 })
 
+-- written yazma
+-- lualine
+-- cmd completion
+-- colorscheme?
 -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
 cmp.setup.cmdline(':', {
     sources = cmp.config.sources({
-        { name = 'path' },
-        { name = 'cmdline' },
-        { name = 'nvim_lua' },
+      { name = 'path' },
+      { name = 'cmdline' },
+      { name = 'nvim_lua' },
     })
 })

@@ -25,6 +25,7 @@ packer.reset()
 local setup = function ()
   vim.g.tokyonight_style = "night"
   vim.cmd[[colorscheme tokyonight]]
+  vim.notify = require("notify")
 end
 
 
@@ -49,6 +50,11 @@ return packer.startup(function(use)
   use {
     'gpanders/editorconfig.nvim',
     commit = ""
+  }
+
+  use {
+    'rcarriga/nvim-notify',
+    commit = "",
   }
 
 	use {
@@ -233,6 +239,11 @@ return packer.startup(function(use)
 
   use {
     "nvim-telescope/telescope-file-browser.nvim",
+    commit = "",
+  }
+
+  use {
+    'nvim-telescope/telescope-ui-select.nvim',
     commit = "",
   }
 
