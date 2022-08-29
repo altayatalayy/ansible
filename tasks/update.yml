@@ -7,10 +7,3 @@
   become_user: root
   when:
     ansible_facts['os_family'] == "Debian"
-
-- name: Update brew
-  homebrew:
-    update_homebrew: true
-    upgrade_all: true
-  when:
-    ansible_facts['os_family'] == "Darwin"
