@@ -1,3 +1,8 @@
+-- check if packer folder exists if not return
+if not vim.fn.isdirectory(vim.fn.stdpath('data') .. '/pack/packer') then
+  return
+end
+
 pcall(require, "impatient")
 
 require('user.settings')
