@@ -17,12 +17,6 @@ wk.register({
     },
   },
 
-  ["<leader>n"] = {
-    name = '+NvimTree',
-    f = {":NvimTreeFocus<CR>", 'focus'},
-    t = {":NvimTreeToggle<CR>", 'toggle'},
-  },
-
   ['<leader>w'] = {
     name = '+Window',
     ['|'] = {':vs<CR>', 'vertical split'},

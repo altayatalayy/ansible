@@ -1,1 +1,0 @@
-set spelllang=en

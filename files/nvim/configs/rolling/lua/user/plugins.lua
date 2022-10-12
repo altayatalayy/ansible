@@ -26,6 +26,7 @@ local setup = function ()
   vim.g.tokyonight_style = "night"
   vim.cmd[[colorscheme tokyonight]]
   vim.notify = require("notify")
+  vim.g.mkdp_filetypes = { "markdown" }
 end
 
 
@@ -34,54 +35,54 @@ pcall(setup)
 return packer.startup(function(use)
   use {
     'wbthomason/packer.nvim',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     'lewis6991/impatient.nvim',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     'pearofducks/ansible-vim',
-    commit = ""
+    --[[ commit = "" ]]
   } -- Detect Ansible files
 
   use {
     'gpanders/editorconfig.nvim',
-    commit = ""
+    --[[ commit = "" ]]
   }
 
   use {
     'rcarriga/nvim-notify',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	use {
 		'nvim-lualine/lualine.nvim',
 		requires = { 'kyazdani42/nvim-web-devicons', opt = true },
-    commit = "",
+    --[[ commit = "", ]]
 	}
 
   use {
     'folke/tokyonight.nvim',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	use {
     "lukas-reineke/indent-blankline.nvim",
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	use {
     'sindrets/diffview.nvim',
     requires = 'nvim-lua/plenary.nvim',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	use {
     'nvim-treesitter/nvim-treesitter',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
  use {
@@ -95,161 +96,161 @@ return packer.startup(function(use)
     'm-demare/hlargs.nvim',
     requires = { 'nvim-treesitter/nvim-treesitter' },
     config = function () require('hlargs').setup() end,
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	use {
     'numToStr/Comment.nvim',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     'JoosepAlviste/nvim-ts-context-commentstring',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     'lewis6991/gitsigns.nvim',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     "folke/trouble.nvim",
     requires = "kyazdani42/nvim-web-devicons",
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
       'j-hui/fidget.nvim',
       config = function () require"fidget".setup{} end,
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     "williamboman/mason.nvim",
     config = function()  require('mason').setup() end,
-    commit = "",
+    --[[ commit = "", ]]
   }
   use {
     "williamboman/mason-lspconfig.nvim",
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     "neovim/nvim-lspconfig",
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     "RRethy/vim-illuminate",
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     'onsails/lspkind.nvim',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     'mfussenegger/nvim-jdtls',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     'simrat39/rust-tools.nvim',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	-- Completion
   use {
     'hrsh7th/cmp-nvim-lsp',
-    commit = "",
+    --[[ commit = "", ]]
   }
   use {
     'hrsh7th/cmp-nvim-lsp-signature-help',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     'hrsh7th/cmp-nvim-lua',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     'hrsh7th/cmp-buffer',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     'hrsh7th/cmp-path',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     'hrsh7th/cmp-cmdline',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     'hrsh7th/nvim-cmp',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     "petertriho/cmp-git",
     requires = "nvim-lua/plenary.nvim",
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	-- Lua snip
 	use {
     'L3MON4D3/LuaSnip',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	use {
     'saadparwaiz1/cmp_luasnip',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     "rafamadriz/friendly-snippets",
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   -- Linting
   use {
     'jose-elias-alvarez/null-ls.nvim',
     requires = 'nvim-lua/plenary.nvim',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	-- Telescope
 	use {
 	  'nvim-telescope/telescope.nvim',
 	  requires = { {'nvim-lua/plenary.nvim'} },
-    commit = "",
+    --[[ commit = "", ]]
 	}
 
 	use {
 		'nvim-telescope/telescope-fzf-native.nvim',
 		run = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
-    commit = "",
+    --[[ commit = "", ]]
 	}
 
   use {
     "nvim-telescope/telescope-file-browser.nvim",
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     'nvim-telescope/telescope-ui-select.nvim',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     'camgraff/telescope-tmux.nvim',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
@@ -258,49 +259,49 @@ return packer.startup(function(use)
       {'nvim-telescope/telescope.nvim'},
     },
     config = function() require('neoclip').setup() end,
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     'nvim-telescope/telescope-media-files.nvim',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	-- Dap
 	use {
     'mfussenegger/nvim-dap',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	use {
     'rcarriga/nvim-dap-ui',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	use {
     'mfussenegger/nvim-dap-python',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	use {
     'theHamsta/nvim-dap-virtual-text',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	use {
     'nvim-telescope/telescope-dap.nvim',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	use {
     'phaazon/hop.nvim',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 
   use {
     'norcalli/nvim-colorizer.lua',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   --[[ use { ]]
@@ -318,26 +319,35 @@ return packer.startup(function(use)
     'akinsho/bufferline.nvim',
     tag = "v2.*",
     requires = 'kyazdani42/nvim-web-devicons',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
 	use {
 		"iamcco/markdown-preview.nvim",
 		run = "cd app && npm install",
 		ft = { "markdown" },
-    commit = "",
+    --[[ commit = "", ]]
 	}
-  vim.g.mkdp_filetypes = { "markdown" }
+
+  use {
+    "ellisonleao/glow.nvim",
+    config = function ()
+      require('glow').setup({
+        width = 120,
+      })
+    end,
+    --[[ commit = "", ]]
+  }
 
   use {
     "akinsho/toggleterm.nvim",
     tag = 'v2.*',
-    commit = "",
+    --[[ commit = "", ]]
   }
   use {
     'kevinhwang91/nvim-ufo',
     requires = 'kevinhwang91/promise-async',
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   -- Zen mode
@@ -346,12 +356,12 @@ return packer.startup(function(use)
     config = function()
       require("twilight").setup { }
     end,
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
     "folke/zen-mode.nvim",
-    commit = "",
+    --[[ commit = "", ]]
   }
 
   use {
@@ -363,6 +373,12 @@ return packer.startup(function(use)
 
   use {
     'folke/which-key.nvim',
-    commit = "",
+    --[[ commit = "", ]]
   }
+
+  use {
+    'tpope/vim-surround'
+    --[[ commit = "", ]]
+  }
+
 end)
