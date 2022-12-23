@@ -47,6 +47,7 @@ require'nvim-treesitter.configs'.setup {
       'fish',
       'comment',
       'norg',
+      'help',
   },
 
   -- Install languages synchronously (only applied to `ensure_installed`)

@@ -13,22 +13,22 @@ null_ls.setup({
         -- Python
         formatting.black,
         diagnostics.flake8,
-        diagnostics.pydocstyle, -- x
+        diagnostics.pydocstyle,
         -- JS
-        formatting.eslint, -- x
+        --[[ formatting.eslint, -- x ]]
         -- diagnostics.eslint,
         -- ansible
         diagnostics.ansiblelint, -- x
         -- yaml
         diagnostics.yamllint,
         -- lua
-        formatting.stylua, -- x
+        --[[ formatting.stylua, -- x ]]
         -- c/c++
         diagnostics.cppcheck, -- x
         -- shell
         diagnostics.shellcheck,
         -- rst
-        diagnostics.rstcheck, -- x
+        diagnostics.rstcheck,
         -- text
         diagnostics.codespell,
         -- git

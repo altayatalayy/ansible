@@ -1,20 +1,20 @@
 ---
 - name: Setup your sources.list
-  shell: >
+  ansible.builtin.shell: >
     echo "deb http://packages.ros.org/ros/ubuntu bionic main" >
     /etc/apt/sources.list.d/ros-melodic.list
   become: true
   become_user: root
 
 - name: Set up your keys
-  apt_key:
+  ansible.builtin.apt_key:
     url: https://raw.githubusercontent.com/ros/rosdistro/master/ros.asc
     state: present
   become: true
   become_user: root
 
 - name: Installation
-  apt:
+  ansible.builtin.apt:
     update_cache: true
     name:
       - ros-melodic-desktop-full
@@ -22,12 +22,12 @@
   become_user: root
 
 - name: Environment setup
-  lineinfile:
+  ansible.builtin.lineinfile:
     path: ~/.bashrc
     line: 'source /opt/ros/melodic/setup.bash'
 
 - name: Dependencies for building packages
-  apt:
+  ansible.builtin.apt:
     name:
       - python-rosdep
       - python-rosinstall
@@ -39,10 +39,10 @@
   become_user: root
 
 - name: Initializing rosdep
-  shell: rosdep init
+  ansible.builtin.shell: rosdep init
   become: true
   become_user: root
   ignore_errors: true
 
 - name: Update rosdep
-  shell: rosdep update
+  ansible.builtin.shell: rosdep update

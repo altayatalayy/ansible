@@ -7,24 +7,14 @@ end
 wk.register({
   s = {":HopChar1<CR>", 'HopChar1'},
   sw = {":HopWord<CR>", 'HopWord'},
-  ["<leader>g"] = {
-    name = '+git',
-    d = {
-      name = '+Diffview',
-      o = {":DiffviewOpen<CR>", 'open'},
-      c = {":DiffviewClose<CR>", 'close'},
-      f = {":DiffviewFileHistory<CR>", 'history'},
-    },
-  },
 
   ['<leader>w'] = {
     name = '+Window',
     ['|'] = {':vs<CR>', 'vertical split'},
     ['-'] = {':sp<CR>', 'horizontal split'},
-    tn = {':tabnew<CR>', 'tabnew'},
-    tk = {':tabnext<CR>', 'tabnext'},
-    tj = {':tabprev<CR>', 'tabprev'},
-    to = {':tabo<CR>', 'tabo'},
+    t = {':tabnew %<CR>', 'tabnew'},
+    n = {':tabnext<CR>', 'tabnext'},
+    p = {':tabprev<CR>', 'tabprev'},
     l = {'<C-W><C-L>', 'right'},
     h = {'<C-W><C-H>', 'left'},
     k = {'<C-W><C-K>', 'up'},
@@ -38,3 +28,6 @@ wk.register({
 wk.register({
 ["<Esc>"] = {"<C-\\><C-n>", ''},
   }, { mode = 't', silent = true, noremap = true, })
+
+vim.keymap.set('v', 'J', ":m '>+1<CR>gv=gv")
+vim.keymap.set('v', 'K', ":m '<-2<CR>gv=gv")
