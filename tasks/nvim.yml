@@ -98,19 +98,6 @@
     ansible_facts['os_family'] == "Debian" and
     not is_ubuntu18_or_debian10
 
-- name: Empty ~/.local/share/nvim/site/pack if cheovim is not installed
-  ansible.builtin.file:
-    path: ~/.local/share/nvim/site/pack
-    state: "{{ item }}"
-    owner: "{{ user_name }}"
-    group:
-      "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
-      else user_name }}"
-    mode: 0750
-  with_items:
-    - absent
-    - directory
-
 - name: Copy config files
   ansible.builtin.copy:
     src: files/nvim/
