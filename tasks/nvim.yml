@@ -102,7 +102,7 @@
   ansible.builtin.git:
     repo: https://github.com/altayatalayy/nvim-config.git
     dest: "{{ nvim_path }}/"
-    version: master
+    version: main
 
 - name: Install required packages for nvim plugins, Mac
   homebrew:
