@@ -99,14 +99,10 @@
     not is_ubuntu18_or_debian10
 
 - name: Copy config files
-  ansible.builtin.copy:
-    src: files/nvim/
+  ansible.builtin.git:
+    repo: https://github.com/altayatalayy/nvim-config.git
     dest: "{{ nvim_path }}/"
-    owner: "{{ user_name }}"
-    group:
-      "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
-      else user_name }}"
-    mode: 0750
+    version: master
 
 - name: Install required packages for nvim plugins, Mac
   homebrew:
