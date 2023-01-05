@@ -53,7 +53,7 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 
 ## After Install
 ```
-nvim -c +PackerSync +qa
+nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
 ``` 
   
 ## Notes
