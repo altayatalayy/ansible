@@ -43,47 +43,39 @@
   when:
     ansible_facts['os_family'] == "Debian"
 
-- name: Install neovim from tarball, unzip tarball
+- name: Install neovim build dependencies
+  ansible.builtin.apt:
+    name:
+      - libtool
+      - libtool-bin
+      - gettext
+      - build-essential
+      - cmake
+      - pkg-config
+      - unzip
+  become: true
+  become_user: root
+  when: is_ubuntu18_or_debian10
+
+- name: Install neovim from source, unzip tarball
   ansible.builtin.unarchive:
     src:
-      "https://github.com/neovim/neovim/releases/download/\
-       v0.8.0/nvim-linux64.tar.gz"
+      "https://github.com/neovim/neovim/archive/refs/tags/stable.tar.gz"
     dest: "/home/{{ user_name }}/"
     remote_src: true
   when: is_ubuntu18_or_debian10
 
-- name: Install neovim from tarball, copy nvim to /usr/bin
-  ansible.builtin.copy:
-    src: "/home/{{ user_name }}/nvim-linux64/bin/nvim"
-    dest: "/usr/bin/nvim"
-    owner: root
-    group: root
-    mode: '0555'
-    remote_src: true
-  become: true
-  become_user: root
+- name: Compile nvim
+  community.general.make:
+    chdir: ~/neovim-stable
+    params:
+      CMAKE_BUILD_TYPE: Release
   when: is_ubuntu18_or_debian10
 
-- name: Install neovim from tarball, copy nvim/share to /usr/share/nvim
-  ansible.builtin.copy:
-    src: "/home/{{ user_name }}/nvim-linux64/share/nvim/"
-    dest: "/usr/share/nvim"
-    owner: root
-    group: root
-    mode: '0555'
-    remote_src: true
-  become: true
-  become_user: root
-  when: is_ubuntu18_or_debian10
-
-- name: Install neovim from tarball, copy nvim/lib to /usr/lib/x86_64-linux-gnu
-  ansible.builtin.copy:
-    src: "/home/{{ user_name }}/nvim-linux64/lib/nvim/"
-    dest: "/usr/lib/x86_64-linux-gnu/nvim"
-    owner: root
-    group: root
-    mode: '0555'
-    remote_src: true
+- name: Run install
+  community.general.make:
+    chdir: '/home/{{ user_name }}/neovim-stable'
+    target: install
   become: true
   become_user: root
   when: is_ubuntu18_or_debian10
@@ -91,7 +83,7 @@
 - name: Install neovim Debian 20.04+
   ansible.builtin.apt:
     deb:
-      "https://github.com/neovim/neovim/releases/download/v0.8.0/nvim-linux64.deb"
+      "https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb"
   become: true
   become_user: root
   when: >
@@ -102,7 +94,15 @@
   ansible.builtin.git:
     repo: https://github.com/altayatalayy/nvim-config.git
     dest: "{{ nvim_path }}/"
+    version: ubuntu18
+  when: is_ubuntu18_or_debian10
+
+- name: Copy config files
+  ansible.builtin.git:
+    repo: https://github.com/altayatalayy/nvim-config.git
+    dest: "{{ nvim_path }}/"
     version: main
+  when: not is_ubuntu18_or_debian10
 
 - name: Install required packages for nvim plugins, Mac
   homebrew:
