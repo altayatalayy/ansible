@@ -7,14 +7,14 @@ name: CI
     paths-ignore:
       - '**/*.md'
       - '*.sh'
-      - 'files/'
+      - 'files/*'
 
   pull_request:
     branches: [master]
     paths-ignore:
       - '**/*.md'
       - '*.sh'
-      - 'files/'
+      - 'files/*'
 
 jobs:
   test:
