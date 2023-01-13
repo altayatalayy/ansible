@@ -1,4 +1,22 @@
 ---
+- name: Set is_ubuntu18_or_debian10 to true
+  ansible.builtin.set_fact:
+    is_ubuntu18_or_debian10: true
+  when: >
+    (ansible_facts['distribution'] == "Ubuntu" and
+    ansible_facts['distribution_major_version'] == "18") or
+    (ansible_facts['distribution'] == "Debian" and
+    ansible_facts['distribution_major_version'] == "10")
+
+- name: Set is_ubuntu18_or_debian10 to false
+  ansible.builtin.set_fact:
+    is_ubuntu18_or_debian10: false
+  when: >
+    not ((ansible_facts['distribution'] == "Ubuntu" and
+    ansible_facts['distribution_major_version'] == "18") or
+    (ansible_facts['distribution'] == "Debian" and
+    ansible_facts['distribution_major_version'] == "10"))
+
 - name: Install required packages with brew
   homebrew:
     name:
@@ -7,7 +25,7 @@
   when:
     ansible_facts['os_family'] == "Darwin"
 
-- name: Install required packages with apt
+- name: Install tmux with apt
   ansible.builtin.apt:
     name:
       - tmux
@@ -16,7 +34,53 @@
   become: true
   become_user: root
   when:
-    ansible_facts['os_family'] == "Debian"
+    ansible_facts['os_family'] == "Debian" and
+    not is_ubuntu18_or_debian10
+
+- name: Make sure tmux-source folder exists
+  ansible.builtin.file:
+    path: ~/tmux-source
+    state: directory
+    mode: '0766'
+  when: is_ubuntu18_or_debian10
+
+- name: Download tmux source code
+  ansible.builtin.unarchive:
+    src: https://github.com/tmux/tmux/releases/download/3.3a/tmux-3.3a.tar.gz
+    dest: ~/tmux-source
+    mode: '0660'
+    remote_src: true
+    extra_opts: [--strip-components=1]
+  when: is_ubuntu18_or_debian10
+
+- name: Install build dependencies
+  ansible.builtin.apt:
+    name:
+      - libevent-dev
+      - ncurses-dev
+      - build-essential
+      - bison
+      - pkg-config
+  become: true
+  become_user: root
+  when: is_ubuntu18_or_debian10
+
+- name: Run configure
+  ansible.builtin.shell: cd ~/tmux-source && sh ./configure
+  when: is_ubuntu18_or_debian10
+
+- name: Compile tmux
+  community.general.make:
+    chdir: ~/tmux-source
+  when: is_ubuntu18_or_debian10
+
+- name: Run install
+  community.general.make:
+    chdir: '/home/{{ user_name }}/tmux-source'
+    target: install
+  become: true
+  become_user: root
+  when: is_ubuntu18_or_debian10
 
 - name: Copy tmux config file
   ansible.builtin.copy:
