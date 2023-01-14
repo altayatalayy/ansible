@@ -30,8 +30,16 @@ Install and configure
 brew install git ansible
 ansible-galaxy collection install community.general
 ```
-#### Ubuntu
+#### Ubuntu 20.04+
 ```bash
+sudo apt install git ansible
+ansible-galaxy collection install community.general
+```
+
+#### Ubuntu 18.04
+```bash
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt update
 sudo apt install git ansible
 ansible-galaxy collection install community.general
 ```
