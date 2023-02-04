@@ -87,6 +87,12 @@
   when:
     ansible_facts['os_family'] == "Debian"
 
+- name: Uncomment DISABLE_AUTO_TITLE line
+  ansible.builtin.lineinfile:
+    path: ~/.zshrc
+    regexp: '^# DISABLE_AUTO_TITLE'
+    line: 'DISABLE_AUTO_TITLE="true"'
+
 - name: add plugins to .zshrc
   ansible.builtin.lineinfile:
     path: ~/.zshrc

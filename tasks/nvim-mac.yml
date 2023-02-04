@@ -1,0 +1,37 @@
+---
+- name: Install required packages with brew
+  homebrew:
+    name:
+      - nvim
+      - curl
+      - git
+      - llvm
+
+- name: Install required packages for nvim plugins, Mac
+  homebrew:
+    name:
+      - ripgrep
+      - fd
+      - nodejs
+      - yarn
+
+- name: Install lazygit, Mac
+  homebrew:
+    name: lazygit
+
+- name: Install ansible-lint
+  ansible.builtin.pip:
+    name:
+      - ansible-lint
+
+- name: Install eslint
+  community.general.npm:
+    name: eslint
+    global: true
+  become: true
+  become_user: root
+
+- name: Install cppcheck Macos
+  homebrew:
+    name:
+      - cppcheck

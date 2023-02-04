@@ -1,0 +1,56 @@
+---
+- name: sasnkd
+  ansible.builtin.debug:
+    var: nvim_installed
+
+- name: Remove old nvim
+  ansible.builtin.file:
+    path: '/usr/local/{{ item }}/nvim'
+    state: absent
+  with_items:
+    - bin
+    - lib
+    - share
+  when: nvim_installed|bool
+  become: true
+  become_user: root
+
+- name: Install neovim build dependencies
+  ansible.builtin.apt:
+    name:
+      - libtool
+      - libtool-bin
+      - gettext
+      - build-essential
+      - cmake
+      - pkg-config
+      - unzip
+      - git
+  become: true
+  become_user: root
+
+- name: Download neovim source
+  ansible.builtin.unarchive:
+    src:
+      "https://github.com/neovim/neovim/archive/refs/tags/stable.tar.gz"
+    dest: "/home/{{ user_name }}/"
+    remote_src: true
+
+- name: Compile nvim
+  community.general.make:
+    chdir: ~/neovim-stable
+    params:
+      CMAKE_BUILD_TYPE: Release
+      NUM_THREADS: 4
+
+- name: Run install
+  community.general.make:
+    chdir: '/home/{{ user_name }}/neovim-stable'
+    target: install
+  become: true
+  become_user: root
+
+- name: Delete neovim source files
+  ansible.builtin.file:
+    path: ~/neovim-stable
+    state: absent

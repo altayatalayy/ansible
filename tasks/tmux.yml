@@ -1,48 +1,58 @@
 ---
-- name: Set is_ubuntu18_or_debian10 to true
+- name: Set tmux facts
   ansible.builtin.set_fact:
-    is_ubuntu18_or_debian10: true
-  when: >
-    (ansible_facts['distribution'] == "Ubuntu" and
-    ansible_facts['distribution_major_version'] == "18") or
-    (ansible_facts['distribution'] == "Debian" and
-    ansible_facts['distribution_major_version'] == "10")
+    tmux_version: 3.3a
+    tmux_bin_path: /usr/local/bin/tmux
 
-- name: Set is_ubuntu18_or_debian10 to false
-  ansible.builtin.set_fact:
-    is_ubuntu18_or_debian10: false
-  when: >
-    not ((ansible_facts['distribution'] == "Ubuntu" and
-    ansible_facts['distribution_major_version'] == "18") or
-    (ansible_facts['distribution'] == "Debian" and
-    ansible_facts['distribution_major_version'] == "10"))
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: auto
 
-- name: Install required packages with brew
-  homebrew:
-    name:
-      - tmux
-    state: present
-  when:
-    ansible_facts['os_family'] == "Darwin"
-
-- name: Install tmux with apt
+- name: Remove installed tmux
   ansible.builtin.apt:
     name:
       - tmux
-    state: present
-    update_cache: true
+    state: absent
   become: true
   become_user: root
-  when:
-    ansible_facts['os_family'] == "Debian" and
-    not is_ubuntu18_or_debian10
+  when: >
+    ('tmux' in ansible_facts.packages)
+    and not ansible_facts.packages.tmux[0].version == tmux_version
+
+- name: Check for existing tmux install
+  ansible.builtin.stat:
+    path: "{{ tmux_bin_path }}"
+  register: result_tmux_installed
+
+- name: Check tmux version
+  ansible.builtin.command: "{{ tmux_bin_path }} -V"
+  register: result_tmux_version
+  when: result_tmux_installed is defined and result_tmux_installed.stat.exists
+  changed_when: false
+
+- name: Set build_tmux
+  ansible.builtin.set_fact:
+    build_tmux: >
+      "{{ result_tmux_version is skipped or
+      not result_tmux_version.stdout_lines[0] is match('.*3.3a') }}"
+
+- name: Remove old tmux
+  ansible.builtin.file:
+    path: '{{ item }}'
+    state: absent
+  with_items:
+    - /usr/local/bin/tmux
+    - /usr/local/share/man/man.1/tmux.1
+  become: true
+  become_user: root
+  when: build_tmux|bool
 
 - name: Make sure tmux-source folder exists
   ansible.builtin.file:
     path: ~/tmux-source
     state: directory
     mode: '0766'
-  when: is_ubuntu18_or_debian10
+  when: build_tmux|bool
 
 - name: Download tmux source code
   ansible.builtin.unarchive:
@@ -51,7 +61,7 @@
     mode: '0660'
     remote_src: true
     extra_opts: [--strip-components=1]
-  when: is_ubuntu18_or_debian10
+  when: build_tmux|bool
 
 - name: Install build dependencies
   ansible.builtin.apt:
@@ -63,16 +73,16 @@
       - pkg-config
   become: true
   become_user: root
-  when: is_ubuntu18_or_debian10
+  when: build_tmux|bool
 
 - name: Run configure
   ansible.builtin.shell: cd ~/tmux-source && sh ./configure
-  when: is_ubuntu18_or_debian10
+  when: build_tmux|bool
 
 - name: Compile tmux
   community.general.make:
     chdir: ~/tmux-source
-  when: is_ubuntu18_or_debian10
+  when: build_tmux|bool
 
 - name: Run install
   community.general.make:
@@ -80,7 +90,13 @@
     target: install
   become: true
   become_user: root
-  when: is_ubuntu18_or_debian10
+  when: build_tmux|bool
+
+- name: Delete tmux-source folder
+  ansible.builtin.file:
+    path: ~/tmux-source
+    state: absent
+  when: build_tmux|bool
 
 - name: Copy tmux config file
   ansible.builtin.copy:

@@ -1,0 +1,25 @@
+- name: Install required packages with brew
+  homebrew:
+    name:
+      - tmux
+    state: present
+  when:
+    ansible_facts['os_family'] == "Darwin"
+
+- name: Copy tmux config file
+  ansible.builtin.copy:
+    src: files/tmux/.tmux.conf
+    dest: ~/.tmux.conf
+    mode: 0640
+
+- name: Check if tpm is installed
+  ansible.builtin.stat:
+    path: ~/.tmux/plugins/tpm
+  register: tpm_installed
+
+- name: Install tmux tpm
+  ansible.builtin.git:
+    repo: https://github.com/tmux-plugins/tpm
+    dest: ~/.tmux/plugins/tpm
+    version: master
+  when: not tpm_installed.stat.exists

@@ -6,10 +6,26 @@
   become_user: "{{ user_name }}"
 
   tasks:
-
     - import_tasks: tasks/update.yml
-    - import_tasks: tasks/nvim.yml
+    - import_tasks: tasks/nvim-mac.yml
+      when: ansible_facts['os_family'] == "Darwin"
+
+    - import_tasks: tasks/nvim-deb-x86.yml
+      when: >
+        ansible_facts['os_family'] == "Debian" and
+        ansible_facts['architecture'] == 'x86_64'
+
+    - import_tasks: tasks/nvim-deb-aarch64.yml
+      when: >
+        ansible_facts['os_family'] == "Debian" and
+        ansible_facts['architecture'] == 'arm64'
+
+    - import_tasks: tasks/tmux-mac.yml
+      when: ansible_facts['os_family'] == "Darwin"
+
     - import_tasks: tasks/tmux.yml
+      when: ansible_facts['os_family'] == "Debian"
+
     - import_tasks: tasks/termapps.yml
     - import_tasks: tasks/zsh.yml
     - import_tasks: tasks/git.yml

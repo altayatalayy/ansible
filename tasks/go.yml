@@ -1,0 +1,67 @@
+---
+
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: Remove installed golang-go
+  ansible.builtin.apt:
+    name:
+      - golang-go
+    state: absent
+  become: true
+  become_user: root
+  when: >
+    'golang-go' in ansible_facts.packages
+
+- name: Check for existing neovim install
+  ansible.builtin.stat:
+    path: /usr/local/go
+  register: result_go_installed
+
+- name: Check go version
+  ansible.builtin.command: "/usr/local/go/bin/go version"
+  register: result_go_version
+  when: result_go_installed is defined and result_go_installed.stat.exists
+  changed_when: false
+
+- name: Set build_go
+  ansible.builtin.set_fact:
+    build_go: >
+      "{{ not (result_go_version is not skipped and
+      result_go_version.stdout_lines[0] is match(".*?1\.20.*?")) }}"
+
+- name: Remove old go
+  ansible.builtin.file:
+    path: /usr/local/go
+    state: absent
+  become: true
+  become_user: root
+  when: build_go|bool
+
+- name: Download and unarchive go
+  ansible.builtin.unarchive:
+    src: https://go.dev/dl/go1.20.linux-amd64.tar.gz
+    dest: /usr/local
+    remote_src: true
+  become: true
+  become_user: root
+  when: build_go|bool
+
+- name: Add go to path in .profile
+  ansible.builtin.lineinfile:
+    path: ~/.bashrc
+    line: 'export PATH=$PATH:/usr/local/go/bin'
+    state: present
+    create: true
+    mode: '0644'
+  when: build_go|bool
+
+- name: Add go to path in .zprofile
+  ansible.builtin.lineinfile:
+    path: ~/.zshenv
+    line: 'export PATH=$PATH:/usr/local/go/bin'
+    state: present
+    create: true
+    mode: '0644'
+  when: build_go|bool

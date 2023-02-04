@@ -1,0 +1,60 @@
+---
+- name: Gather the package facts
+  ansible.builtin.package_facts:
+    manager: auto
+
+- name: Remove installed nodejs
+  ansible.builtin.apt:
+    name:
+      - nodejs
+    state: absent
+  become: true
+  become_user: root
+  when: >
+    not is_ubuntu18
+    and ('nodejs' in ansible_facts.packages)
+    and not ansible_facts.packages.nodejs[0].version is match('.*?18.*?')
+
+- name: Remove installed nodejs
+  ansible.builtin.apt:
+    name:
+      - nodejs
+    state: absent
+  become: true
+  become_user: root
+  when: >
+    is_ubuntu18
+    and ('nodejs' in ansible_facts.packages)
+    and not ansible_facts.packages.nodejs[0].version is match('.*?16.*?')
+
+- name: Run nodesource setup script
+  ansible.builtin.shell: |
+    curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+  become: true
+  become_user: root
+  changed_when: false
+  when: not is_ubuntu18
+
+- name: Run nodesource setup script
+  ansible.builtin.shell: |
+    curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+  become: true
+  become_user: root
+  changed_when: false
+  when: is_ubuntu18
+
+- name: Install node, npm
+  ansible.builtin.apt:
+    name:
+      - nodejs
+    state: present
+  become: true
+  become_user: root
+
+- name: Install yarn
+  community.general.npm:
+    name: yarn
+    global: true
+    state: present
+  become_user: root
+  changed_when: false
