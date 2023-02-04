@@ -26,22 +26,22 @@ Install and configure
 ## Setup
 #### Macos
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-brew install git ansible
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" &&\
+brew install git ansible &&\
 ansible-galaxy collection install community.general
 ```
 #### Ubuntu 20.04+
 ```bash
-sudo apt install git ansible
+sudo apt install git ansible &&\
 ansible-galaxy collection install community.general
 ```
 
 #### Ubuntu 18.04
 ```bash
-sudo apt install software-properties-common
-sudo apt-add-repository ppa:ansible/ansible
-sudo apt update
-sudo apt install git ansible
+sudo apt install software-properties-common &&\
+sudo apt-add-repository ppa:ansible/ansible &&\
+sudo apt update &&\
+sudo apt install git ansible &&\
 ansible-galaxy collection install community.general
 ```
 
@@ -59,9 +59,8 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 ```
 
 ## After Install
-```bash
-nvim --headless -c 'autocmd User PackerComplete quitall'
-``` 
+### Install tmux plugins
+`prefix + Ctrl-I` 
   
 ## Notes
 ### nvim
