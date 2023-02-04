@@ -30,8 +30,17 @@ Install and configure
 brew install git ansible
 ansible-galaxy collection install community.general
 ```
-#### Ubuntu
+#### Ubuntu 20.04+
 ```bash
+sudo apt install git ansible
+ansible-galaxy collection install community.general
+```
+
+#### Ubuntu 18.04
+```bash
+sudo apt install software-properties-common
+sudo apt-add-repository ppa:ansible/ansible
+sudo apt update
 sudo apt install git ansible
 ansible-galaxy collection install community.general
 ```
@@ -51,7 +60,7 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 
 ## After Install
 ```bash
-nvim --headless -c 'autocmd User PackerComplete quitall' -c 'PackerSync'
+nvim --headless -c 'autocmd User PackerComplete quitall'
 ``` 
   
 ## Notes
