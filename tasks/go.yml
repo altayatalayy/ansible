@@ -14,7 +14,7 @@
   when: >
     'golang-go' in ansible_facts.packages
 
-- name: Check for existing neovim install
+- name: Check for existing go install
   ansible.builtin.stat:
     path: /usr/local/go
   register: result_go_installed
@@ -48,7 +48,7 @@
   become_user: root
   when: build_go|bool
 
-- name: Add go to path in .profile
+- name: Add go to path in ~/.bashrc
   ansible.builtin.lineinfile:
     path: ~/.bashrc
     line: 'export PATH=$PATH:/usr/local/go/bin'
@@ -57,7 +57,7 @@
     mode: '0644'
   when: build_go|bool
 
-- name: Add go to path in .zprofile
+- name: Add go to path in ~/.zshenv
   ansible.builtin.lineinfile:
     path: ~/.zshenv
     line: 'export PATH=$PATH:/usr/local/go/bin'
