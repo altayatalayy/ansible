@@ -4,6 +4,11 @@
   gather_facts: true
   become: true
   become_user: "{{ user_name }}"
+  vars:
+    is_ubuntu18: "{{ ansible_facts.distribution == 'Ubuntu' and
+      ansible_facts.distribution_major_version == '18' }}"
+    is_debian10: "{{ ansible_facts.distribution == 'Debian' and
+      ansible_facts.distribution_major_version == '10' }}"
 
   tasks:
     - import_tasks: tasks/update.yml
