@@ -18,30 +18,30 @@ is used for automation.
 
 ## Supported languages and frameworks
 
-<table>
+<table style="table-layout: fixed; width: 700px; margin: auto;">
     <tr>
-        <td>Python<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/python.svg" width="65" title="Python" /></td>
-        <td>C<br><img src="https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg" width="65" title="C" /></td>
-        <td>C++<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/cplusplus.svg" width="65" title="C++"/></td>
-        <td>Rust<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/rust.svg" width="65" title="Rust" /></td>
-        <td>Java<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/java.svg" width="65" title="Java" /></td>
-        <td>Bash<br><img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Bash_Logo_Colored.svg" width="65" title="Bash"/></td>
-        <td>Terraform<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/terraform.svg" width="65" title="Terraform"/></td>
-        <td>Go<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/go.svg" width="65" title="Go" /></td>
+        <td width="100" style="text-align: center" >Python<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/python.svg" width="30" title="Python" /></td>
+        <td width="100" style="text-align: center" >C<br><img src="https://upload.wikimedia.org/wikipedia/commons/1/18/C_Programming_Language.svg" width="30" title="C" /></td>
+        <td width="100" style="text-align: center" >C++<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/cplusplus.svg" width="30" title="C++"/></td>
+        <td width="100" style="text-align: center" >Rust<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/rust.svg" width="30" title="Rust" /></td>
+        <td width="100" style="text-align: center" >Java<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/java.svg" width="30" title="Java" /></td>
+        <td width="100" style="text-align: center" >Bash<br><img src="https://upload.wikimedia.org/wikipedia/commons/4/4b/Bash_Logo_Colored.svg" width="30" title="Bash"/></td>
+        <td width="100" style="text-align: center" >Go<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/go.svg" width="30" title="Go" /></td>
     </tr>
     <tr>
-        <td>JavaScript<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/javascript.svg" width="65" title="JavaScript" /></td>
-        <td>TypeScript<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/typescript.svg" width="65" title="TypeScript"/></td>
-        <td>React<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/react.svg" width="65" title="React" /></td>
-        <td>HTML5<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/html5.svg" width="65" title="HTML5" /></td>
-        <td>CSS3<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/css3.svg" width="65" title="CSS3"/></td>
-        <td>npm<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/npm.svg" width="65" title="npm" /></td>
-        <td>Yarn<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/yarn.svg" width="65" title="Yarn" /></td>
-        <td>Tailwindcss<br><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" width="65" title="Bash"/></td>
+        <td width="100" style="text-align: center" >JavaScript<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/javascript.svg" width="30" title="JavaScript" /></td>
+        <td width="100" style="text-align: center" >React<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/react.svg" width="30" title="React" /></td>
+        <td width="100" style="text-align: center" >TypeScript<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/typescript.svg" width="30" title="TypeScript"/></td>
+        <td width="100" style="text-align: center" >HTML5<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/html5.svg" width="30" title="HTML5" /></td>
+        <td width="100" style="text-align: center" >CSS3<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/css3.svg" width="30" title="CSS3"/></td>
+        <td width="100" style="text-align: center" >npm<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/npm.svg" width="30" title="npm" /></td>
+        <td width="100" style="text-align: center" >Yarn<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/yarn.svg" width="30" title="Yarn" /></td>
     </tr>
     <tr>
-        <td>JSON<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/json.svg" width="65" title="JSON" /></td>
-        <td>Markdown<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/markdown.svg" width="65" title="markdown" /></td>
+        <td width="100" style="text-align: center" >Markdown<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/markdown.svg" width="30" title="markdown" /></td>
+        <td width="100" style="text-align: center" >JSON<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/json.svg" width="30" title="JSON" /></td>
+        <td width="100" style="text-align: center" >Tailwindcss<br><img src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" width="30" title="Bash"/></td>
+        <td width="100" style="text-align: center" >Terraform<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/terraform.svg" width="30" title="Terraform"/></td>
     </tr>
 </table>
 
@@ -51,7 +51,7 @@ is used for automation.
         <td>Neovim<br>
             <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Neovim-mark.svg"  width="50" title="Neovim"/>
         </td>
-        <td>Git<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/git.svg" width="80" title="git"/></td>
+        <td>Git<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/git.svg" width="50" title="git"/></td>
         <td><br>
             <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Tmux_logo.svg"  width="50" title="tmux"/>
         </td>
@@ -60,27 +60,27 @@ is used for automation.
 
 
 ## Platform Support
-<table>
+<table style="table-layout: fixed; width: 90%; margin: auto; text-align: center; ">
     <thead>
         <tr>
-            <th>OS</th>
-            <th>Version</th>
-            <th>Status</th>
-            <th>OS</th>
-            <th>Version</th>
-            <th>Status</th>
+            <th width="15%">OS</th>
+            <th width="15%">Version</th>
+            <th width="15%">Status</th>
+            <th width="15%">OS</th>
+            <th width="15%">Version</th>
+            <th width="15%">Status</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <td rowspan=3>Ubuntu<br>
+            <td rowspan=3 style="vertical-align: middle;">Ubuntu<br>
                 <img src="https://edent.github.io/SuperTinyIcons/images/svg/ubuntu.svg" width="50" title="Ubuntu" />
             </td>
             <td>22.04</td>
             <td>✅</td>
-            <td rowspan=3>Debian<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/debian.svg" width="50" title="Debian"/></td>
-            <td rowspan=3>10</td>
-            <td rowspan=3>✅</td>
+            <td rowspan=3 style="vertical-align: middle;">Debian<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/debian.svg" width="50" title="Debian"/></td>
+            <td rowspan=3 style="vertical-align: middle;">10</td>
+            <td rowspan=3 style="vertical-align: middle;">✅</td>
         </tr>
         <tr>
             <td>20.04</td>
@@ -94,25 +94,25 @@ is used for automation.
             <td>macOS<br>
                 <img src="https://edent.github.io/SuperTinyIcons/images/svg/macos.svg" width="50" title="macOS"/>
             </td>
-            <td>Ventura</td>
+            <td style="vertical-align: middle;">Ventura</td>
             <td>✅</td>
             <td>Raspberry Pi<br>
                 <img src="https://edent.github.io/SuperTinyIcons/images/svg/raspberry_pi.svg" width="50" title="Raspberry Pi" />
             </td>
-            <td>Raspberry Pi OS (64-bit)</td>
-            <td>❌</td>
+            <td style="vertical-align: middle;">Pi OS (64-bit)</td>
+            <td style="vertical-align: middle;">❌</td>
         </tr>
         <tr>
             <td>Fedora<br>
                 <img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Fedora_logo.svg" width="50" title="Fedora" />
             </td>
             <td></td>
-            <td>❌</td>
+            <td style="vertical-align: middle;">❌</td>
             <td>Arch Linux<br>
                 <img src="https://edent.github.io/SuperTinyIcons/images/svg/arch_linux.svg" width="50" title="Arch Linux"/>
             </td>
             <td></td>
-            <td>❌</td>
+            <td style="vertical-align: middle;">❌</td>
         </tr>
     </tbody>
 </table>
@@ -176,9 +176,3 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 $ copypath #copy path to clipboard
 $ copyfile #copy a file to clipboard
 ```
-
-### ssh setup for vms
-- on guest: `sudo apt install ssh`
-- on host: `ssh-copy-id -p <port> -i <sshkey> user@host`
-- on host: Edit /etc/hosts
-- on host: Edit ssh config 
