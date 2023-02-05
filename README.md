@@ -9,18 +9,12 @@ is used for automation.
 
 ## Table of Contents
 * [Supported Languages](#supported-languages-and-frameworks)
-* [Programs](#programs)
 * [Platform Support](#platform-support)
 * [Setup](#setup)
 * [Launch](#launch)
+* [After Install](#after-install)
+* [Demo](#demo)
 * [Notes](#notes)
-
-## Demo
-```bash
-docker build -t config-demo:latest git://github.com/altayatalayy/ansible.git#master
-docker run -it config-demo:latest /bin/bash
-ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=testuser" basic.yml
-```
 
 
 ## Supported languages and frameworks
@@ -51,20 +45,6 @@ ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=testus
         <td width="100" style="text-align: center" >Terraform<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/terraform.svg" width="30" title="Terraform"/></td>
     </tr>
 </table>
-
-## Programs
-<table>
-    <tr>
-        <td>Neovim<br>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Neovim-mark.svg"  width="50" title="Neovim"/>
-        </td>
-        <td>Git<br><img src="https://edent.github.io/SuperTinyIcons/images/svg/git.svg" width="50" title="git"/></td>
-        <td><br>
-            <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/Tmux_logo.svg"  width="50" title="tmux"/>
-        </td>
-    </tr>
-</table>
-
 
 ## Platform Support
 <table style="table-layout: fixed; width: 90%; margin: auto; text-align: center; ">
@@ -163,6 +143,26 @@ sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$
 ### Install tmux plugins
 `prefix + Ctrl-I` 
   
+## Demo
+Run the setup in a docker container
+
+Build the image
+
+```bash
+docker build -t config-demo:latest git@github.com:altayatalayy/ansible.git#master
+```
+
+Start the container and run ansible-pull
+```bash
+docker run --rm -it config-demo:latest /bin/bash
+ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=testuser" basic.yml
+```
+
+Delete the image
+```bash
+docker image rm config-demo:latest
+```
+
 ## Notes
 ### nvim
 
