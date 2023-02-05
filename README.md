@@ -15,6 +15,13 @@ is used for automation.
 * [Launch](#launch)
 * [Notes](#notes)
 
+## Demo
+```bash
+docker build -t config-demo:latest git://github.com/altayatalayy/ansible.git#master
+docker run -it config-demo:latest /bin/bash
+ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=testuser" basic.yml
+```
+
 
 ## Supported languages and frameworks
 
@@ -120,22 +127,30 @@ is used for automation.
 ## Setup
 #### Macos
 ```bash
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" &&\
-brew install git ansible &&\
-ansible-galaxy collection install community.general
-```
-#### Ubuntu 20.04+
-```bash
-sudo apt install git ansible &&\
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" && \
+brew install git ansible && \
 ansible-galaxy collection install community.general
 ```
 
-#### Ubuntu 18.04
+#### Ubuntu
 ```bash
-sudo apt install software-properties-common &&\
-sudo apt-add-repository ppa:ansible/ansible &&\
-sudo apt update &&\
-sudo apt install git ansible &&\
+sudo dpkg --purge ansible && sudo apt --purge autoremove && \
+sudo apt update && \
+sudo apt install -y software-properties-common && \
+sudo apt-add-repository -y ppa:ansible/ansible && \
+sudo apt update && \
+sudo apt install -y git ansible && \
+ansible-galaxy collection install community.general
+```
+
+#### Ubuntu (as root)
+```bash
+dpkg --purge ansible && apt --purge autoremove && \
+apt update && \
+apt install -y software-properties-common && \
+apt-add-repository -y ppa:ansible/ansible && \
+apt update && \
+apt install -y git ansible && \
 ansible-galaxy collection install community.general
 ```
 
