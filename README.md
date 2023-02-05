@@ -1,27 +1,28 @@
 # Config
 ![example workflow](https://github.com/altayatalayy/ansible/actions/workflows/CI.yml/badge.svg)
 
-Install and configure
+Setup a development environment on various platforms. Ansible is used for automation.
+
+List of programs installed:
 * neovim
 * git
 * tmux
 * zsh
-* flatpak
-* UTM, virt-manager
-* ros
+* golang
+* nodejs
+* htop, neofetch
 
 ## Table of Contents
 * [Platform Support](#platform-support)
 * [Setup](#setup)
 * [Launch](#launch)
 * [Notes](#notes)
-<!-- * [License](#license) -->
 
 ## Platform Support
 
 |  MacOS  | Ubuntu 22.04 | Ubuntu 20.04 | Ubuntu 18.04 | Debian 10 | Raspberry Pi OS | Fedora | Arch Linux |
 |  :---:  | :----------: | :----------: | :----------: | :-------: | :-------------: | :----: | :--------: |
-|    ✅   |       ✅    |       ✅      |       ✅     |     ✅    |        ✅       |    :x:    |     :x:    |
+|    ✅   |       ✅    |       ✅      |       ✅     |     ✅    |        :x:      |    :x:    |     :x:    |
 
 ## Setup
 #### Macos
@@ -48,14 +49,6 @@ ansible-galaxy collection install community.general
 ## Launch
 ```bash
 sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami)" basic.yml
-```
-#### Install ros
-```bash
-sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami)" ros.yml
-```
-#### Install ros2
-```bash
-sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami)" ros2.yml
 ```
 
 ## After Install

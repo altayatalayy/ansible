@@ -1,8 +1,4 @@
 ---
-- name: sasnkd
-  ansible.builtin.debug:
-    var: nvim_installed
-
 - name: Remove old nvim
   ansible.builtin.file:
     path: '/usr/local/{{ item }}/nvim'
