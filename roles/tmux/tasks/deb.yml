@@ -71,6 +71,7 @@
       - build-essential
       - bison
       - pkg-config
+      - autoconf
   become: true
   become_user: root
   when: build_tmux|bool
