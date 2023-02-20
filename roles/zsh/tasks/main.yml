@@ -18,8 +18,6 @@
     shell: /bin/zsh
   become: true
   become_user: root
-  when:
-    ansible_facts['os_family'] == "Debian"
 
 - name: Check if .zshrc file exists
   ansible.builtin.stat:

@@ -22,14 +22,15 @@
 - name: Check go version
   ansible.builtin.command: "/usr/local/go/bin/go version"
   register: result_go_version
-  when: result_go_installed is defined and result_go_installed.stat.exists
+  when: >
+    result_go_installed is defined and result_go_installed.stat.exists
   changed_when: false
 
 - name: Set build_go
   ansible.builtin.set_fact:
     build_go: >
-      "{{ not (result_go_version is not skipped and
-      result_go_version.stdout_lines[0] is match(".*?1\.20.*?")) }}"
+      {{ result_go_version is skipped or
+      result_go_version.stdout_lines[0] is not match(".*?1\.20.*?") }}
 
 - name: Remove old go
   ansible.builtin.file:
@@ -37,7 +38,7 @@
     state: absent
   become: true
   become_user: root
-  when: build_go|bool
+  when: build_go|lower|trim|bool
 
 - name: Download and unarchive go
   ansible.builtin.unarchive:
@@ -46,7 +47,7 @@
     remote_src: true
   become: true
   become_user: root
-  when: build_go|bool
+  when: build_go|lower|trim|bool
 
 - name: Add go to path
   ansible.builtin.lineinfile:
@@ -58,4 +59,4 @@
   with_items:
     - ~/.bashrc
     - ~/.zshenv
-  when: build_go|bool
+  when: build_go|lower|trim|bool

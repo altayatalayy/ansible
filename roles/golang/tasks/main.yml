@@ -1,0 +1,8 @@
+---
+- name: Go (MacOS)
+  ansible.builtin.import_tasks: mac.yml
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Go (Debian)
+  ansible.builtin.import_tasks: deb.yml
+  when: ansible_facts['os_family'] == "Debian"

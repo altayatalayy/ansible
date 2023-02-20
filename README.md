@@ -136,7 +136,7 @@ ansible-galaxy collection install community.general
 
 ## Launch
 ```bash
-sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami)" basic.yml
+ANSIBLE_FORCE_COLOR=True sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami)" basic.yml
 ```
 
 ## After Install

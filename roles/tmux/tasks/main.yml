@@ -1,10 +1,11 @@
-- name: Install required packages with brew
-  homebrew:
-    name:
-      - tmux
-    state: present
-  when:
-    ansible_facts['os_family'] == "Darwin"
+---
+- name: Tmux (MacOS)
+  ansible.builtin.import_tasks: mac.yml
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Nvim (Debian)
+  ansible.builtin.import_tasks: deb.yml
+  when: ansible_facts['os_family'] == "Debian"
 
 - name: Copy tmux config file
   ansible.builtin.copy:

@@ -33,8 +33,8 @@
 - name: Set build_tmux
   ansible.builtin.set_fact:
     build_tmux: >
-      "{{ result_tmux_version is skipped or
-      not result_tmux_version.stdout_lines[0] is match('.*3.3a') }}"
+      {{ result_tmux_version is skipped or
+      not result_tmux_version.stdout_lines[0] is match('.*3.3a') }}
 
 - name: Remove old tmux
   ansible.builtin.file:
@@ -97,21 +97,3 @@
     path: ~/tmux-source
     state: absent
   when: build_tmux|bool
-
-- name: Copy tmux config file
-  ansible.builtin.copy:
-    src: files/tmux/.tmux.conf
-    dest: ~/.tmux.conf
-    mode: 0640
-
-- name: Check if tpm is installed
-  ansible.builtin.stat:
-    path: ~/.tmux/plugins/tpm
-  register: tpm_installed
-
-- name: Install tmux tpm
-  ansible.builtin.git:
-    repo: https://github.com/tmux-plugins/tpm
-    dest: ~/.tmux/plugins/tpm
-    version: master
-  when: not tpm_installed.stat.exists

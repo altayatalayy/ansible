@@ -32,7 +32,8 @@
   when: result_nvim_installed is defined and result_nvim_installed.stat.exists
   changed_when: false
 
-- import_tasks: tasks/build-nvim-deb.yml
+- name: Build nvim
+  ansible.builtin.import_tasks: build-nvim-deb.yml
   when: >
     (is_ubuntu18 or is_debian10) and
     not (result_nvim_version is not skipped and
@@ -61,12 +62,6 @@
   when: >
     not (is_ubuntu18 or is_debian10)
 
-- name: Copy config files
-  ansible.builtin.git:
-    repo: https://github.com/altayatalayy/nvim-config.git
-    dest: "{{ nvim_config_path }}/"
-    version: main
-
 - name: Install ripgrep, Ubuntu 18.10+
   ansible.builtin.apt:
     name:
@@ -85,10 +80,6 @@
   become_user: root
   when: (is_ubuntu18 or is_debian10)
 
-- import_tasks: tasks/js.yml
-
-- import_tasks: tasks/go.yml
-
 - name: Install required packages for nvim plugins
   ansible.builtin.apt:
     name:
@@ -98,12 +89,6 @@
       - unzip
   become: true
   become_user: root
-
-- name: Install ansible-lint
-  ansible.builtin.pip:
-    name:
-      - ansible-lint
-  when: not (is_ubuntu18 or is_debian10)
 
 - name: Install lazygit, Debian
   ansible.builtin.unarchive:
@@ -120,26 +105,3 @@
       - cppcheck
   become: true
   become_user: root
-
-- name: Remove old packer folder
-  ansible.builtin.file:
-    path: '{{ item }}'
-    state: absent
-  with_items:
-    - ~/.local/share/nvim/pack
-
-- name: Run Lazy Sync
-  ansible.builtin.command: nvim --headless "+Lazy! sync" +qa
-  changed_when: false
-
-- name: set EDITOR env var to nvim
-  ansible.builtin.lineinfile:
-    path: '{{ item }}'
-    line: 'export EDITOR="nvim"'
-    state: present
-    create: true
-    mode: '0644'
-  with_items:
-    - ~/.bashrc
-    - ~/.zshenv
-  when: build_go|bool

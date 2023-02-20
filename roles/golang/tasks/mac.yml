@@ -1,0 +1,6 @@
+---
+- name: Install go (MacOS)
+  community.general.homebrew:
+    name:
+      - go
+    state: present

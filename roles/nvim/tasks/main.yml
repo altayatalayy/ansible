@@ -1,0 +1,44 @@
+---
+- name: Nvim (Debian)
+  ansible.builtin.import_tasks: mac.yml
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Nvim (Debian)
+  ansible.builtin.import_tasks: deb.yml
+  when: >
+    ansible_facts['os_family'] == "Debian" and
+    ansible_facts['architecture'] == 'x86_64'
+
+- name: Nvim (Debian)
+  ansible.builtin.import_tasks: deb-aarch64.yml
+  when: >
+    ansible_facts['os_family'] == "Debian" and
+    ansible_facts['architecture'] == 'arm64'
+
+- name: Copy config files
+  ansible.builtin.git:
+    repo: https://github.com/altayatalayy/nvim-config.git
+    dest: "{{ nvim_config_path }}/"
+    version: main
+
+- name: Remove old packer folder
+  ansible.builtin.file:
+    path: '{{ item }}'
+    state: absent
+  with_items:
+    - ~/.local/share/nvim/pack
+
+- name: Run Lazy Sync
+  ansible.builtin.command: nvim --headless "+Lazy! sync" +qa
+  changed_when: false
+
+- name: Set EDITOR env var to nvim
+  ansible.builtin.lineinfile:
+    path: '{{ item }}'
+    line: 'export EDITOR="nvim"'
+    state: present
+    create: true
+    mode: '0644'
+  with_items:
+    - ~/.bashrc
+    - ~/.zshenv
