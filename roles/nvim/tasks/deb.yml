@@ -1,11 +1,4 @@
 ---
-
-- name: Set nvim facts
-  ansible.builtin.set_fact:
-    nvim_config_path: "~/.config/nvim"
-    nvim_version: 0.8.3
-    nvim_bin_path: /usr/local/bin/nvim
-
 - name: Gather the package facts
   ansible.builtin.package_facts:
     manager: auto
@@ -40,8 +33,8 @@
     result_nvim_version.stdout_lines[0] is match(".*0.8.3"))
   vars:
     nvim_installed: >
-      "{{ result_nvim_installed is defined
-      and result_nvim_installed.stat.exists }}"
+      {{ result_nvim_installed is defined
+      and result_nvim_installed.stat.exists }}
 
 - name: Install required packages with apt
   ansible.builtin.apt:

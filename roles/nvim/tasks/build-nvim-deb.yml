@@ -7,7 +7,7 @@
     - bin
     - lib
     - share
-  when: nvim_installed|bool
+  when: nvim_installed|lower|trim|bool
   become: true
   become_user: root
 

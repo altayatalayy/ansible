@@ -1,9 +1,4 @@
 ---
-- name: Set tmux facts
-  ansible.builtin.set_fact:
-    tmux_version: 3.3a
-    tmux_bin_path: /usr/local/bin/tmux
-
 - name: Gather the package facts
   ansible.builtin.package_facts:
     manager: auto
@@ -45,23 +40,23 @@
     - /usr/local/share/man/man.1/tmux.1
   become: true
   become_user: root
-  when: build_tmux|bool
+  when: build_tmux|lower|trim|bool
 
 - name: Make sure tmux-source folder exists
   ansible.builtin.file:
     path: ~/tmux-source
     state: directory
     mode: '0766'
-  when: build_tmux|bool
+  when: build_tmux|lower|trim|bool
 
 - name: Download tmux source code
   ansible.builtin.unarchive:
     src: https://github.com/tmux/tmux/releases/download/3.3a/tmux-3.3a.tar.gz
     dest: ~/tmux-source
-    mode: '0660'
+    mode: '0760'
     remote_src: true
     extra_opts: [--strip-components=1]
-  when: build_tmux|bool
+  when: build_tmux|lower|trim|bool
 
 - name: Install build dependencies
   ansible.builtin.apt:
@@ -71,19 +66,18 @@
       - build-essential
       - bison
       - pkg-config
-      - autoconf
   become: true
   become_user: root
-  when: build_tmux|bool
+  when: build_tmux|lower|trim|bool
 
 - name: Run configure
-  ansible.builtin.shell: cd ~/tmux-source && sh ./configure
-  when: build_tmux|bool
+  ansible.builtin.shell: cd ~/tmux-source && ./configure
+  when: build_tmux|lower|trim|bool
 
 - name: Compile tmux
   community.general.make:
     chdir: ~/tmux-source
-  when: build_tmux|bool
+  when: build_tmux|lower|trim|bool
 
 - name: Run install
   community.general.make:
@@ -91,10 +85,10 @@
     target: install
   become: true
   become_user: root
-  when: build_tmux|bool
+  when: build_tmux|lower|trim|bool
 
 - name: Delete tmux-source folder
   ansible.builtin.file:
     path: ~/tmux-source
     state: absent
-  when: build_tmux|bool
+  when: build_tmux|lower|trim|bool

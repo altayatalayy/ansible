@@ -51,11 +51,3 @@
     state: present
   become: true
   become_user: root
-
-- name: Install yarn
-  community.general.npm:
-    name: yarn
-    global: true
-    state: present
-  become_user: root
-  changed_when: false

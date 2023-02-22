@@ -6,3 +6,11 @@
 - name: NodeJS (Debian)
   ansible.builtin.import_tasks: deb.yml
   when: ansible_facts['os_family'] == "Debian"
+
+- name: Install yarn
+  community.general.npm:
+    name: yarn
+    global: true
+    state: present
+  become_user: root
+  changed_when: false
