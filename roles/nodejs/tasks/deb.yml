@@ -27,27 +27,41 @@
     and ('nodejs' in ansible_facts.packages)
     and not ansible_facts.packages.nodejs[0].version is match('.*?16.*?')
 
-- name: Run nodesource setup script
-  ansible.builtin.shell: |
-    curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+- name: Install dependencies
+  ansible.builtin.apt:
+    name:
+      - gnupg
+    state: present
   become: true
   become_user: root
-  changed_when: false
-  when: not is_ubuntu18
 
-- name: Run nodesource setup script
-  ansible.builtin.shell: |
-    curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+- name: "Add nodejs apt key"
+  ansible.builtin.apt_key:
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    state: present
   become: true
   become_user: root
-  changed_when: false
+
+- name: Add nodejs 16.x ppa for apt repo
+  ansible.builtin.apt_repository:
+    repo: "deb https://deb.nodesource.com/node_16.x {{ ansible_facts.lsb.codename }} main"
+    update_cache: true
+  become: true
+  become_user: root
   when: is_ubuntu18
+
+- name: Add nodejs 18.x ppa for apt repo
+  ansible.builtin.apt_repository:
+    repo: "deb https://deb.nodesource.com/node_18.x {{ ansible_facts.lsb.codename }} main"
+    update_cache: true
+  become: true
+  become_user: root
+  when: not is_ubuntu18
 
 - name: Install node, npm
   ansible.builtin.apt:
     name:
       - nodejs
-      - npm
     state: present
   become: true
   become_user: root
