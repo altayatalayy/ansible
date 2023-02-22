@@ -12,8 +12,6 @@
     name:
       - ripgrep
       - fd
-      - nodejs
-      - yarn
 
 - name: Install lazygit, Mac
   community.general.homebrew:
