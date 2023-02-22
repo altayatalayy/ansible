@@ -11,21 +11,9 @@
   become: true
   become_user: root
   when: >
-    not is_ubuntu18
-    and ('nodejs' in ansible_facts.packages)
-    and not ansible_facts.packages.nodejs[0].version is match('.*?18.*?')
-
-- name: Remove installed nodejs
-  ansible.builtin.apt:
-    name:
-      - nodejs
-    state: absent
-  become: true
-  become_user: root
-  when: >
-    is_ubuntu18
-    and ('nodejs' in ansible_facts.packages)
-    and not ansible_facts.packages.nodejs[0].version is match('.*?16.*?')
+    (is_ubuntu18 and not item.version is match('.*?16.*?')) or
+    (not is_ubuntu18 and not item.version is match('.*?18.*?'))
+  with_items: "{{ ansible_facts.packages.nodejs if 'nodejs' in ansible_facts.packages else [] }}"
 
 - name: Install dependencies
   ansible.builtin.apt:
@@ -35,28 +23,25 @@
   become: true
   become_user: root
 
-- name: "Add nodejs apt key"
+- name: Add nodejs apt key
   ansible.builtin.apt_key:
     url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
     state: present
   become: true
   become_user: root
 
-- name: Add nodejs 16.x ppa for apt repo
+- name: Add nodejs ppa for apt repo
   ansible.builtin.apt_repository:
-    repo: "deb https://deb.nodesource.com/node_16.x {{ ansible_facts.lsb.codename }} main"
+    repo: "deb https://deb.nodesource.com/node_{{ item.version }}.x {{ ansible_facts.lsb.codename }} main"
     update_cache: true
+    state: present
+    filename: nodesource
   become: true
   become_user: root
-  when: is_ubuntu18
-
-- name: Add nodejs 18.x ppa for apt repo
-  ansible.builtin.apt_repository:
-    repo: "deb https://deb.nodesource.com/node_18.x {{ ansible_facts.lsb.codename }} main"
-    update_cache: true
-  become: true
-  become_user: root
-  when: not is_ubuntu18
+  when: item.os|bool
+  with_items:
+    - {os: '{{ is_ubuntu18 | bool }}', version: 16}
+    - {os: '{{ (not is_ubuntu18) | bool }}', version: 18}
 
 - name: Install node, npm
   ansible.builtin.apt:
