@@ -9,6 +9,7 @@
     name:
       - golang-go
     state: absent
+    autoremove: true
   become: true
   become_user: root
   when: >

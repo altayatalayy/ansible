@@ -8,6 +8,7 @@
     name:
       - tmux
     state: absent
+    autoremove: true
   become: true
   become_user: root
   when: >
