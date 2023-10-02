@@ -10,32 +10,9 @@
     state: absent
     autoremove: true
   become: true
-  become_user: root
   when: >
     ('neovim' in ansible_facts.packages)
     and not ansible_facts.packages.neovim[0].version == nvim_version
-
-- name: Check for existing neovim install
-  ansible.builtin.stat:
-    path: "{{ nvim_bin_path }}"
-  register: result_nvim_installed
-
-- name: Check neovim version
-  ansible.builtin.command: "{{ nvim_bin_path }} --clean --version"
-  register: result_nvim_version
-  when: result_nvim_installed is defined and result_nvim_installed.stat.exists
-  changed_when: false
-
-- name: Build nvim
-  ansible.builtin.import_tasks: build-nvim-deb.yml
-  when: >
-    (is_ubuntu18 or is_debian10) and
-    not (result_nvim_version is not skipped and
-    result_nvim_version.stdout_lines[0] is match(".*0.8.3"))
-  vars:
-    nvim_installed: >
-      {{ result_nvim_installed is defined
-      and result_nvim_installed.stat.exists }}
 
 - name: Install required packages with apt
   ansible.builtin.apt:
@@ -45,34 +22,6 @@
       - python3-pip
       - python3-venv
   become: true
-  become_user: root
-
-- name: Install neovim Debian 20.04+
-  ansible.builtin.apt:
-    deb:
-      "https://github.com/neovim/neovim/releases/download/stable/nvim-linux64.deb"
-  become: true
-  become_user: root
-  when: >
-    not (is_ubuntu18 or is_debian10)
-
-- name: Install ripgrep, Ubuntu 18.10+
-  ansible.builtin.apt:
-    name:
-      - ripgrep
-      - fd-find
-  become: true
-  become_user: root
-  when: >
-    not (is_ubuntu18 or is_debian10)
-
-- name: Install ripgrep, Ubuntu 18.04
-  ansible.builtin.apt:
-    deb:
-      "https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb"
-  become: true
-  become_user: root
-  when: (is_ubuntu18 or is_debian10)
 
 - name: Install required packages for nvim plugins
   ansible.builtin.apt:
@@ -82,20 +31,54 @@
       - gcc
       - unzip
   become: true
-  become_user: root
+
+- name: Install ripgrep, Ubuntu 18.10+
+  ansible.builtin.apt:
+    name:
+      - ripgrep
+      - fd-find
+  become: true
+  when: >
+    not (is_ubuntu18 or is_debian10)
+
+- name: Install ripgrep, Ubuntu 18.04
+  ansible.builtin.apt:
+    deb: "https://github.com/BurntSushi/ripgrep/releases/download/13.0.0/ripgrep_13.0.0_amd64.deb"
+  become: true
+  when: (is_ubuntu18 or is_debian10)
 
 - name: Install lazygit, Debian
   ansible.builtin.unarchive:
-    src:
-      "https://github.com/jesseduffield/lazygit/releases/download/v0.37.0/lazygit_0.37.0_Linux_x86_64.tar.gz"
+    src: "https://github.com/jesseduffield/lazygit/releases/download/v0.37.0/lazygit_0.37.0_Linux_x86_64.tar.gz"
     dest: /usr/local/bin/
     remote_src: true
   become: true
-  become_user: root
 
 - name: Install cppcheck
   ansible.builtin.apt:
     name:
       - cppcheck
   become: true
-  become_user: root
+
+- name: Install neovim Ubuntu 22.04
+  ansible.builtin.apt:
+    deb: "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.1/nvim-linux64-22.deb"
+  become: true
+  when: >
+    ansible_facts.distribution == 'Ubuntu' and
+    ansible_facts.distribution_major_version == '22'
+
+- name: Install neovim Ubuntu 20.04
+  ansible.builtin.apt:
+    deb: "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.1/nvim-linux64-20.deb"
+  become: true
+  when: >
+    ansible_facts.distribution == 'Ubuntu' and
+    ansible_facts.distribution_major_version == '20'
+
+- name: Install neovim Ubuntu 18.04
+  ansible.builtin.apt:
+    deb: "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.1/nvim-linux64-18.deb"
+  become: true
+  when: >
+    (is_ubuntu18 or is_debian10)

@@ -10,14 +10,12 @@ driver:
 platforms:
   - name: instance
     image: altayatalay/docker-ubuntu2204-ansible:latest
+    privileged: true
+    pre_build_image: true
+    user: testuser
 
 provisioner:
   name: ansible
-  inventory:
-    hosts:
-      all:
-        vars:
-          user_name: testuser
 
 verifier:
   name: ansible

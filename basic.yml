@@ -2,8 +2,6 @@
 - hosts: localhost
   connection: local
   gather_facts: true
-  become: true
-  become_user: "{{ user_name }}"
   vars:
     is_ubuntu18: "{{ ansible_facts.distribution == 'Ubuntu' and
       ansible_facts.distribution_major_version == '18' }}"
@@ -13,18 +11,18 @@
   pre_tasks:
     - name: Update (Debian)
       ansible.builtin.apt:
+        name: python3-apt
         update_cache: true
-        upgrade: true
+        state: present
       become: true
-      become_user: root
       when: ansible_facts['os_family'] == "Debian"
 
-    - name: Update (MacOS)
-      community.general.homebrew:
-        update_homebrew: true
-        upgrade_all: true
-        upgrade_options: ignore-pinned
-      when: ansible_facts['os_family'] == "Darwin"
+  #   - name: Update (MacOS)
+  #     community.general.homebrew:
+  #       update_homebrew: true
+  #       upgrade_all: true
+  #       upgrade_options: ignore-pinned
+  #     when: ansible_facts['os_family'] == "Darwin"
 
   roles:
     - nvim
@@ -32,5 +30,5 @@
     - zsh
     - git
 
-  tasks:
-    - import_tasks: tasks/termapps.yml
+  # tasks:
+  #   - import_tasks: tasks/termapps.yml

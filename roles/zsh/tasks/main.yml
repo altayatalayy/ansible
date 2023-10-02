@@ -8,44 +8,34 @@
     state: present
     update_cache: true
   become: true
-  become_user: root
-  when:
-    ansible_facts['os_family'] == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Get user name
+  ansible.builtin.command: whoami
+  changed_when: false
+  register: user_result
 
 - name: Set zsh as default shell
   ansible.builtin.user:
-    name: "{{ user_name }}"
+    name: "{{ user_result.stdout }}"
     shell: /bin/zsh
   become: true
-  become_user: root
-
-- name: Check if .zshrc file exists
-  ansible.builtin.stat:
-    path: ~/.zshrc
-  register: zsh_file
 
 - name: Make sure ~/.zshrc exists
   ansible.builtin.file:
-    path: ~/.zshrc
-    owner: "{{ user_name }}"
-    group:
-      "{{ 'staff' if ansible_facts['os_family'] == 'Darwin'
-      else user_name }}"
-    mode: 0750
+    path: "~/.zshrc"
     state: touch
-  when: not zsh_file.stat.exists
-
-- name: Check if .oh-my-zsh folder exists
-  ansible.builtin.stat:
-    path: ~/.oh-my-zsh
-  register: register_name
+    mode: "0644"
+    modification_time: preserve
+    access_time: preserve
 
 - name: Install oh-my-zsh
   ansible.builtin.shell: >
     sh -c "$(curl -fsSL
     https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
     --unattended
-  when: not (register_name.stat.exists and register_name.stat.isdir)
+  args:
+    creates: ~/.oh-my-zsh
 
 - name: Install zsh-autosuggestions
   ansible.builtin.git:
@@ -60,38 +50,34 @@
     version: master
 
 - name: Mac Install diff-so-fancy
-  homebrew:
+  community.general.homebrew:
     name:
       - diff-so-fancy
-  when:
-    ansible_facts['os_family'] == "Darwin"
+  when: ansible_facts['os_family'] == "Darwin"
 
 - name: Ubuntu install diff-so-fancy
   ansible.builtin.git:
     repo: https://github.com/so-fancy/diff-so-fancy.git
     dest: ~/.diff-so-fancy
     version: master
-  when:
-    ansible_facts['os_family'] == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
 
 - name: Ubuntu add diff-so-fancy to $PATH
   ansible.builtin.file:
-    src: "/home/{{ user_name }}/.diff-so-fancy/diff-so-fancy"
+    src: "{{ ansible_env.HOME }}/.diff-so-fancy/diff-so-fancy"
     dest: /usr/local/bin/diff-so-fancy
-    mode: '0755'
+    mode: "0755"
     state: link
   become: true
-  become_user: root
-  when:
-    ansible_facts['os_family'] == "Debian"
+  when: ansible_facts['os_family'] == "Debian"
 
 - name: Uncomment DISABLE_AUTO_TITLE line
   ansible.builtin.lineinfile:
     path: ~/.zshrc
-    regexp: '^# DISABLE_AUTO_TITLE'
+    regexp: "^# DISABLE_AUTO_TITLE"
     line: 'DISABLE_AUTO_TITLE="true"'
 
-- name: add plugins to .zshrc
+- name: Add plugins to .zshrc
   ansible.builtin.lineinfile:
     path: ~/.zshrc
     regexp: '^plugins=\(git\)'
@@ -106,3 +92,29 @@
       vi-mode
       )
     backrefs: true
+
+- name: Ensure ~/.zshenv exists
+  ansible.builtin.file:
+    path: "~/.zshenv"
+    state: touch
+    mode: '0644'
+    modification_time: preserve
+    access_time: preserve
+
+- name: Set EDITOR env var in .bashrc
+  ansible.builtin.lineinfile:
+    path: "~/.bashrc"
+    regexp: "^export EDITOR=.*"
+    line: 'export EDITOR="{{ editor }}"'
+    state: present
+  when: lookup('env', 'SHELL') is search('/bash')
+  notify: reload bash shell
+
+- name: Set EDITOR env var in .zshenv
+  ansible.builtin.lineinfile:
+    path: "~/.zshenv"
+    regexp: "^export EDITOR=.*"
+    line: 'export EDITOR="{{ editor }}"'
+    state: present
+  when: lookup('env', 'SHELL') is search('/zsh')
+  notify: reload zsh shell

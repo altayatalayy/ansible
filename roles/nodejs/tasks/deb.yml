@@ -10,7 +10,6 @@
     state: absent
     autoremove: true
   become: true
-  become_user: root
   when: >
     (is_ubuntu18 and not item.version is match('.*?16.*?')) or
     (not is_ubuntu18 and not item.version is match('.*?18.*?'))
@@ -19,26 +18,32 @@
 - name: Install dependencies
   ansible.builtin.apt:
     name:
+      - ca-certificates
       - gnupg
     state: present
   become: true
-  become_user: root
+
+- name: Ensure /etc/apt/keyrings directory exists
+  ansible.builtin.file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+  become: true
 
 - name: Add nodejs apt key
   ansible.builtin.apt_key:
-    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    url: https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key
     state: present
+    keyring: /etc/apt/keyrings/nodesource.gpg
   become: true
-  become_user: root
 
 - name: Add nodejs ppa for apt repo
   ansible.builtin.apt_repository:
-    repo: "deb https://deb.nodesource.com/node_{{ item.version }}.x {{ ansible_facts.lsb.codename }} main"
-    update_cache: true
+    repo: "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_{{ item.version }}.x nodistro main"
     state: present
     filename: nodesource
+    update_cache: true
   become: true
-  become_user: root
   when: item.os|bool
   with_items:
     - {os: '{{ is_ubuntu18 | bool }}', version: 16}
@@ -50,4 +55,3 @@
       - nodejs
     state: present
   become: true
-  become_user: root

@@ -10,20 +10,27 @@ driver:
 platforms:
   - name: instance-1
     image: altayatalay/docker-ubuntu1804-ansible
+    privileged: true
+    pre_build_image: true
+    user: testuser
   - name: instance-2
     image: altayatalay/docker-ubuntu2004-ansible
+    privileged: true
+    pre_build_image: true
+    user: testuser
   - name: instance-3
     image: altayatalay/docker-ubuntu2204-ansible
+    privileged: true
+    pre_build_image: true
+    user: testuser
   - name: instance-4
     image: altayatalay/docker-debian10-ansible
+    privileged: true
+    pre_build_image: true
+    user: testuser
 
 provisioner:
   name: ansible
-  inventory:
-    hosts:
-      all:
-        vars:
-          user_name: testuser
 
 verifier:
   name: ansible

@@ -1,0 +1,16 @@
+---
+- name: Reload bash shell
+  ansible.builtin.command: ". ~/.bashrc"
+  args:
+    executable: /bin/bash
+  register: result
+  failed_when: result.rc != 0 and 'No such file or directory' not in result.stderr
+  changed_when: false
+
+- name: Reload zsh shell
+  ansible.builtin.command: ". ~/.zshenv"
+  args:
+    executable: /bin/zsh
+  register: result
+  failed_when: result.rc != 0 and 'No such file or directory' not in result.stderr
+  changed_when: false

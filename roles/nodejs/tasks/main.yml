@@ -12,5 +12,5 @@
     name: yarn
     global: true
     state: present
-  become_user: root
+  become: true
   changed_when: false

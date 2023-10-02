@@ -1,15 +1,15 @@
 ---
-- name: Nvim (Debian)
+- name: Nvim (MacOS)
   ansible.builtin.import_tasks: mac.yml
   when: ansible_facts['os_family'] == "Darwin"
 
-- name: Nvim (Debian)
+- name: Nvim (Debian x86)
   ansible.builtin.import_tasks: deb.yml
   when: >
     ansible_facts['os_family'] == "Debian" and
     ansible_facts['architecture'] == 'x86_64'
 
-- name: Nvim (Debian)
+- name: Nvim (Debian arm64)
   ansible.builtin.import_tasks: deb-aarch64.yml
   when: >
     ansible_facts['os_family'] == "Debian" and

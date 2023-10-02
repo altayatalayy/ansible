@@ -1,20 +1,10 @@
-# Config
+Dev-Env-Automator: Your Next Dev Environment, One Click Away
+
 ![example workflow](https://github.com/altayatalayy/ansible/actions/workflows/CI.yml/badge.svg)
 
+Welcome to Dev-Env-Automator — the solution to setting up your development environment swiftly and efficiently. While the primary goal is to offer you a hassle-free setup with predefined configurations, we keep the door open for those willing to tailor it to other unique needs. Though not extensively flexible, with a bit of extra effort, you can mold it to a setup that mirrors your development necessities precisely.
 Setup a terminal development environment on various platforms.
-[Ansible](https://docs.ansible.com/ansible/latest/index.html)
-<img src="https://edent.github.io/SuperTinyIcons/images/svg/ansible.svg" width="20" title="Ansible"/>
-is used for automation.
 
-
-## Table of Contents
-* [Supported Languages](#supported-languages-and-frameworks)
-* [Platform Support](#platform-support)
-* [Setup](#setup)
-* [Launch](#launch)
-* [After Install](#after-install)
-* [Demo](#demo)
-* [Notes](#notes)
 
 
 ## Supported languages and frameworks
@@ -136,7 +126,7 @@ ansible-galaxy collection install community.general
 
 ## Launch
 ```bash
-ANSIBLE_FORCE_COLOR=True sudo ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=$(whoami)" basic.yml
+ANSIBLE_FORCE_COLOR=True ansible-pull -U https://github.com/altayatalayy/ansible.git -d ~/.dev-env-automator basic.yml
 ```
 
 ## After Install

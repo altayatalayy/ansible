@@ -11,7 +11,6 @@
     state: absent
     autoremove: true
   become: true
-  become_user: root
   when: >
     'golang-go' in ansible_facts.packages
 
@@ -31,23 +30,21 @@
   ansible.builtin.set_fact:
     build_go: >
       {{ result_go_version is skipped or
-      result_go_version.stdout_lines[0] is not match(".*?1\.20.*?") }}
+      result_go_version.stdout_lines[0] is not match(".*?1\.21.*?") }}
 
 - name: Remove old go
   ansible.builtin.file:
     path: /usr/local/go
     state: absent
   become: true
-  become_user: root
   when: build_go|lower|trim|bool
 
 - name: Download and unarchive go
   ansible.builtin.unarchive:
-    src: https://go.dev/dl/go1.20.linux-amd64.tar.gz
+    src: https://go.dev/dl/go1.21.1.linux-amd64.tar.gz
     dest: /usr/local
     remote_src: true
   become: true
-  become_user: root
   when: build_go|lower|trim|bool
 
 - name: Add go to path

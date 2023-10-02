@@ -1,5 +1,29 @@
 FROM ubuntu:20.04
 
-RUN apt-get update && apt-get upgrade -y
+# Set environment variables to avoid warnings during package installation
+ENV DEBIAN_FRONTEND=noninteractive
 
-RUN useradd -ms /bin/bash testuser
+# Update and install necessary packages
+RUN apt-get update && \
+    apt-get install -y \
+    python3 \
+    python3-pip \
+    sudo \
+    curl \
+    wget \
+    ca-certificates \
+    openssh-server && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* 
+
+# Create testuser and grant sudo access
+RUN useradd -ms /bin/bash testuser && \
+    echo "testuser ALL=(ALL) NOPASSWD: ALL" > /etc/sudoers.d/testuser
+
+# Switch to testuser
+USER testuser
+
+# Set the working directory
+WORKDIR /home/testuser
+
+
