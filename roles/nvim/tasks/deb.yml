@@ -47,18 +47,19 @@
   become: true
   when: (is_ubuntu18 or is_debian10)
 
-- name: Install lazygit, Debian
-  ansible.builtin.unarchive:
-    src: "https://github.com/jesseduffield/lazygit/releases/download/v0.37.0/lazygit_0.37.0_Linux_x86_64.tar.gz"
-    dest: /usr/local/bin/
-    remote_src: true
-  become: true
-
 - name: Install cppcheck
   ansible.builtin.apt:
     name:
       - cppcheck
   become: true
+
+- name: Install neovim Ubuntu 22.04
+  ansible.builtin.apt:
+    deb: "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.1/nvim-linux64-23.deb"
+  become: true
+  when: >
+    ansible_facts.distribution == 'Ubuntu' and
+    ansible_facts.distribution_major_version == '23'
 
 - name: Install neovim Ubuntu 22.04
   ansible.builtin.apt:
