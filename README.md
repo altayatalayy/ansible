@@ -104,24 +104,24 @@ ansible-galaxy collection install community.general
 
 #### Ubuntu
 ```bash
-sudo dpkg --purge ansible && sudo apt --purge autoremove && \
 sudo apt update && \
-sudo apt install -y software-properties-common && \
-sudo apt-add-repository -y ppa:ansible/ansible && \
-sudo apt update && \
-sudo apt install -y git ansible && \
-ansible-galaxy collection install community.general
+sudo apt install -y python3 python3-pip python3-venv && \
+python3 -m venv venv && \
+source venv/bin/activate && \
+pip install ansible && \
+ansible-galaxy collection install community.general && \
+deactivate
 ```
 
 #### Ubuntu (as root)
 ```bash
-dpkg --purge ansible && apt --purge autoremove && \
 apt update && \
-apt install -y software-properties-common && \
-apt-add-repository -y ppa:ansible/ansible && \
-apt update && \
-apt install -y git ansible && \
-ansible-galaxy collection install community.general
+apt install -y python3 python3-pip python3-venv && \
+python3 -m venv venv && \
+source venv/bin/activate && \
+pip install ansible && \
+ansible-galaxy collection install community.general && \
+deactivate
 ```
 
 ## Launch
