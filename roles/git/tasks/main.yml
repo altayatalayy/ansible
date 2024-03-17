@@ -10,9 +10,3 @@
     name: core.editor
     scope: global
     value: nvim
-
-- name: Configure Git to use SSH for GitHub URLs
-  community.general.git_config:
-    name: url."ssh://git@github.com/".insteadOf
-    value: "https://github.com/"
-    scope: global
