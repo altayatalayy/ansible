@@ -105,8 +105,8 @@ ansible-galaxy collection install community.general
 ```bash
 sudo apt update && \
 sudo apt install -y python3 python3-pip python3-venv && \
-python3 -m venv venv && \
-source venv/bin/activate && \
+python3 -m venv ~/ansible-venv && \
+source ~/ansible-venv/bin/activate && \
 pip install ansible && \
 ansible-galaxy collection install community.general && \
 deactivate
@@ -116,8 +116,8 @@ deactivate
 ```bash
 apt update && \
 apt install -y python3 python3-pip python3-venv && \
-python3 -m venv venv && \
-source venv/bin/activate && \
+python3 -m venv ~/ansible-venv && \
+source ~/ansible-venv/bin/activate && \
 pip install ansible && \
 ansible-galaxy collection install community.general && \
 deactivate
@@ -126,11 +126,11 @@ deactivate
 ## Launch
 
 ```bash
-ANSIBLE_FORCE_COLOR=True ansible-pull -i localhost,"$(hostname)" -U https://github.com/altayatalayy/ansible.git -d ~/.dev-env-automator basic.yml
+source ~/ansible-venv/bin/activate && ANSIBLE_FORCE_COLOR=True ansible-pull -i localhost -U https://github.com/altayatalayy/ansible.git -d ~/.dev-env-automator basic.yml
 ```
 
 ```bash
-ANSIBLE_FORCE_COLOR=True ansible-pull -i localhost,"$(hostname)" -U file:///~/.dev-env-automator basic.yml
+source ~/ansible-venv/bin/activate && ANSIBLE_FORCE_COLOR=True ansible-pull -i localhost -U file:///~/.dev-env-automator basic.yml
 ```
 
 ## After Install
