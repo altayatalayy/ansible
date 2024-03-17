@@ -1,7 +1,6 @@
 ---
-- name: Main Playbook for Setting Up Environment
-  hosts: all
-  become: true
+- hosts: localhost
+  connection: local
   tasks:
     - name: Install fonts
       import_tasks: tasks/fonts.yml
@@ -13,4 +12,4 @@
             (ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('22.04', '=='))
 
     - name: Install alacritty
-      import_tasks: tasks/alacritty.yml
+      import_tasks: tasks/install_alacritty.yml
