@@ -1,0 +1,120 @@
+---
+- name: Install zsh
+  ansible.builtin.apt:
+    name:
+      - zsh
+      - curl
+      - git
+    state: present
+    update_cache: true
+  become: true
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Get user name
+  ansible.builtin.command: whoami
+  changed_when: false
+  register: user_result
+
+- name: Set zsh as default shell
+  ansible.builtin.user:
+    name: "{{ user_result.stdout }}"
+    shell: /bin/zsh
+  become: true
+
+- name: Make sure ~/.zshrc exists
+  ansible.builtin.file:
+    path: "~/.zshrc"
+    state: touch
+    mode: "0644"
+    modification_time: preserve
+    access_time: preserve
+
+- name: Install oh-my-zsh
+  ansible.builtin.shell: >
+    sh -c "$(curl -fsSL
+    https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+    --unattended
+  args:
+    creates: ~/.oh-my-zsh
+
+- name: Install zsh-autosuggestions
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-autosuggestions
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+    version: master
+
+- name: Install zsh-syntax-highlighting
+  ansible.builtin.git:
+    repo: https://github.com/zsh-users/zsh-syntax-highlighting.git
+    dest: ~/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+    version: master
+
+- name: Mac Install diff-so-fancy
+  community.general.homebrew:
+    name:
+      - diff-so-fancy
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Ubuntu install diff-so-fancy
+  ansible.builtin.git:
+    repo: https://github.com/so-fancy/diff-so-fancy.git
+    dest: ~/.diff-so-fancy
+    version: master
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Ubuntu add diff-so-fancy to $PATH
+  ansible.builtin.file:
+    src: "{{ ansible_env.HOME }}/.diff-so-fancy/diff-so-fancy"
+    dest: /usr/local/bin/diff-so-fancy
+    mode: "0755"
+    state: link
+  become: true
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Uncomment DISABLE_AUTO_TITLE line
+  ansible.builtin.lineinfile:
+    path: ~/.zshrc
+    regexp: "^# DISABLE_AUTO_TITLE"
+    line: 'DISABLE_AUTO_TITLE="true"'
+
+- name: Add plugins to .zshrc
+  ansible.builtin.lineinfile:
+    path: ~/.zshrc
+    regexp: '^plugins=\(git\)'
+    line: >
+      plugins=(
+      git
+      zsh-autosuggestions
+      copypath
+      copyfile
+      copybuffer
+      zsh-syntax-highlighting
+      vi-mode
+      )
+    backrefs: true
+
+- name: Ensure ~/.zshenv exists
+  ansible.builtin.file:
+    path: "~/.zshenv"
+    state: touch
+    mode: '0644'
+    modification_time: preserve
+    access_time: preserve
+
+- name: Set EDITOR env var in .bashrc
+  ansible.builtin.lineinfile:
+    path: "~/.bashrc"
+    regexp: "^export EDITOR=.*"
+    line: 'export EDITOR="{{ editor }}"'
+    state: present
+  when: lookup('env', 'SHELL') is search('/bash')
+  notify: reload bash shell
+
+- name: Set EDITOR env var in .zshenv
+  ansible.builtin.lineinfile:
+    path: "~/.zshenv"
+    regexp: "^export EDITOR=.*"
+    line: 'export EDITOR="{{ editor }}"'
+    state: present
+  when: lookup('env', 'SHELL') is search('/zsh')
+  notify: reload zsh shell

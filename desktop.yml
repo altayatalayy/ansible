@@ -3,12 +3,11 @@
   hosts: all
   become: true
   tasks:
+    - name: Install fonts
+      import_tasks: tasks/fonts.yml
+
     - name: Import Docker installation tasks for Ubuntu 22.04 and 20.04
       import_tasks: tasks/install_docker.yml
       become: true
       when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('20.04', '==')) or
             (ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('22.04', '=='))
-  handlers:
-    - name: Update apt cache
-      apt:
-        update_cache: true

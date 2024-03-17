@@ -16,11 +16,23 @@
     dest: ~/.config/zsh
     version: main
 
+- name: Check if ~/.zshenv exists and is a regular file
+  stat:
+    path: "{{ ansible_env.HOME }}/.zshenv"
+  register: zshenv_stat
+
+- name: Remove ~/.zshenv if it is a regular file
+  file:
+    path: "{{ ansible_env.HOME }}/.zshenv"
+    state: absent
+  when: zshenv_stat.stat.islnk is not defined and zshenv_stat.stat.exists
+
 - name: Create symbolic link for .zshenv
   ansible.builtin.file:
     src: "{{ ansible_env.HOME }}/.config/zsh/.zshenv"
     dest: "{{ ansible_env.HOME }}/.zshenv"
     state: link
+    force: true
 
 - name: Install zsh-autosuggestions
   ansible.builtin.git:
@@ -39,4 +51,5 @@
     src: https://github.com/junegunn/fzf/releases/download/0.48.0/fzf-0.48.0-linux_amd64.tar.gz
     dest: /usr/local/bin
     remote_src: true
-    become: true
+  become: true
+  when: ansible_facts['os_family'] == "Debian"

@@ -31,14 +31,3 @@
 - name: Run Lazy Sync
   ansible.builtin.command: nvim --headless "+Lazy! sync" +qa
   changed_when: false
-
-- name: Set EDITOR env var to nvim
-  ansible.builtin.lineinfile:
-    path: '{{ item }}'
-    line: 'export EDITOR="nvim"'
-    state: present
-    create: true
-    mode: '0644'
-  with_items:
-    - ~/.bashrc
-    - ~/.zshenv
