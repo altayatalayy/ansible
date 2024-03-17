@@ -13,16 +13,16 @@
 - name: Clone zsh config
   ansible.builtin.git:
     repo: https://github.com/altayatalayy/zsh-config.git
-    dest: ~/.config/zsh
+    dest: "{{ ansible_env.HOME }}/.config/zsh"
     version: main
 
 - name: Check if ~/.zshenv exists and is a regular file
-  stat:
+  ansible.builtin.stat:
     path: "{{ ansible_env.HOME }}/.zshenv"
   register: zshenv_stat
 
 - name: Remove ~/.zshenv if it is a regular file
-  file:
+  ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.zshenv"
     state: absent
   when: zshenv_stat.stat.islnk is not defined and zshenv_stat.stat.exists

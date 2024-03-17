@@ -26,7 +26,7 @@
     path: '{{ item }}'
     state: absent
   with_items:
-    - ~/.local/share/nvim/pack
+    - "{{ ansible_env.HOME }}/.local/share/nvim/pack"
 
 - name: Run Lazy Sync
   ansible.builtin.command: nvim --headless "+Lazy! sync" +qa

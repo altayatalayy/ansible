@@ -10,11 +10,11 @@
 - name: Clone tmux config
   ansible.builtin.git:
     repo: https://github.com/altayatalayy/tmux-config.git
-    dest: ~/.config/tmux
+    dest: "{{ ansible_env.HOME }}/.config/tmux"
     version: main
 
 - name: Install tmux tpm
   ansible.builtin.git:
     repo: https://github.com/tmux-plugins/tpm
-    dest: ~/.config/tmux/plugins/tpm
+    dest: "{{ ansible_env.HOME }}/.config/tmux/plugins/tpm"
     version: master

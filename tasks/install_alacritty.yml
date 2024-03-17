@@ -1,0 +1,14 @@
+---
+- name: Install alacritty
+  community.general.snap:
+    name:
+      - alacritty
+    state: present
+    classic: true
+  when: ansible_facts['os_family'] == "Debian"
+
+- name: Clone alacritty config
+  ansible.builtin.git:
+    repo: https://github.com/altayatalayy/alacritty-config.git
+    dest: "{{ ansible_env.HOME }}/.config/alacritty"
+    version: main

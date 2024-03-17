@@ -11,3 +11,6 @@
       become: true
       when: (ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('20.04', '==')) or
             (ansible_distribution == 'Ubuntu' and ansible_distribution_version is version('22.04', '=='))
+
+    - name: Install alacritty
+      import_tasks: tasks/alacritty.yml
