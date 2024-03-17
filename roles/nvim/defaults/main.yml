@@ -1,4 +1,4 @@
 ---
 nvim_config_path: "~/.config/nvim"
-nvim_version: 0.9.2
+nvim_version: 0.9.5
 nvim_bin_path: /usr/local/bin/nvim

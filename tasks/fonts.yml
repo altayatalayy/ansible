@@ -1,0 +1,43 @@
+---
+- name: Set font destination directory for Linux
+  ansible.builtin.set_fact:
+    font_dest_linux: "{{ ansible_env.HOME }}/.local/share/fonts"
+  when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat"
+
+- name: Set font destination directory for macOS
+  ansible.builtin.set_fact:
+    font_dest_macos: "{{ ansible_env.HOME }}/Library/Fonts"
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Ensure font directory exists on Linux
+  ansible.builtin.file:
+    path: "{{ font_dest_linux }}"
+    state: directory
+    mode: '0755'
+  when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat"
+
+- name: Ensure font directory exists on macOS
+  ansible.builtin.file:
+    path: "{{ font_dest_macos }}"
+    state: directory
+    mode: '0755'
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Download and unarchive Hack Nerd Font to Linux fonts directory
+  ansible.builtin.unarchive:
+    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip"
+    dest: "{{ font_dest_linux }}"
+    remote_src: true
+  when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat"
+
+- name: Download and unarchive Hack Nerd Font to macOS fonts directory
+  ansible.builtin.unarchive:
+    src: "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.1.1/Hack.zip"
+    dest: "{{ font_dest_macos }}"
+    remote_src: true
+  when: ansible_facts['os_family'] == "Darwin"
+
+- name: Refresh font cache on Linux
+  ansible.builtin.command: fc-cache -fv
+  changed_when: false
+  when: ansible_facts['os_family'] == "Debian" or ansible_facts['os_family'] == "RedHat"

@@ -7,20 +7,14 @@
   ansible.builtin.import_tasks: deb.yml
   when: ansible_facts['os_family'] == "Debian"
 
-- name: Copy tmux config file
-  ansible.builtin.copy:
-    src: files/tmux/.tmux.conf
-    dest: ~/.tmux.conf
-    mode: 0640
-
-- name: Check if tpm is installed
-  ansible.builtin.stat:
-    path: ~/.tmux/plugins/tpm
-  register: tpm_installed
+- name: Clone tmux config
+  ansible.builtin.git:
+    repo: https://github.com/altayatalayy/tmux-config.git
+    dest: ~/.config/tmux
+    version: main
 
 - name: Install tmux tpm
   ansible.builtin.git:
     repo: https://github.com/tmux-plugins/tpm
-    dest: ~/.tmux/plugins/tpm
+    dest: ~/.config/tmux/plugins/tpm
     version: master
-  when: not tpm_installed.stat.exists

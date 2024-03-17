@@ -55,7 +55,7 @@
 
 - name: Install neovim Ubuntu 22.04
   ansible.builtin.apt:
-    deb: "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.1/nvim-linux64-23.deb"
+    deb: "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.7/nvim-linux64-23.deb"
   become: true
   when: >
     ansible_facts.distribution == 'Ubuntu' and
@@ -63,7 +63,7 @@
 
 - name: Install neovim Ubuntu 22.04
   ansible.builtin.apt:
-    deb: "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.1/nvim-linux64-22.deb"
+    deb: "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.7/nvim-linux64-22.deb"
   become: true
   when: >
     ansible_facts.distribution == 'Ubuntu' and
@@ -71,7 +71,7 @@
 
 - name: Install neovim Ubuntu 20.04
   ansible.builtin.apt:
-    deb: "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.1/nvim-linux64-20.deb"
+    deb: "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.7/nvim-linux64-20.deb"
   become: true
   when: >
     ansible_facts.distribution == 'Ubuntu' and
@@ -79,7 +79,7 @@
 
 - name: Install neovim Ubuntu 18.04
   ansible.builtin.apt:
-    deb: "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.1/nvim-linux64-18.deb"
+    deb: "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.7/nvim-linux64-18.deb"
   become: true
   when: >
     (is_ubuntu18 or is_debian10)

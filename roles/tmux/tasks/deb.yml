@@ -17,13 +17,13 @@
 - name: Install tmux (Ubuntu)
   ansible.builtin.apt:
     deb:
-      "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.1/tmux.deb"
+      "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.7/tmux.deb"
   become: true
   when: not is_debian10
 
 - name: Install tmux (Debian)
   ansible.builtin.apt:
     deb:
-      "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.1/tmux10.deb"
+      "https://github.com/altayatalayy/neovim-package/releases/download/v0.1.7/tmux10.deb"
   become: true
   when: is_debian10

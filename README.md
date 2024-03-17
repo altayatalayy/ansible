@@ -2,7 +2,6 @@ Dev-Env-Automator: Your Next Dev Environment, One Click Away
 
 ![example workflow](https://github.com/altayatalayy/ansible/actions/workflows/CI.yml/badge.svg)
 
-Welcome to Dev-Env-Automator — the solution to setting up your development environment swiftly and efficiently. While the primary goal is to offer you a hassle-free setup with predefined configurations, we keep the door open for those willing to tailor it to other unique needs. Though not extensively flexible, with a bit of extra effort, you can mold it to a setup that mirrors your development necessities precisely.
 Setup a terminal development environment on various platforms.
 
 
@@ -125,34 +124,19 @@ deactivate
 ```
 
 ## Launch
+
 ```bash
-ANSIBLE_FORCE_COLOR=True ansible-pull -U https://github.com/altayatalayy/ansible.git -d ~/.dev-env-automator basic.yml
+ANSIBLE_FORCE_COLOR=True ansible-pull -i localhost,"$(hostname)" -U https://github.com/altayatalayy/ansible.git -d ~/.dev-env-automator basic.yml
+```
+
+```bash
+ANSIBLE_FORCE_COLOR=True ansible-pull -i localhost,"$(hostname)" -U file:///~/.dev-env-automator basic.yml
 ```
 
 ## After Install
 ### Install tmux plugins
 `prefix + Ctrl-I` 
   
-## Demo
-Run the setup in a docker container
-
-Build the image
-
-```bash
-docker build -t config-demo:latest git@github.com:altayatalayy/ansible.git#master
-```
-
-Start the container and run ansible-pull
-```bash
-docker run --rm -it config-demo:latest /bin/bash
-ansible-pull -U https://github.com/altayatalayy/ansible.git -e "user_name=testuser" basic.yml
-```
-
-Delete the image
-```bash
-docker image rm config-demo:latest
-```
-
 ## Notes
 ### nvim
 
